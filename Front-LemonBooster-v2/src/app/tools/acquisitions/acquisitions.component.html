@@ -1,0 +1,49 @@
+<div class="card border">
+    <div class="card-header">
+        <h4>Acquisitions</h4>
+    </div>
+    <div class="card-body">
+        <div class="row">
+            <div class=" col-md-10">
+                <div class="form-group has-success">
+                    <input class="form-control" #acquisition placeholder="Enterprise name to search..." type="text">
+                </div>
+            </div>
+            <div class="col-md-2">
+                <button class="btn btn-danger btn-sm btn-simple btn-block" (click)="searchAcquisition(acquisition.value)">
+                    Search
+                </button>
+            </div>
+        </div>
+        <hr>
+
+        <form [formGroup]="form" (ngSubmit)="saveAcquisitions()">
+            <div class="row">
+
+                <div class="col-md-12">
+                    <div class=" form-group">
+                        <label for="scope"> Acquisitions:  &nbsp;<span> [Separated by Comma]</span> </label>
+                        <textarea
+                            formControlName="Acquisitions"
+                            class=" form-control"
+                            type="text"
+                            placeholder="Enter acquisitions name..."
+                        ></textarea>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6">
+                    
+                </div>
+                <div class="col-md-6">
+                    <button class="btn btn-success btn-sm btn-simple pull-right" type="submit">
+                        Save
+                    </button>
+                </div>
+            </div>
+
+        </form>
+
+    </div>
+</div>

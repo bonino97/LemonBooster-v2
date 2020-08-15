@@ -1,0 +1,49 @@
+<div class="card border">
+    <div class="card-header">
+        <h4>ASNs</h4>
+    </div>
+    <div class="card-body">
+        <div class="row">
+            <div class=" col-md-10">
+                <div class=" form-group has-success">
+                    <input class=" form-control" #asn placeholder="Enterprise name to search ASN numbers..." type="text">
+                </div>
+            </div>
+            <div class="col-md-2">
+                <button class="btn btn-danger btn-sm btn-simple btn-block" (click)="searchAsns(asn.value)">
+                    Search
+                </button>
+            </div>
+        </div>
+        <hr>
+
+        <form [formGroup]="form" (ngSubmit)="saveAsns()">
+            <div class="row">
+
+                <div class="col-md-12">
+                    <div class=" form-group">
+                        <label for="scope"> ASNs:  &nbsp;<span> [Separated by Comma & Without 'AS']</span> </label>
+                        <textarea
+                            formControlName="ASNs"
+                            class=" form-control"
+                            type="text"
+                            placeholder="Enter ASN values..."
+                        ></textarea>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6">
+
+                </div>
+                <div class="col-md-6">
+                    <button class="btn btn-success btn-sm btn-simple pull-right" type="submit">
+                        Save
+                    </button>
+                </div>
+            </div>
+        </form>
+
+
+    </div>
+</div>

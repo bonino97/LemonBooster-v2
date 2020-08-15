@@ -1,0 +1,37 @@
+<div class="row animate__animated animate__fadeIn">
+    <div class="col-md-3">
+        <div class="card border">
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-12">
+                        <p class="text-muted text-center">Complete information.</p>
+                        <button class="btn btn-success btn-sm btn-simple btn-block" (click)="open(1)">
+                            Acquasitions
+                        </button>
+                    </div>
+                    <div class="col-md-12">
+                        <button class="btn btn-success btn-sm btn-simple btn-block" (click)="open(2)">
+                            ASNs
+                        </button>
+                    </div>
+                    <div class="col-md-12">
+                        <button class="btn btn-success btn-sm btn-simple btn-block" (click)="open(3)">
+                            CIDRs
+                        </button>
+                    </div>
+                    <div class="col-md-12">
+                        <button class="btn btn-danger btn-sm btn-simple btn-block" (click)="open(4)">
+                            Amass
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-9">
+        <app-acquisitions *ngIf="_acquisitions"></app-acquisitions>
+        <app-asns *ngIf="_asns"></app-asns>
+        <app-cidrs *ngIf="_cidrs"></app-cidrs>
+        <app-amass *ngIf="_amass"></app-amass>
+    </div>
+</div>

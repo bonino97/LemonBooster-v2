@@ -1,0 +1,18 @@
+<div class="sidebar-wrapper animate__animated animate__fadeIn">
+    <div class="logo">
+      <a href="javascript:void(0)" class="simple-text logo-mini" >
+        <div class="logo-img"> <img style="width: 25px;" src="../../../assets/img/icons8-citrus-64.png" /> </div> </a>
+      <a href="javascript:void(0)" class="simple-text logo-normal"> LemonBooster </a>
+    </div>
+    <ul class="nav">
+      <li *ngFor="let menuitem of menuItems" routerLinkActive="active">
+        <!--If is a single link-->
+        <a [routerLink]="[menuitem.path]" *ngIf="menuitem.type === 'link'">
+          <i class="{{ menuitem.icontype }}"></i>
+          <p>{{ menuitem.title }}</p>
+        </a>
+  
+      </li>
+    </ul>
+  </div>
+  

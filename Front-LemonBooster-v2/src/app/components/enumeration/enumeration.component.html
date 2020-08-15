@@ -1,0 +1,33 @@
+<div class="row animate__animated animate__fadeIn">
+    <div class="col-md-3">
+        <div class="card border">
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-12">
+                        <button class="btn btn-success btn-sm btn-simple btn-block" (click)="open(1)">
+                            Subdomains
+                        </button>
+                    </div>
+                    <div class="col-md-12">
+                        <button class="btn btn-success btn-sm btn-simple btn-block" (click)="open(2)">
+                            Alive
+                        </button>
+                    </div>
+                    <div class="col-md-12">
+                        <button class="btn btn-success btn-sm btn-simple btn-block" (click)="open(3)">
+                            Screenshot
+                        </button>
+                    </div>
+                    <div class="col-md-12">
+                        <button class="btn btn-success btn-sm btn-simple btn-block" (click)="open(3)">
+                            JS Scanning
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-9">
+        <app-subdomains *ngIf="_subdomains"></app-subdomains>
+    </div>
+</div>

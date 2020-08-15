@@ -1,0 +1,15 @@
+.border{
+    border: 0.0625rem solid #00f2c3 !important;
+}
+
+hr{
+    background-color: #00f2c3 ;
+}
+
+
+@media only screen and (min-width: 768px) {
+    .vl {
+        border-left: 0.0625rem solid #fd5d93;
+        height: 500px;
+      }
+}

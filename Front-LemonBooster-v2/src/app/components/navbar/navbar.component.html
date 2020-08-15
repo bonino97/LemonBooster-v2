@@ -1,0 +1,34 @@
+<nav class=" navbar navbar-expand-lg navbar-absolute" [ngClass]="{'bg-white': isCollapsed === false, 'navbar-transparent': isCollapsed === true}">
+    <div class=" container-fluid">
+      <div class=" navbar-wrapper">
+        <div class=" navbar-minimize d-inline">
+          <button
+            class=" minimize-sidebar btn btn-link btn-just-icon"
+            tooltil="Sidebar toggle"
+            placement="right"
+            (click)="minimizeSidebar()"
+          >
+            <i class=" tim-icons icon-align-center visible-on-sidebar-regular">
+            </i>
+            <i class=" tim-icons icon-bullet-list-67 visible-on-sidebar-mini">
+            </i>
+          </button>
+        </div>
+        <div class=" navbar-toggle d-inline">
+          <button class=" navbar-toggler" type="button" (click)="sidebarOpen()">
+            <span class=" navbar-toggler-bar bar1"> </span>
+            <span class=" navbar-toggler-bar bar2"> </span>
+            <span class=" navbar-toggler-bar bar3"> </span>
+          </button>
+        </div>
+      </div>
+
+      <div
+        class=" navbar-collapse"
+        [collapse]="isCollapsed"
+        id="navigation"
+      >
+      
+      </div>
+    </div>
+  </nav>

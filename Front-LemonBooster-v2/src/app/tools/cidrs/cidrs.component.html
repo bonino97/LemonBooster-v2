@@ -1,0 +1,51 @@
+<div class="card border">
+    <div class="card-header">
+        <h4>CIDRs</h4>
+    </div>
+    <div class="card-body">
+        <div class="row">
+            <div class=" col-md-10">
+                <label class="text-muted">*Without 'AS' before</label>
+                <div class=" form-group has-success">
+                    <input class=" form-control" #cidr placeholder="ASN number to search..." type="text">
+                </div>
+            </div>
+            <div class="col-md-2">
+                <button class="btn btn-danger btn-sm btn-simple btn-block mt-4" (click)="searchCidrs(cidr.value)">
+                    Search
+                </button>
+            </div>
+        </div>
+        <hr>
+        <form [formGroup]="form" (ngSubmit)="saveCidrs()">
+
+        
+            <div class="row">
+
+                <div class="col-md-12">
+                    <div class=" form-group">
+                        <label for="scope"> CIDRs:  &nbsp;<span> [Separated by Comma]</span> </label>
+                        <textarea
+                            formControlName="CIDRs"
+                            class=" form-control"
+                            type="text"
+                            placeholder="Enter CIDR numbers..."
+                        ></textarea>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6">
+
+                </div>
+                <div class="col-md-6">
+                    <button class="btn btn-success btn-sm btn-simple pull-right" type="submit">
+                        Save
+                    </button>
+                </div>
+
+            </div>
+
+        </form>
+    </div>
+</div>

@@ -1,0 +1,38 @@
+
+<div class="card border">
+  <ngx-loading [show]="executing" [config]="{ backdropBorderRadius: '3px', primaryColour: '#00f2c3', secondaryColour: '#00f2c3', tertiaryColour: '#00f2c3'}"></ngx-loading>
+    <div class="card-header">
+        <h4>Subdomain Enumeration</h4>
+    </div>
+
+    <div class="card-body" >
+      <div class=" table-responsive" *ngIf="!!program && !executing">
+        <table class=" table">
+          <thead class=" text-primary">
+            <tr>
+              <th>Scope</th>
+              <th class=" text-right">Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let scope of program.Scopes" >
+              <td>
+                  {{scope}}
+              </td>
+              <td class=" text-right">
+                <button
+                  class=" btn btn-success btn-simple btn-sm btn-icon"
+                  tooltip="Execute"
+                  type="button"
+                  (click)="executeSubdomainEnumeration(scope)"
+                >
+                    <i class="fas fa-play"></i>
+                </button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+</div>
+

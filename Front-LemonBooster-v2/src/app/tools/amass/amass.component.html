@@ -1,0 +1,95 @@
+<div class="card border">
+    <div class="card-header">
+        <h4>Amass</h4>
+    </div>
+    <div class="card-body">
+        <div class="row" *ngIf="!!program">
+
+            <div class="col-md-5">
+                
+                <form [formGroup]="asnForm" (ngSubmit)="asnExec()">
+                    <span class=" text-success ml-1">
+                        <ul class="list-unstyled">
+                            <li class="text">ASNs:
+                                <ul>
+                                    <li class="text-danger font-weight-bold" *ngFor="let asn of program.ASNs">
+                                        <div class=" form-check">
+                                            <label class=" form-check-label">
+                                                <input class="form-check-input" type="checkbox" [value]="asn" (change)="onCheckboxChangeAsns($event)">
+                                                <span class=" form-check-sign">
+                                                    {{asn}}
+                                                </span> 
+                                            </label>
+                                        </div>
+    
+                                    </li>
+                                </ul>
+                            </li>
+                        </ul>    
+                    </span>
+    
+                    <div class="row">
+                        <div class="col-md-12">
+                            <span class=" mt-2 ml-auto mr-auto text-danger font-weight-bold ml-1">
+                                amass intel -asn {{textAsn}}
+                            </span>
+                        </div>
+                        <div class="col-md-12 mt-3">
+                            <button class="btn btn-block btn-danger btn-simple btn-sm" type="submit" >
+                                Execute
+                            </button>
+                        </div>
+                    </div>
+                </form>   
+                
+                
+            </div>
+            <div class="col-md-1 justify-content-center">
+
+            </div>
+            <div class="col-md-1 vl justify-content-center">
+
+            </div>
+            <div class="col-md-5">
+                
+                <form [formGroup]="cidrForm" (ngSubmit)="cidrExec()">
+                    <span class=" text-success ml-1">
+                        <ul class="list-unstyled">
+                            <li class="text">CIDRs:
+                                <ul>
+                                    <li class="text-danger font-weight-bold" *ngFor="let cidr of program.CIDRs">
+
+                                        <div class=" form-check">
+                                            <label class=" form-check-label">
+                                                <input class="form-check-input" type="checkbox" [value]="cidr" (change)="onCheckboxChangeCidrs($event)">
+                                                <span class=" form-check-sign">
+                                                    {{cidr}}
+                                                </span> 
+                                            </label>
+                                        </div>
+    
+                                    </li>
+                                </ul>
+                            </li>
+                        </ul>    
+                    </span>
+    
+                    <div class="row">
+                        <div class="col-md-12">
+                            <span class=" mt-2 ml-auto mr-auto text-danger font-weight-bold ml-1">
+                                amass intel -cidr {{textCidr}}
+                            </span>
+                        </div>
+                        <div class="col-md-12 mt-3">
+                            <button class="btn btn-block btn-danger btn-simple btn-sm" type="submit" >
+                                Execute
+                            </button>
+                        </div>
+                    </div>
+                </form>   
+                
+                
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,73 @@
+<div class="row mt-3 animate__animated animate__fadeIn" *ngIf="!!program">
+    <div class="col-md-6 ml-auto mr-auto">
+        <div class="card border">
+            <div class="card-header">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="row">
+                            <div class="col-sm-4">
+                                <button class="btn btn-danger btn-sm btn-simple" [routerLink]="['/programs']"><i class="fas fa-arrow-left"></i></button>
+                            </div>
+                            <div class="col-sm-4">
+                                <h4 class="text-center text-success font-weight-bold">
+                                    {{program.Name}}
+                                </h4>
+                            </div>
+                            <div class="col-sm-4">
+                                <button class="btn btn-success btn-sm btn-simple float-lg-right" [routerLink]="['/programs',program.Url,'edit']"><i class="fas fa-pencil-alt"></i></button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-12">
+
+                        <ul class="list-unstyled">
+                            <li class="text">Scope:
+                                <ul>
+                                  <li class="text-warning font-weight-bold" *ngFor="let scope of program.Scopes">{{scope}}</li>
+                                </ul>
+                            </li>
+                        </ul>
+
+                    </div>
+                </div>
+            </div>
+
+            <div class="card-footer animate__animated animate__fadeIn">
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="button-group">
+                            <button class="btn btn-success btn-sm btn-simple" (click)="open(1)" >Seeds</button>
+                            <button class="btn btn-success btn-sm btn-simple" (click)="open(2)" >Enum</button>
+                            <button class="btn btn-success btn-sm btn-simple" (click)="open(3)" >Crawl</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+<div class="row mt-3 animate__animated animate__fadeIn" *ngIf="!!error">
+    <div class="col-md-4 ml-auto mr-auto text-center">
+        <div class="card">
+            <div class="card-body border-danger">
+                <h3 class="font-weight-bold text-danger">
+                    {{error}}
+                </h3>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<app-seeds *ngIf="_openSeeds"></app-seeds>
+<app-enumeration *ngIf="_openEnum"></app-enumeration>
+<app-crawl *ngIf="_openCrawl"></app-crawl>
