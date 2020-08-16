@@ -2,12 +2,16 @@
 const mongoose = require('mongoose');
 require('dotenv').config({path: '.env'});
 
-mongoose.connect(process.env.DB, { useNewUrlParser: true, useUnifiedTopology: true, useFindAndModify: false }, (err, res) => { 
-    
+mongoose.connect(process.env.DB, { 
+    useNewUrlParser: true,  
+    useFindAndModify: false,    
+    socketTimeoutMS: 30000,
+    keepAlive: true,
+    reconnectTries: 30000 
+}, (err, res) => { 
     if(err){
         throw err;
     }
-
     console.log('Database: lemon-booster ~ Online');
 });
 

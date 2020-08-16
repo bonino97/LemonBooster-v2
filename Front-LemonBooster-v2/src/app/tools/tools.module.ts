@@ -10,6 +10,7 @@ import { AsnsComponent } from './asns/asns.component';
 import { CidrsComponent } from './cidrs/cidrs.component';
 import { AmassComponent } from './amass/amass.component';
 import { SubdomainsComponent } from './subdomains/subdomains.component';
+import { AliveComponent } from './alive/alive.component';
 
 @NgModule({
   declarations: [
@@ -17,7 +18,8 @@ import { SubdomainsComponent } from './subdomains/subdomains.component';
     AsnsComponent,
     CidrsComponent,
     AmassComponent,
-    SubdomainsComponent
+    SubdomainsComponent,
+    AliveComponent
   ],
   imports: [
     CommonModule,

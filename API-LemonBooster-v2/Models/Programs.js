@@ -19,6 +19,7 @@ const ProgramsSchema = new Schema({
     Acquisitions: [String],
     ASNs: [String],
     CIDRs: [String],
+    Subdomains: [String],
     Url: {
         type: String,
         lowercase: true

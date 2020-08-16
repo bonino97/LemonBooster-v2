@@ -9,10 +9,13 @@ import { RouterModule } from '@angular/router';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ComponentsModule } from './../components/components.module';
+import { NgxLoadingModule } from 'ngx-loading';
+
 
 /* COMPONENTS */
 import { DashboardComponent } from './dashboard.component';
 import { DashboardRoutes } from './dashboard-routing.module';
+
 
 
 @NgModule({
@@ -23,7 +26,8 @@ import { DashboardRoutes } from './dashboard-routing.module';
     CommonModule,
     RouterModule,
     RouterModule.forChild(DashboardRoutes),
-    ComponentsModule
+    ComponentsModule,
+    NgxLoadingModule.forRoot({})
   ]
 })
 

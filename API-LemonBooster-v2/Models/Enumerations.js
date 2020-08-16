@@ -12,6 +12,11 @@ const EnumerationsSchema = new mongoose.Schema({
         type: String, 
         required: [true, 'Scope Required']
     },
+    Type: { 
+        type: Number, 
+        required: [true, 'Type Required']
+    },
+    File: String,
     Syntax: [String],
     ExecutedAt: {
         type: Date,

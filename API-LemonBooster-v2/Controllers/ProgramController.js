@@ -8,7 +8,7 @@ const Programs = require('../Models/Programs');
 require('dotenv').config({path: '.env'});
 const shell = require('shelljs');
 const fs = require('fs');
-const { remove } = require('../Models/Programs');
+const { PaginatedResultsByScope } = require('../Helpers/PaginatedResult');
 
 //CONSTANTS
 const RESULTS_DIR = process.env.RESULTS_DIR;
@@ -103,9 +103,8 @@ exports.AddProgram = async (req,res) => {
         const program = new Programs({
             Name: body.Name,
             Scopes: body.Scopes,
-            Directory: programDir
+            Directory: programDir,
         });
-    
         
         if(!fs.existsSync(RESULTS_DIR)){
             shell.exec(`mkdir ${RESULTS_DIR}`);
@@ -228,4 +227,28 @@ exports.EditProgram = async (req,res) => {
             msg: e.message
         });
     }
+}
+
+exports.GetSubdomainsByScope = async (req,res) => {
+
+    try{
+        
+        const program = await Programs.findOne({Url: req.params.url});
+        const page = parseInt(req.query.page);
+        const limit = parseInt(req.query.limit);
+        const scope = req.query.scope;
+        const filter = req.query.filter;
+
+        const programs = await PaginatedResultsByScope(program.Subdomains, page, limit, scope, filter);
+
+        return res.status(200).json(programs);
+
+    } catch(e) {
+        console.error(e);
+        return res.status(400).json({
+            success: false,
+            msg: e.message
+        });
+    }
+
 }

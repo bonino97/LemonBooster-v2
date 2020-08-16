@@ -31,4 +31,8 @@ export class ProgramService {
     return this.apiService.PUT(`programs/${url}`, params);
   }
 
+  GetProgramSubdomainsByScope(url, page, limit, scope, filter){
+    return this.apiService.GET(`programs/${url}/subdomains?page=${page}&limit=${limit}&scope=${scope}&filter=${filter}`);
+  }
+
 }

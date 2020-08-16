@@ -74,11 +74,11 @@ exports.ExecuteSubdomainEnumeration = async (req,res) => {
         const enumeration = new Enumerations({
             Directory: CreateSubdomainEnumerationDirectory(program),
             Scope: body.Scope,
-            Program: program
+            Program: program,
+            Type: 1 // Tipo 1 = Subdomain Enumeration.
         }); 
 
         enumeration.save();
-        console.log(enumeration);
 
         return res.status(200).json({
             success:true,

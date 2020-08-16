@@ -29,7 +29,7 @@ export class EditProgramComponent implements OnInit {
     this.form = new FormGroup({
 
       Name: new FormControl('', Validators.required),
-      Scopess: new FormControl('', Validators.required)
+      Scopes: new FormControl('', Validators.required)
 
     });
 
@@ -41,7 +41,7 @@ export class EditProgramComponent implements OnInit {
             this.program = data.data;
             this.form.patchValue({
               Name: this.program.Name,
-              Scopess: this.program.Scopess
+              Scopes: this.program.Scopes
             });
           }, (error) => {
             if(!error.error.success){
@@ -57,7 +57,7 @@ export class EditProgramComponent implements OnInit {
       return ;
     }
 
-    if(this.form.value.Scopess.includes(',')){
+    if(this.form.value.Scopes.includes(',')){
       const Scopes = [];
       const splitedScopes = this.form.value.Scopes.split(',');
   
