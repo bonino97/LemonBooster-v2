@@ -42,8 +42,6 @@ export class SubdomainsComponent implements OnInit {
   socketStatus: boolean = false;
   executing: boolean = false;
 
-  programUrl: any;
-
   constructor(
     public route : ActivatedRoute,
     public toolService:ToolsService,
@@ -56,7 +54,7 @@ export class SubdomainsComponent implements OnInit {
     this.checkStatus();
     this.route.params.subscribe(
       (data) => {
-        this.toolService.GetSubdomainEnumeration(data['url'])
+        this.toolService.GetEnumerationProgram(data['url'])
         .subscribe((data:any) => {
           this.program = data.data;
         }, (error) => {
@@ -68,10 +66,19 @@ export class SubdomainsComponent implements OnInit {
       .subscribe((data:any) => {
         swal.fire({
           html: `<span style='color:grey'>${data.msg}<span>`,
-          timer: 12000,
+          timer: 20000,
           showConfirmButton: false
         }).then( () => {
-          this.executing = true;
+          if(data.executing){
+            this.executing = true;
+          } else {
+            this.executing = false;
+            swal.fire({
+              html: `<span style='color:grey'>${data.msg}<span>`,
+              timer: 1000,
+              showConfirmButton: false
+            });
+          }
         });
       }, (error) => {
         console.error(error);
@@ -215,7 +222,7 @@ export class SubdomainsComponent implements OnInit {
     this.limit = $event.target.value;
     this.route.params.subscribe(
       (data) => { 
-        this.programService.GetProgramSubdomainsByScope(data['url'], this.nextPage, this.limit, this.scope, this.filter)
+        this.programService.GetProgramSubdomainsByScope(data['url'], this.actualPage, this.limit, this.scope, this.filter)
         .subscribe(data => {
           this.dataTableValidations(data);
         }, (error) => {

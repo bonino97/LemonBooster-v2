@@ -14,7 +14,9 @@ const GO_DIR=`${process.env.GO_DIR}`;
 ExecuteSubdomainEnumeration = (client) => {
     client.on('execute-subdomain-enumeration', async (payload) => {
         await Enumeration.findById(payload._id, async (err, enumeration) => {
+            console.log(payload);
             var firstExecution = false;
+            
             let allSubdomainsFile = `${enumeration.Directory}/Subdomains-${enumeration.Scope.toUpperCase()}.txt`;
     
             let newSubdomainsFile = `${enumeration.Directory}/NewSubdomains-${enumeration.Scope.toUpperCase()}-${date}.txt`;
@@ -74,7 +76,8 @@ ExecuteSubdomainEnumeration = (client) => {
             shell.exec(`rm -r ${auxNewSubdomainsFile} ${findomainFile} ${subfinderFile} ${assetFinderFile}`); //Elimino txts.
             shell.exec(`cat ${newSubdomainsFile} >> ${allSubdomainsFile}`); // Guardo todos los resultados en AllSubdomains.
     
-            enumeration.File = newSubdomainsFile; // Guardo file.
+            enumeration.NewFile = newSubdomainsFile; // Guardo New Subdomains.
+            enumeration.File = allSubdomainsFile; // Guardo File.
             enumeration.Executed = true; //Cambio estado a Executed.
             enumeration.save();
     
@@ -90,18 +93,26 @@ ExecuteSubdomainEnumeration = (client) => {
             });
 
             const program = await Program.findById(payload.Program._id);
+            program.Files.push(allSubdomainsFile);
 
             if(firstExecution){
                 let Results = {
                     Type: 1,
                     Data: FileToArray(allSubdomainsFile)
                 }
+
                 monitoring.Results = Results;
-                program.Subdomains = FileToArray(allSubdomainsFile);
-            } else {
+
                 Results.Data.forEach(element => {
                     program.Subdomains.push(element);
                 });
+
+            } else {
+
+                Results.Data.forEach(element => {
+                    program.Subdomains.push(element);
+                });
+
             }
 
             monitoring.save();
@@ -116,8 +127,101 @@ ExecuteSubdomainEnumeration = (client) => {
     });
 }
 
-module.exports = {
-    ExecuteSubdomainEnumeration
+ExecuteAlive = (client) => {
+    client.on('execute-alive', async (payload) => {
+        
+        await Enumeration.findById(payload.Alive._id, async (err, enumeration) => {
+
+            fs.access(payload.Alive.Directory, function(err) {
+                if (err && err.code === 'ENOENT') {
+                  fs.mkdir(payload.Alive.Directory); //CREA DIRECTORIO POR SI ES NULL
+                  enumeration.Directory = payload.Alive.Directory;
+                } else {
+                    enumeration.Directory = payload.Alive.Directory;
+                }
+            });
+            var firstExecution = false;
+
+            let allAlivesFile = `${enumeration.Directory}/Alives-${enumeration.Scope.toUpperCase()}.txt`;
+            let newAlivesFile = `${enumeration.Directory}/NewAlives-${enumeration.Scope.toUpperCase()}-${date}.txt`;
+            let auxNewAlivesFile = `${enumeration.Directory}/AuxNewAlives-${enumeration.Scope.toUpperCase()}-${date}.txt`;
+
+            /* SINTAXIS DE CADA HERRAMIENTA */            
+            const httprobe = `cat ${payload.Subdomain.File} | ${GO_DIR}httprobe | tee -a ${auxNewAlivesFile}`;
+            
+            enumeration.Syntax = [httprobe];
+            
+            client.emit('executed-alive', {
+                success: true,
+                executing: true,
+                msg: `Executing Subdomain Enumeration on ${enumeration.Scope}...`
+            });
+                
+            shell.exec(httprobe); //Ejecuto Httprobe
+    
+            if(!fs.existsSync(allAlivesFile)){
+                fs.appendFileSync(allAlivesFile, '', (err) => {
+                    if (err) {
+                        return fs.appendFileSync(`${enumeration.Directory}/Error.txt`, err);
+                    }
+                });
+                firstExecution = true;
+                shell.exec(`cat ${auxNewAlivesFile} >> ${allAlivesFile}`); // Si no existe ningun archivo All inicializo con todos los encontrados.
+            }
+        
+            shell.exec(`awk 'NR == FNR{ a[$0] = 1;next } !a[$0]' ${allAlivesFile} ${auxNewAlivesFile} >> ${newAlivesFile}`); // Filtro entre AllAlive y NewAlives para luego armar un Txt de NuevosSubdominios a Monitorear.
+            shell.exec(`rm -r ${auxNewAlivesFile}`); //Elimino txt auxiliar.
+
+            shell.exec(`cat ${newAlivesFile} >> ${allAlivesFile}`); // Guardo todos los resultados en AllAlives.
+    
+            enumeration.NewFile = newAlivesFile; // Guardo New Alives.
+            enumeration.File = allAlivesFile; // Guardo File.
+            enumeration.Executed = true; //Cambio estado a Executed.
+            enumeration.save();
+    
+            let Results = {
+                Type: 2,
+                Data: FileToArray(newAlivesFile)
+            }
+
+            const monitoring = new Monitorings({
+                Program: enumeration.Program,
+                Scope: enumeration.Scope,
+                Results: Results
+            });
+
+            const program = await Program.findById(payload.Alive.Program._id);
+
+            program.Files.push(allAlivesFile);
+
+            if(firstExecution){
+
+                let Results = {
+                    Type: 2,
+                    Data: FileToArray(allAlivesFile)
+                }
+                monitoring.Results = Results;
+
+                Results.Data.forEach(element => {
+                    program.Alives.push(element);
+                });
+            } else {
+                Results.Data.forEach(element => {
+                    program.Alives.push(element);
+                });
+            }
+
+            monitoring.save();
+            program.save();
+
+            client.emit('executed-alive', {
+                success: true,
+                executing: false,
+                msg: `Alive enumeration executed Succesfully...`
+            });
+            
+        });
+    });
 }
 
 function FileToArray(file){
@@ -127,4 +231,10 @@ function FileToArray(file){
     fileToArray = fs.readFileSync(file, {encoding: 'utf-8'}).split('\n');
     
     return fileToArray;
+}
+
+
+module.exports = {
+    ExecuteSubdomainEnumeration,
+    ExecuteAlive
 }

@@ -8,6 +8,7 @@ import { Component, OnInit } from '@angular/core';
 export class EnumerationComponent implements OnInit {
 
   _subdomains: boolean = true;
+  _alive: boolean = false;
 
   constructor() { }
 
@@ -17,10 +18,12 @@ export class EnumerationComponent implements OnInit {
   open(value){
     switch(value){
       case 1: 
-          
+        this._subdomains = true;
+        this._alive = false;
         break;
       case 2: 
-
+        this._subdomains = false;
+        this._alive = true;
         break;
       case 3: 
 

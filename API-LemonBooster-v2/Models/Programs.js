@@ -20,6 +20,8 @@ const ProgramsSchema = new Schema({
     ASNs: [String],
     CIDRs: [String],
     Subdomains: [String],
+    Alives: [String],
+    Files: [String], 
     Url: {
         type: String,
         lowercase: true

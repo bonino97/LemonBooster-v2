@@ -16,7 +16,7 @@ const Enumerations = require('../Models/Enumerations');
 //=====================================================================
 
 
-exports.GetEnumeration = async (req,res) => {
+exports.GetEnumerationProgram = async (req,res) => {
     try{
         const url = req.params.url;
 
@@ -88,8 +88,43 @@ exports.ExecuteSubdomainEnumeration = async (req,res) => {
 
 }
 
+exports.ExecuteAlive = async (req,res) => {
+    const body = req.body;
+    const url = req.params.url;
+    
+    await Program.findOne({Url: url}, async (err,program) => {
+        if(err){
+            return res.status(400).json({
+                success: false,
+                msg: 'Error getting program.',
+                errors: err 
+            });
+        }
 
+        if(!program){
+            return res.status(404).json({
+                success: false,
+                msg: `Doesn't exist program with this URL.` 
+            });
+        }
 
+        const subdomainEnumeration = await Enumerations.findOne({Program: program._id, Type: 1, Scope: req.body.Scope});
+        const enumeration = new Enumerations({
+            Directory: CreateAliveDirectory(program),
+            Scope: body.Scope,
+            Program: program,
+            Type: 2 // Tipo 2 = Alive Enumeration.
+        });
+
+        enumeration.save();
+
+        return res.status(200).json({
+            success:true,
+            data: enumeration,
+            subdomain: subdomainEnumeration
+        });
+    });
+}
 
 function CreateEnumerationDirectory(Program){
 
@@ -100,6 +135,17 @@ function CreateEnumerationDirectory(Program){
     }
 
     return ENUMERATION_DIR;
+}
+
+function CreateAliveDirectory(Program){
+
+    const ALIVE_DIR = `${Program.Directory}Alive`;
+
+    if(!fs.existsSync(ALIVE_DIR) ){
+        shell.exec(`mkdir ${ALIVE_DIR}`);
+    }
+    
+    return ALIVE_DIR;
 }
 
 function CreateSubdomainEnumerationDirectory(Program){

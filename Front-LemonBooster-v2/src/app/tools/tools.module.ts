@@ -33,7 +33,8 @@ import { AliveComponent } from './alive/alive.component';
     AsnsComponent,
     CidrsComponent,
     AmassComponent,
-    SubdomainsComponent
+    SubdomainsComponent,
+    AliveComponent
   ]
 })
 export class ToolsModule { }

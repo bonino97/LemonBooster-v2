@@ -17,6 +17,7 @@ const EnumerationsSchema = new mongoose.Schema({
         required: [true, 'Type Required']
     },
     File: String,
+    NewFile: String,
     Syntax: [String],
     ExecutedAt: {
         type: Date,

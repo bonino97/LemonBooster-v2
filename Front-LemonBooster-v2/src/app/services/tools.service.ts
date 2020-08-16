@@ -40,7 +40,7 @@ export class ToolsService {
 
   /* ENUMERATION SECTION */
 
-  GetSubdomainEnumeration(url){
+  GetEnumerationProgram(url){
     return this.apiService.GET(`enumeration/${url}`);
   }
 
@@ -56,5 +56,16 @@ export class ToolsService {
     return this.wsService.Listen('executed-subdomain-enumeration');
   }
 
+  ExecuteAlive(url, params){
+    return this.apiService.POST(`enumeration/${url}/alive`, params);
+  }
+
+  WsExecuteAlive(payload){
+    this.wsService.Emit('execute-alive', payload);
+  }
+
+  GetExecutedAlive() {
+    return this.wsService.Listen('executed-alive');
+  }
 
 }

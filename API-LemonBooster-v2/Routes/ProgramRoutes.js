@@ -14,6 +14,9 @@ app.get('/:url', ProgramController.GetProgram);
 // //GET SUBDOMAINS BY SCOPE
 app.get('/:url/subdomains', ProgramController.GetSubdomainsByScope);
 
+// //GET ALIVES BY SCOPE
+app.get('/:url/alives', ProgramController.GetAlivesByScope);
+
 //ADD PROGRAM
 app.post('', ProgramController.AddProgram);
 

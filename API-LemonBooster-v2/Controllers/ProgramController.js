@@ -168,6 +168,8 @@ exports.RemoveProgram = async (req,res) => {
                     msg: 'Doesnt exist a program with this id.' 
                 });
             }
+
+            shell.exec(`rm -r ${removedProgram.Directory}`);
     
             return res.status(200).json({
                 success: true,
@@ -242,6 +244,29 @@ exports.GetSubdomainsByScope = async (req,res) => {
         const programs = await PaginatedResultsByScope(program.Subdomains, page, limit, scope, filter);
 
         return res.status(200).json(programs);
+
+    } catch(e) {
+        console.error(e);
+        return res.status(400).json({
+            success: false,
+            msg: e.message
+        });
+    }
+
+}
+
+exports.GetAlivesByScope = async (req,res) => {
+
+    try{
+        
+        const program = await Programs.findOne({Url: req.params.url});
+        const page = parseInt(req.query.page);
+        const limit = parseInt(req.query.limit);
+        const scope = req.query.scope;
+        const filter = req.query.filter;
+        const alives = await PaginatedResultsByScope(program.Alives, page, limit, scope, filter);
+        
+        return res.status(200).json(alives);
 
     } catch(e) {
         console.error(e);
