@@ -52,6 +52,14 @@ export class ToolsService {
     this.wsService.Emit('execute-subdomain-enumeration', payload);
   }
 
+  WsExecutePermutationEnumeration(payload){
+    this.wsService.Emit('execute-permutation-enumeration', payload);
+  }
+
+  WsExecuteGithubEnumeration(payload){
+    this.wsService.Emit('execute-github-enumeration', payload);
+  }
+
   GetExecutedSubdomainEnumeration() {
     return this.wsService.Listen('executed-subdomain-enumeration');
   }
@@ -128,5 +136,10 @@ export class ToolsService {
   GetExecutedSubdomainResponseCodes() {
     return this.wsService.Listen('executed-response-codes');
   }
+
+  GetSubdomainResponseCodes(url, page, limit, scope, filter){
+    return this.apiService.GET(`enumeration/${url}/response-codes?page=${page}&limit=${limit}&scope=${scope}&filter=${filter}`);
+  }
+
 
 }

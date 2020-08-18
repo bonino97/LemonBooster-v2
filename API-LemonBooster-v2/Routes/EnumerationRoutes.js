@@ -36,6 +36,6 @@ app.get('/:url/js', EnumerationController.GetJSFileBySubdomain);
 app.post('/:url/response-codes', EnumerationController.ExecuteSubdomainResponseCodes);
 
 //GET RESPONSE CODES SUBDOMAINS
-app.get('/:url/response-codes', EnumerationController.GetResponseCodesSubdomains);
+app.get('/:url/response-codes', EnumerationController.GetResponseCodesSubdomainsByScope);
 
 module.exports = app;

@@ -1,3 +1,4 @@
+
 import { ToolsModule } from './../tools/tools.module';
 import { RouterModule } from '@angular/router';
 import { CollapseModule } from 'ngx-bootstrap/collapse';
@@ -13,7 +14,7 @@ import { NavbarComponent } from './navbar/navbar.component';
 import { ProgramsNavbarComponent } from './programs-navbar/programs-navbar.component';
 import { SeedsComponent } from './seeds/seeds.component';
 import { EnumerationComponent } from './enumeration/enumeration.component';
-import { CrawlComponent } from './crawl/crawl.component';
+import { DiscoveryComponent } from './discovery/discovery.component';
 
 @NgModule({
   declarations: [
@@ -22,7 +23,7 @@ import { CrawlComponent } from './crawl/crawl.component';
     ProgramsNavbarComponent,
     SeedsComponent,
     EnumerationComponent,
-    CrawlComponent
+    DiscoveryComponent
   ],
   imports: [
     CommonModule,
@@ -38,7 +39,7 @@ import { CrawlComponent } from './crawl/crawl.component';
     ProgramsNavbarComponent,
     SeedsComponent,
     EnumerationComponent,
-    CrawlComponent
+    DiscoveryComponent
   ]
 })
 export class ComponentsModule { }

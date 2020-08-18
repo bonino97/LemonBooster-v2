@@ -12,7 +12,7 @@ const Program = require('../Models/Programs');
 const Enumerations = require('../Models/Enumerations');
 const Monitorings = require('../Models/Monitorings');
 
-const { PaginatedResultsByScope } = require('../Helpers/PaginatedResult');
+const { PaginatedResultsByScope, PaginatedResponseCodesByScope } = require('../Helpers/PaginatedResult');
 
 
 //CONSTANTS
@@ -415,10 +415,26 @@ exports.ExecuteSubdomainResponseCodes = async (req,res) => {
     }
 }
 
-exports.GetResponseCodesSubdomains = async (req,res) => {
+exports.GetResponseCodesSubdomainsByScope = async (req,res) => {
+    try{
+        
+        const program = await Program.findOne({Url: req.params.url});
+        const page = parseInt(req.query.page);
+        const limit = parseInt(req.query.limit);
+        const scope = req.query.scope;
+        const filter = req.query.filter;
+        const responseCodes = await PaginatedResponseCodesByScope(program.ResponseCodes, page, limit, scope, filter);
+        
+        return res.status(200).json(responseCodes);
 
+    } catch(e) {
+        console.error(e);
+        return res.status(400).json({
+            success: false,
+            msg: e.message
+        });
+    }
 }
-
 
 function CreateEnumerationDirectory(Program){
 

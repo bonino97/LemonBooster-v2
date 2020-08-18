@@ -22,7 +22,10 @@ const ProgramsSchema = new Schema({
     Subdomains: [String],
     Alives: [String],
     Screenshots: [String],
-    ResponseCodes: [String],
+    ResponseCodes: [{
+        StatusCode: String,
+        Subdomain: String
+    }],
     Files: [String],
     Url: {
         type: String,

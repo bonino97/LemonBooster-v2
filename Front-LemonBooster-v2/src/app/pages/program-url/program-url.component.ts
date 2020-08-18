@@ -14,7 +14,7 @@ export class ProgramUrlComponent implements OnInit {
 
   _openSeeds: boolean = false;
   _openEnum: boolean = true;
-  _openCrawl: boolean = false;
+  _openDiscovery: boolean = false;
 
   constructor(
     public route : ActivatedRoute,
@@ -42,17 +42,17 @@ export class ProgramUrlComponent implements OnInit {
       case 1: 
           this._openSeeds = true;
           this._openEnum = false;
-          this._openCrawl = false;
+          this._openDiscovery = false;
         break;
       case 2: 
           this._openSeeds = false;
           this._openEnum = true;
-          this._openCrawl = false;
+          this._openDiscovery = false;
         break;
       case 3: 
           this._openSeeds = false;
           this._openEnum = false;
-          this._openCrawl = true;
+          this._openDiscovery = true;
         break;
     }
   }

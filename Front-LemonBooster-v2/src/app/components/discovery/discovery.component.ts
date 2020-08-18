@@ -1,11 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 
 @Component({
-  selector: 'app-crawl',
-  templateUrl: './crawl.component.html',
-  styleUrls: ['./crawl.component.scss']
+  selector: 'app-discovery',
+  templateUrl: './discovery.component.html',
+  styleUrls: ['./discovery.component.scss']
 })
-export class CrawlComponent implements OnInit {
+export class DiscoveryComponent implements OnInit {
 
   constructor() { }
 

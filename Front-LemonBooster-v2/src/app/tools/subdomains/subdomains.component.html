@@ -16,6 +16,7 @@
           <thead class=" text-primary">
             <tr>
               <th>Scope</th>
+              <th>Type of Enum</th>
               <th class=" text-right">Actions</th>
             </tr>
           </thead>
@@ -23,6 +24,30 @@
             <tr *ngFor="let scope of program.Scopes" >
               <td>
                   {{scope}}
+              </td>
+              <td>
+                <form [formGroup]="selectEnumerationForm">
+                  <div class="form-group">
+                    <div class="form-check">
+                      <input class="form-check-input" formControlName="enumRadio" type="radio" [value]="1" [checked]="true">
+                      <label class="form-check-label" for="enumRadio">
+                        Common
+                      </label>
+                    </div>
+                    <div class="form-check">
+                      <input class="form-check-input" formControlName="enumRadio" type="radio" [value]="2">
+                      <label class="form-check-label" for="enumRadio">
+                        Permutations
+                      </label>
+                    </div>
+                    <div class="form-check">
+                      <input class="form-check-input" formControlName="enumRadio" type="radio" [value]="3">
+                      <label class="form-check-label" for="enumRadio">
+                        Git Subdomains
+                      </label>
+                    </div>
+                  </div>
+                </form>
               </td>
               <td class=" text-right">
                 <div class="button-group">
@@ -50,7 +75,6 @@
       </div>
     </div>
 </div>
-
 
 <div class="card border animate__animated animate__fadeIn" *ngIf="!!subdomains && !executing">
   <div class=" card-body">

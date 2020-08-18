@@ -9,6 +9,8 @@ const date = dateFormat(new Date(), "yyyy-mm-dd-HH-MM");
 
 const GO_DIR=`${process.env.GO_DIR}`;
 const TOOLS_DIR=`${process.env.TOOLS_DIR}`;
+const GOBUSTERDNS_DICT =`${process.env.GOBUSTERDNS_DICT}`;
+const GIT_TOKEN = `${process.env.GIT_TOKEN}`;
 
 
 
@@ -86,13 +88,17 @@ ExecuteSubdomainEnumeration = (client) => {
                     monitoring.Results = Results;
         
                     Results.Data.forEach(element => {
-                        program.Subdomains.push(element);
+                        if(element.length !== 0){
+                            program.Subdomains.push(element);
+                        }
                     });
         
                 } else {
         
                     Results.Data.forEach(element => {
-                        program.Subdomains.push(element);
+                        if(element.length !== 0){
+                            program.Subdomains.push(element);
+                        }
                     });
         
                 }
@@ -118,6 +124,193 @@ ExecuteSubdomainEnumeration = (client) => {
         
     });
 }
+
+ExecutePermutationEnumeration = (client) => {
+    client.on('execute-permutation-enumeration', async (payload) => {
+        try {
+            const id = payload._id
+            const enumeration = await Enumeration.findById(id).exec();
+            console.log(enumeration);
+            if(enumeration) {
+                
+                const allSubdomainsFile = `${enumeration.Directory}/Subdomains-${enumeration.Scope.toUpperCase()}.txt`;
+                const newSubdomainsFile = `${enumeration.Directory}/NewSubdomains-${enumeration.Scope.toUpperCase()}-${date}.txt`;
+                const auxNewSubdomainsFile = `${enumeration.Directory}/AuxNewSubdomains-${enumeration.Scope}-${date}.txt`;
+                const gobusterAuxSubdomainsFile = `${enumeration.Directory}/AuxGobuster-${enumeration.Scope}-${date}.txt`;
+
+                if(!fs.existsSync(allSubdomainsFile)){
+                    client.emit('executed-subdomain-enumeration', {
+                        success: false,
+                        executing: false,
+                        msg: `Execute common Subdomain Enumeration first...`
+                    });
+                } else {
+
+                    const data = fs.readFileSync(allSubdomainsFile, 'UTF-8');
+                    const dataArr = data.split('\n');
+
+                    client.emit('executed-subdomain-enumeration', {
+                        success: true,
+                        executing: true,
+                        msg: `Executing Permutation Subdomain Enumeration on ${enumeration.Scope}...`
+                    });
+
+
+                    dataArr.forEach(element => {
+                        shell.exec(`${GO_DIR}gobuster dns -d ${element.trim()} -w ${GOBUSTERDNS_DICT} -t 100 -o ${gobusterAuxSubdomainsFile}`);
+                        shell.exec(`sed 's/Found: //g' ${gobusterAuxSubdomainsFile} >> ${auxNewSubdomainsFile}`);
+                        shell.exec(`rm -r ${gobusterAuxSubdomainsFile}`);
+                    });
+
+                    shell.exec(`sort -u ${auxNewSubdomainsFile} -o ${auxNewSubdomainsFile}`); // Ordeno y filtro resultados.
+                
+                    shell.exec(`awk 'NR == FNR{ a[$0] = 1;next } !a[$0]' ${allSubdomainsFile} ${auxNewSubdomainsFile} >> ${newSubdomainsFile}`); // Filtro entre AllSubd y NewSub para luego armar un Txt de NuevosSubdominios a Monitorear.
+                    shell.exec(`rm -r ${auxNewSubdomainsFile}`); //Elimino txts.
+                    shell.exec(`cat ${newSubdomainsFile} >> ${allSubdomainsFile}`); // Guardo todos los resultados en AllSubdomains.
+
+                    enumeration.NewFile = newSubdomainsFile; // Guardo New Subdomains.
+                    enumeration.File = allSubdomainsFile; // Guardo File.
+                    enumeration.Executed = true; //Cambio estado a Executed.
+                    enumeration.save();
+
+                    let Results = {
+                        Type: 1,
+                        Data: FileToArray(newSubdomainsFile)
+                    }
+
+                    const monitoring = new Monitorings({
+                        Program: enumeration.Program,
+                        Scope: enumeration.Scope,
+                        Results: Results
+                    });
+            
+                    const program = await Program.findById(payload.Program);
+                    program.Files.push(allSubdomainsFile);
+
+                    Results.Data.forEach(element => {
+                        if(element.length !== 0){
+                            program.Subdomains.push(element);
+                        }
+                    });
+
+                    monitoring.save();
+                    program.save();
+            
+                    client.emit('executed-subdomain-enumeration', {
+                        success: true,
+                        executing: false,
+                        msg: `Subdomain permutation enumeration executed Succesfully...`
+                    });
+                }
+
+            } else {
+
+                client.emit('executed-subdomain-enumeration', {
+                    success: false,
+                    executing: false,
+                    msg: `Something wrong, please refresh or try again...`
+                });
+            }
+        } catch (e) {
+            console.error(e);
+        }
+        
+    });
+}
+
+ExecuteGithubEnumeration = (client) => {
+    client.on('execute-github-enumeration', async (payload) => {
+        try {
+            const id = payload._id
+            const enumeration = await Enumeration.findById(id).exec();
+            console.log(enumeration);
+            if(enumeration) {
+                
+                const allSubdomainsFile = `${enumeration.Directory}/Subdomains-${enumeration.Scope.toUpperCase()}.txt`;
+                const newSubdomainsFile = `${enumeration.Directory}/NewSubdomains-${enumeration.Scope.toUpperCase()}-${date}.txt`;
+                const auxNewSubdomainsFile = `${enumeration.Directory}/AuxNewSubdomains-${enumeration.Scope}-${date}.txt`;
+                const gitAuxSubdomainsFile = `${enumeration.Directory}/AuxGit-${enumeration.Scope}-${date}.txt`;
+
+                if(!fs.existsSync(allSubdomainsFile)){
+                    client.emit('executed-subdomain-enumeration', {
+                        success: false,
+                        executing: false,
+                        msg: `Execute common Subdomain Enumeration first...`
+                    });
+                } else {
+
+                    const data = fs.readFileSync(allSubdomainsFile, 'UTF-8');
+                    const dataArr = data.split('\n');
+
+                    client.emit('executed-subdomain-enumeration', {
+                        success: true,
+                        executing: true,
+                        msg: `Executing Github Subdomain Enumeration on ${enumeration.Scope}...`
+                    });
+
+
+                    dataArr.forEach(element => {
+                        shell.exec(`python3 ${TOOLS_DIR}/github-search/github-subdomains.py -d ${element.trim()} -t ${GIT_TOKEN} | tee -a ${gitAuxSubdomainsFile}`);
+                        shell.exec(`sed 's/Found: //g' ${gitAuxSubdomainsFile} >> ${auxNewSubdomainsFile}`);
+                        shell.exec(`rm -r ${gitAuxSubdomainsFile}`);
+                    });
+
+                    shell.exec(`sort -u ${auxNewSubdomainsFile} -o ${auxNewSubdomainsFile}`); // Ordeno y filtro resultados.
+                
+                    shell.exec(`awk 'NR == FNR{ a[$0] = 1;next } !a[$0]' ${allSubdomainsFile} ${auxNewSubdomainsFile} >> ${newSubdomainsFile}`); // Filtro entre AllSubd y NewSub para luego armar un Txt de NuevosSubdominios a Monitorear.
+                    shell.exec(`rm -r ${auxNewSubdomainsFile}`); //Elimino txts.
+                    shell.exec(`cat ${newSubdomainsFile} >> ${allSubdomainsFile}`); // Guardo todos los resultados en AllSubdomains.
+
+                    enumeration.NewFile = newSubdomainsFile; // Guardo New Subdomains.
+                    enumeration.File = allSubdomainsFile; // Guardo File.
+                    enumeration.Executed = true; //Cambio estado a Executed.
+                    enumeration.save();
+
+                    let Results = {
+                        Type: 1,
+                        Data: FileToArray(newSubdomainsFile)
+                    }
+
+                    const monitoring = new Monitorings({
+                        Program: enumeration.Program,
+                        Scope: enumeration.Scope,
+                        Results: Results
+                    });
+            
+                    const program = await Program.findById(payload.Program);
+                    program.Files.push(allSubdomainsFile);
+
+                    Results.Data.forEach(element => {
+                        if(element.length !== 0){
+                            program.Subdomains.push(element);
+                        }
+                    });
+
+                    monitoring.save();
+                    program.save();
+            
+                    client.emit('executed-subdomain-enumeration', {
+                        success: true,
+                        executing: false,
+                        msg: `Subdomain github enumeration executed Succesfully...`
+                    });
+                }
+
+            } else {
+
+                client.emit('executed-subdomain-enumeration', {
+                    success: false,
+                    executing: false,
+                    msg: `Something wrong, please refresh or try again...`
+                });
+            }
+        } catch (e) {
+            console.error(e);
+        }
+        
+    });
+}
+
 
 ExecuteAlive = (client) => {
     client.on('execute-alive', async (payload) => {
@@ -198,11 +391,15 @@ ExecuteAlive = (client) => {
                     monitoring.Results = Results;
         
                     Results.Data.forEach(element => {
-                        program.Alives.push(element);
+                        if(element.length !== 0){
+                            program.Alives.push(element);
+                        }
                     });
                 } else {
                     Results.Data.forEach(element => {
-                        program.Alives.push(element);
+                        if(element.length !== 0){
+                            program.Alives.push(element);
+                        }
                     });
                 }
         
@@ -417,11 +614,29 @@ ExecuteSubdomainResponseCodes = (client) => {
                     }
                     monitoring.Results = Results;
                     Results.Data.forEach(element => {
-                        program.ResponseCodes.push(element);
+                        if(element.length !== 0){ 
+                            let statusCode = element.split(' ')[0];
+                            let subdomain = element.split(' ')[1];
+                            
+                            let ResponseCodes = {
+                                StatusCode: statusCode,
+                                Subdomain: subdomain
+                            }
+                            program.ResponseCodes.push(ResponseCodes);
+                        }
                     });
                 } else {
                     Results.Data.forEach(element => {
-                        program.ResponseCodes.push(element);
+                        if(element.length !== 0){
+                            let statusCode = element.split(' ')[0];
+                            let subdomain = element.split(' ')[1];
+                            
+                            let ResponseCodes = {
+                                StatusCode: statusCode,
+                                Subdomain: subdomain
+                            }
+                            program.ResponseCodes.push(ResponseCodes);
+                        }
                     });
                 }
         
@@ -464,5 +679,7 @@ module.exports = {
     ExecuteAlive,
     ExecuteScreenshot,
     ExecuteJSScanner,
-    ExecuteSubdomainResponseCodes
+    ExecuteSubdomainResponseCodes,
+    ExecutePermutationEnumeration,
+    ExecuteGithubEnumeration
 }

@@ -12,8 +12,29 @@ import swal from "sweetalert2";
 })
 export class ResponseCodesComponent implements OnInit {
 
+  actualPage;
+  previousPage;
+  nextPage;
+  range: Number[] = [];
+  totalPages: Number;
+  limit = 5;
+  filter = '';
+
+  disablePreviousButton: boolean = false;
+  disableNextButton: boolean = false;
+  disableNextFiveButton: boolean = false;
+  disablePreviousFiveButton: boolean = false;
+
+  alives: any;
+
+  responseCodeSubdomain: any;
+  responseCodeSubdomains: any;
+
+  statusCode:any;
+  subdomain: any;
+
   scope: any;
-  subdomains: any;
+  
 
   program:any;
 
@@ -80,6 +101,10 @@ export class ResponseCodesComponent implements OnInit {
     });
   }
 
+  openSubdomain(subdomain) {
+    window.open(subdomain, "_blank");
+  }
+
   executeResponseCodesScanning(scope) {
     this.route.params.subscribe(
       (data) => {
@@ -109,6 +134,162 @@ export class ResponseCodesComponent implements OnInit {
             });
           });
       });
+  }
+
+  getResponseCodesSubdomains(scope){
+    this.scope = scope;
+    this.route.params.subscribe(
+      (data) => { 
+        this.toolService.GetSubdomainResponseCodes(data['url'], 1, 5, this.scope, this.filter)
+        .subscribe(data => {
+          this.dataTableValidations(data);
+        }, (error) => {
+          swal.fire({
+            html: `<span style='color:grey'>${error.error.msg}<span>`,
+            timer: 2500,
+            showConfirmButton: false
+          });
+        });
+      });
+  }
+
+  next(){ //Pagina Siguiente
+    
+    this.route.params.subscribe(
+      (data) => { 
+        this.toolService.GetSubdomainResponseCodes(data['url'], this.nextPage, this.limit, this.scope, this.filter)
+        .subscribe(data => {
+          this.dataTableValidations(data);
+        }, (error) => {
+          swal.fire({
+            html: `<span style='color:grey'>${error.error.msg}<span>`,
+            timer: 2500,
+            showConfirmButton: false
+          });
+        });
+      });
+  }
+
+  previous(){ //Pagina Previa
+    
+    this.route.params.subscribe(
+      (data) => { 
+        this.toolService.GetSubdomainResponseCodes(data['url'], this.previousPage, this.limit, this.scope, this.filter)
+        .subscribe(data => {
+          this.dataTableValidations(data);
+        }, (error) => {
+          swal.fire({
+            html: `<span style='color:grey'>${error.error.msg}<span>`,
+            timer: 2500,
+            showConfirmButton: false
+          });
+        });
+      });
+  }
+
+
+  nextFive(){
+    this.route.params.subscribe(
+      (data) => { 
+        this.toolService.GetSubdomainResponseCodes(data['url'], this.actualPage+5, this.limit, this.scope, this.filter)
+        .subscribe(data => {
+          this.dataTableValidations(data);
+        }, (error) => {
+          swal.fire({
+            html: `<span style='color:grey'>${error.error.msg}<span>`,
+            timer: 2500,
+            showConfirmButton: false
+          });
+        });
+      });
+  }
+
+  previousFive(){
+    this.route.params.subscribe(
+      (data) => { 
+        this.toolService.GetSubdomainResponseCodes(data['url'], (this.actualPage-5), this.limit, this.scope, this.filter)
+        .subscribe(data => {
+          this.dataTableValidations(data);
+        }, (error) => {
+          swal.fire({
+            html: `<span style='color:grey'>${error.error.msg}<span>`,
+            timer: 2500,
+            showConfirmButton: false
+          });
+        });
+      });
+  }
+
+  entriesChange($event) {
+    this.limit = $event.target.value;
+    this.route.params.subscribe(
+      (data) => { 
+        this.toolService.GetSubdomainResponseCodes(data['url'], this.actualPage, this.limit, this.scope, this.filter)
+        .subscribe(data => {
+          this.dataTableValidations(data);
+        }, (error) => {
+          swal.fire({
+            html: `<span style='color:grey'>${error.error.msg}<span>`,
+            timer: 2500,
+            showConfirmButton: false
+          });
+        });
+      });
+  }
+
+  filterTable($event) {
+    this.filter = $event.target.value;
+    if ($event.keyCode === 13) {
+      this.route.params.subscribe(
+        (data) => { 
+          this.toolService.GetSubdomainResponseCodes(data['url'], this.actualPage, this.limit, this.scope, this.filter)
+          .subscribe(data => {
+            console.log(data);
+            this.dataTableValidations(data);
+          }, (error) => {
+            swal.fire({
+              html: `<span style='color:grey'>${error.error.msg}<span>`,
+              timer: 2500,
+              showConfirmButton: false
+            });
+          });
+        });
+    }
+  }
+
+  dataTableValidations(data){
+    this.totalPages = data.totalPages;
+    this.alives = [];
+  
+    this.alives = data.results;
+    this.actualPage = data.actualPage;
+    this.range = [];
+
+    if((this.actualPage+5) < data.totalPages){
+      this.disableNextFiveButton = false;
+    } else {
+      this.disableNextFiveButton = true;
+    }
+
+    if((this.actualPage) > 5){
+      this.disablePreviousFiveButton = false;
+    } else {
+      this.disablePreviousFiveButton = true;
+    }
+    
+    if(!!data.previousPage){
+      this.previousPage = data.previousPage.page;
+      this.disablePreviousButton = false;
+    } else {
+      this.disablePreviousButton = true;
+    };
+    
+    if(!!data.nextPage){
+      this.nextPage = data.nextPage.page;
+      this.disableNextButton = false;
+    } else {
+      this.disableNextButton = true;
+    };
   }
 
 }
