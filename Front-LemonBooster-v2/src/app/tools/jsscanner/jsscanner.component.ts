@@ -1,24 +1,18 @@
 import { ProgramService } from 'src/app/services/program.service';
-import { Component, OnInit } from '@angular/core';
 import { ToolsService } from 'src/app/services/tools.service';
+import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Socket } from 'ngx-socket-io';
 import swal from "sweetalert2";
-
-export enum SelectionType {
-  single = "single",
-  multi = "multi",
-  multiClick = "multiClick",
-  cell = "cell",
-  checkbox = "checkbox"
-}
+import { environment } from 'src/environments/environment';
 
 @Component({
-  selector: 'app-subdomains',
-  templateUrl: './subdomains.component.html',
-  styleUrls: ['./subdomains.component.scss']
+  selector: 'app-jsscanner',
+  templateUrl: './jsscanner.component.html',
+  styleUrls: ['./jsscanner.component.scss']
 })
-export class SubdomainsComponent implements OnInit {
+export class JsscannerComponent implements OnInit {
+
 
   actualPage;
   previousPage;
@@ -33,14 +27,14 @@ export class SubdomainsComponent implements OnInit {
   disableNextFiveButton: boolean = false;
   disablePreviousFiveButton: boolean = false;
 
-  scope: any;
-  subdomains: any;
-
-  program:any;
-  subdomainEnumeration:any;
-  wsSubdomainEnumeration:any;
-  socketStatus: boolean = false;
   executing: boolean = false;
+  socketStatus: boolean;
+
+  program: any;
+  scope: any;
+  alives: any;
+
+  jsFile: any;
 
   constructor(
     public route : ActivatedRoute,
@@ -50,7 +44,6 @@ export class SubdomainsComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-
     this.checkStatus();
     this.route.params.subscribe(
       (data) => {
@@ -60,37 +53,44 @@ export class SubdomainsComponent implements OnInit {
         }, (error) => {
           swal.fire({
             html: `<span style='color:grey'>${error.error.msg}<span>`,
-            timer: 20000,
+            timer: 2000,
             showConfirmButton: false
           });
-        });
-      });
-
-      this.toolService.GetExecutedSubdomainEnumeration()
-      .subscribe((data:any) => {
-        if(data.executing){
-          this.executing = true;
-          swal.fire({
-            html: `<span style='color:grey'>${data.msg}<span>`,
-            timer: 20000,
-            showConfirmButton: false
-          });
-        } else {
-          this.executing = false;
-          swal.fire({
-            html: `<span style='color:grey'>${data.msg}<span>`,
-            timer: 1000,
-            showConfirmButton: false
-          });
-        }
-      }, (error) => {
-        swal.fire({
-          html: `<span style='color:grey'>${error.error.msg}<span>`,
-          timer: 20000,
-          showConfirmButton: false
         });
       });
       
+      this.toolService.GetExecutedJSScanner()
+      .subscribe((data:any) => {
+
+        if(data.executing){
+          this.executing = true;
+
+          swal.fire({
+            html: `<span style='color:grey'>${data.msg}<span>`,
+            timer: 20000,
+            showConfirmButton: false
+          });
+
+        } else {
+
+          this.executing = false;
+
+          swal.fire({
+            html: `<span style='color:grey'>${data.msg}<span>`,
+            timer: 2000,
+            showConfirmButton: false
+          });
+
+        }
+
+      }, (error) => {
+        swal.fire({
+          html: `<span style='color:grey'>${error.error.msg}<span>`,
+          timer: 2500,
+          showConfirmButton: false
+        });
+      });
+  
   }
 
   checkStatus(){
@@ -107,118 +107,70 @@ export class SubdomainsComponent implements OnInit {
     });
   }
 
-  executeSubdomainEnumeration(scope){
-    this.route.params.subscribe(
-      (data) => {
-
-        let Scope = {
-          Scope: scope
-        }
-
-        this.toolService.ExecuteSubdomainEnumeration(data['url'], Scope)
-          .subscribe((data:any) => {
-            this.subdomainEnumeration = data.data;
-            this.executing = true;
-            this.toolService.WsExecuteSubdomainEnumeration(this.subdomainEnumeration); // Ejecuto herramienta.
-          }, (error) => {
-            swal.fire({
-              html: `<span style='color:grey'>${error.error.msg}<span>`,
-              timer: 1500,
-              showConfirmButton: false
-            });
-          });
-      });
-      
-  }
-
-  getScopeSubdomains(scope){
+  getAlives(scope){
     this.scope = scope;
     this.route.params.subscribe(
       (data) => { 
-        this.toolService.GetProgramSubdomainsByScope(data['url'], 1, 5, this.scope, this.filter)
+        this.toolService.GetAlivesByScope(data['url'], 1, 5, this.scope, this.filter)
         .subscribe(data => {
           this.dataTableValidations(data);
         }, (error) => {
           swal.fire({
             html: `<span style='color:grey'>${error.error.msg}<span>`,
-            timer: 1500,
+            timer: 2500,
             showConfirmButton: false
           });
         });
       });
   }
 
-  next(){ //Pagina Siguiente
-    
+  getJSFile(alive){
     this.route.params.subscribe(
       (data) => { 
-        this.toolService.GetProgramSubdomainsByScope(data['url'], this.nextPage, this.limit, this.scope, this.filter)
-        .subscribe(data => {
-          this.dataTableValidations(data);
-        }, (error) => {
+        this.toolService.GetJSFile(data['url'], this.scope, alive).subscribe(
+          (data:any) => {
+            this.jsFile = data.data.UrlFile;
+            window.open(`${environment.staticUrl}${this.jsFile}`, "_blank");
+          },(error) => {
           swal.fire({
             html: `<span style='color:grey'>${error.error.msg}<span>`,
-            timer: 1500,
+            timer: 2500,
             showConfirmButton: false
           });
-        });
       });
+    });
   }
 
-  previous(){ //Pagina Previa
-    
+  executeJSScanner(alive){
     this.route.params.subscribe(
-      (data) => { 
-        this.toolService.GetProgramSubdomainsByScope(data['url'], this.previousPage, this.limit, this.scope, this.filter)
-        .subscribe(data => {
-          this.dataTableValidations(data);
-        }, (error) => {
-          swal.fire({
-            html: `<span style='color:grey'>${error.error.msg}<span>`,
-            timer: 1500,
-            showConfirmButton: false
-          });
-        });
-      });
-  }
+      (data) => {
 
+        let Params = {
+          Scope: this.scope,
+          Subdomain: alive
+        }
 
-  nextFive(){
-    this.route.params.subscribe(
-      (data) => { 
-        this.toolService.GetProgramSubdomainsByScope(data['url'], this.actualPage+5, this.limit, this.scope, this.filter)
-        .subscribe(data => {
-          this.dataTableValidations(data);
-        }, (error) => {
-          swal.fire({
-            html: `<span style='color:grey'>${error.error.msg}<span>`,
-            timer: 1500,
-            showConfirmButton: false
-          });
-        });
-      });
-  }
+        this.toolService.ExecuteJSScanner(data['url'], Params)
+          .subscribe((data:any) => {
+            
+            this.executing = true;
 
-  previousFive(){
-    this.route.params.subscribe(
-      (data) => { 
-        this.toolService.GetProgramSubdomainsByScope(data['url'], (this.actualPage-5), this.limit, this.scope, this.filter)
-        .subscribe(data => {
-          this.dataTableValidations(data);
-        }, (error) => {
-          swal.fire({
-            html: `<span style='color:grey'>${error.error.msg}<span>`,
-            timer: 1500,
-            showConfirmButton: false
+            this.toolService.WsExecuteJSScanner(data.data); // Ejecuto herramienta.
+            
+          }, (error) => {
+            swal.fire({
+              html: `<span style='color:grey'>${error.error.msg}<span>`,
+              timer: 2500,
+              showConfirmButton: false
+            });
           });
-        });
       });
   }
 
   dataTableValidations(data){
     this.totalPages = data.totalPages;
-    this.subdomains = [];
-    this.subdomains = data.results;
+    this.alives = [];
+    this.alives = data.results;
     this.actualPage = data.actualPage;
     this.range = [];
 
@@ -249,17 +201,84 @@ export class SubdomainsComponent implements OnInit {
     };
   }
 
-  entriesChange($event) {
-    this.limit = $event.target.value;
+  next(){ //Pagina Siguiente
+    
     this.route.params.subscribe(
       (data) => { 
-        this.toolService.GetProgramSubdomainsByScope(data['url'], this.actualPage, this.limit, this.scope, this.filter)
+        this.toolService.GetAlivesByScope(data['url'], this.nextPage, this.limit, this.scope, this.filter)
         .subscribe(data => {
           this.dataTableValidations(data);
         }, (error) => {
           swal.fire({
             html: `<span style='color:grey'>${error.error.msg}<span>`,
-            timer: 1500,
+            timer: 2500,
+            showConfirmButton: false
+          });
+        });
+      });
+  }
+
+  previous(){ //Pagina Previa
+    
+    this.route.params.subscribe(
+      (data) => { 
+        this.toolService.GetAlivesByScope(data['url'], this.previousPage, this.limit, this.scope, this.filter)
+        .subscribe(data => {
+          this.dataTableValidations(data);
+        }, (error) => {
+          swal.fire({
+            html: `<span style='color:grey'>${error.error.msg}<span>`,
+            timer: 2500,
+            showConfirmButton: false
+          });
+        });
+      });
+  }
+
+
+  nextFive(){
+    this.route.params.subscribe(
+      (data) => { 
+        this.toolService.GetAlivesByScope(data['url'], this.actualPage+5, this.limit, this.scope, this.filter)
+        .subscribe(data => {
+          this.dataTableValidations(data);
+        }, (error) => {
+          swal.fire({
+            html: `<span style='color:grey'>${error.error.msg}<span>`,
+            timer: 2500,
+            showConfirmButton: false
+          });
+        });
+      });
+  }
+
+  previousFive(){
+    this.route.params.subscribe(
+      (data) => { 
+        this.toolService.GetAlivesByScope(data['url'], (this.actualPage-5), this.limit, this.scope, this.filter)
+        .subscribe(data => {
+          this.dataTableValidations(data);
+        }, (error) => {
+          swal.fire({
+            html: `<span style='color:grey'>${error.error.msg}<span>`,
+            timer: 2500,
+            showConfirmButton: false
+          });
+        });
+      });
+  }
+
+  entriesChange($event) {
+    this.limit = $event.target.value;
+    this.route.params.subscribe(
+      (data) => { 
+        this.toolService.GetAlivesByScope(data['url'], this.actualPage, this.limit, this.scope, this.filter)
+        .subscribe(data => {
+          this.dataTableValidations(data);
+        }, (error) => {
+          swal.fire({
+            html: `<span style='color:grey'>${error.error.msg}<span>`,
+            timer: 2500,
             showConfirmButton: false
           });
         });
@@ -271,14 +290,14 @@ export class SubdomainsComponent implements OnInit {
     if ($event.keyCode === 13) {
       this.route.params.subscribe(
         (data) => { 
-          this.toolService.GetProgramSubdomainsByScope(data['url'], this.actualPage, this.limit, this.scope, this.filter)
+          this.toolService.GetAlivesByScope(data['url'], this.actualPage, this.limit, this.scope, this.filter)
           .subscribe(data => {
             console.log(data);
             this.dataTableValidations(data);
           }, (error) => {
             swal.fire({
               html: `<span style='color:grey'>${error.error.msg}<span>`,
-              timer: 1500,
+              timer: 2500,
               showConfirmButton: false
             });
           });
@@ -286,9 +305,4 @@ export class SubdomainsComponent implements OnInit {
     }
   }
 
-  openSubdomain(subdomain) {
-    var url = `http://${subdomain}`;
-    window.open(url, "_blank");
-  }
 }
-

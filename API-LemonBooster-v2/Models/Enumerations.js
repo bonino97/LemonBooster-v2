@@ -18,12 +18,15 @@ const EnumerationsSchema = new mongoose.Schema({
     },
     File: String,
     NewFile: String,
+    UrlFile: String,
+    Subdomain: String, 
     Syntax: [String],
     ExecutedAt: {
         type: Date,
         default: Date.now()
     },
     Executed: Boolean,
+    PathDirectory: String,
     Program: {
         type: Schema.ObjectId,
         ref: 'Programs'

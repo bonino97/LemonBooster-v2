@@ -21,12 +21,15 @@ const ProgramsSchema = new Schema({
     CIDRs: [String],
     Subdomains: [String],
     Alives: [String],
-    Files: [String], 
+    Screenshots: [String],
+    ResponseCodes: [String],
+    Files: [String],
     Url: {
         type: String,
         lowercase: true
     },
     Directory: String,
+    PathDirectory: String,
     Users: {
         type: Schema.ObjectId,
         ref: 'Users'

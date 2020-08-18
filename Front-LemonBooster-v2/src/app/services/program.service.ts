@@ -30,12 +30,4 @@ export class ProgramService {
   EditProgram(url, params: any){
     return this.apiService.PUT(`programs/${url}`, params);
   }
-
-  GetProgramSubdomainsByScope(url, page, limit, scope, filter){
-    return this.apiService.GET(`programs/${url}/subdomains?page=${page}&limit=${limit}&scope=${scope}&filter=${filter}`); 
-  }
-  GetAlivesByScope(url, page, limit, scope, filter) {
-    return this.apiService.GET(`programs/${url}/alives?page=${page}&limit=${limit}&scope=${scope}&filter=${filter}`); 
-  }
-
 }

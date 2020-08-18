@@ -4,7 +4,7 @@
       <div class="card-header">
           <div class="row">
             <div class="col-md-9">
-              <h4>Alive Subdomains</h4>
+              <h4>JS-Scanner</h4>
             </div>
           </div>
   
@@ -15,7 +15,7 @@
           <table class=" table">
             <thead class=" text-primary">
               <tr>
-                <th>SUBDOMAINS OF</th>
+                <th>ALIVES OF</th>
                 <th class=" text-right">Actions</th>
               </tr>
             </thead>
@@ -34,14 +34,6 @@
                       >
                         <i class="tim-icons icon-notes"></i>
                       </button>
-                      <button
-                      class=" btn btn-success btn-simple btn-sm btn-icon"
-                      tooltip="Execute"
-                      type="button"
-                      (click)="executeAlive(scope)"
-                    >
-                        <i class="fas fa-play"></i>
-                    </button>
                   </div>
                 </td>
               </tr>
@@ -106,13 +98,22 @@
               <td>{{alive}}</td>
               <td class="text-right">
                 <button
-                class=" btn btn-warning btn-simple btn-sm btn-icon"
+                class=" btn btn-warning btn-simple btn-sm btn-icon mr-1"
                 tooltip="View"
                 type="button"
-                (click)="openAlive(alive)"
+                (click)="getJSFile(alive)"
                 >
                   <i class="fas fa-eye"></i>
                 </button>
+
+                <button
+                class=" btn btn-success btn-simple btn-sm btn-icon"
+                tooltip="Execute"
+                type="button"
+                (click)="executeJSScanner(alive)"
+              >
+                  <i class="fas fa-play"></i>
+              </button>
               </td>
             </tr>
           </tbody>

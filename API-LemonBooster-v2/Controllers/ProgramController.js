@@ -3,6 +3,8 @@
 //MODELS 
 
 const Programs = require('../Models/Programs');
+const Enumerations = require('../Models/Enumerations');
+const Monitorings = require('../Models/Monitorings');
 
 //LIBRARIES
 require('dotenv').config({path: '.env'});
@@ -10,8 +12,10 @@ const shell = require('shelljs');
 const fs = require('fs');
 const { PaginatedResultsByScope } = require('../Helpers/PaginatedResult');
 
+
 //CONSTANTS
 const RESULTS_DIR = process.env.RESULTS_DIR;
+const PATH_DIR = process.env.PATH_DIR;
 
 //=====================================================================
 // Obtain all Programs
@@ -99,11 +103,13 @@ exports.AddProgram = async (req,res) => {
     try{
         const body = req.body;
         const programDir = `${RESULTS_DIR}${body.Name}/`;
+        const pathProgramDir = `${PATH_DIR}${body.Name}/`;
     
         const program = new Programs({
             Name: body.Name,
             Scopes: body.Scopes,
             Directory: programDir,
+            PathDirectory: pathProgramDir
         });
         
         if(!fs.existsSync(RESULTS_DIR)){
@@ -150,38 +156,40 @@ exports.AddProgram = async (req,res) => {
 
 exports.RemoveProgram = async (req,res) => {
     try{
-        var id = req.params.id;
 
-        await Programs.findByIdAndRemove(id, (err,removedProgram) => {
-        
-            if(err){
-                return res.status(400).json({
-                    success: false,
-                    msg: 'An error ocurred removing program.',
-                    errors: err 
-                });
-            }
-    
-            if(!removedProgram){
-                return res.status(404).json({
-                    success: false,
-                    msg: 'Doesnt exist a program with this id.' 
-                });
-            }
+        const id = req.params.id;
+        const program = await Programs.findById(id).exec();
 
-            shell.exec(`rm -r ${removedProgram.Directory}`);
-    
-            return res.status(200).json({
-                success: true,
-                msg: `Programs: ${removedProgram.Name} removed successfully...` 
+        if(!program){
+            return res.status(404).json({
+                success: false,
+                msg: 'Doesnt exist a program with this id.' 
             });
+        }
+
+        await Enumerations.deleteMany({
+            Program: id
         });
 
-    } catch(e){
-        console.error(e);
+        await Monitorings.deleteMany({
+            Program: id
+        });
+
+        await program.deleteOne();
+        
+        shell.exec(`rm -r ${program.Directory}`);
+
+        return res.status(200).json({
+            success: true,
+            msg: `Programs: ${program.Name} removed successfully...` 
+        });
+
+    } catch(e) {
+
         return res.status(400).json({
             success: false,
-            msg: e.message
+            msg: 'An error ocurred removing program.',
+            errors: e 
         });
     }
 }
@@ -229,51 +237,4 @@ exports.EditProgram = async (req,res) => {
             msg: e.message
         });
     }
-}
-
-exports.GetSubdomainsByScope = async (req,res) => {
-
-    try{
-        
-        const program = await Programs.findOne({Url: req.params.url});
-        const page = parseInt(req.query.page);
-        const limit = parseInt(req.query.limit);
-        const scope = req.query.scope;
-        const filter = req.query.filter;
-
-        const programs = await PaginatedResultsByScope(program.Subdomains, page, limit, scope, filter);
-
-        return res.status(200).json(programs);
-
-    } catch(e) {
-        console.error(e);
-        return res.status(400).json({
-            success: false,
-            msg: e.message
-        });
-    }
-
-}
-
-exports.GetAlivesByScope = async (req,res) => {
-
-    try{
-        
-        const program = await Programs.findOne({Url: req.params.url});
-        const page = parseInt(req.query.page);
-        const limit = parseInt(req.query.limit);
-        const scope = req.query.scope;
-        const filter = req.query.filter;
-        const alives = await PaginatedResultsByScope(program.Alives, page, limit, scope, filter);
-        
-        return res.status(200).json(alives);
-
-    } catch(e) {
-        console.error(e);
-        return res.status(400).json({
-            success: false,
-            msg: e.message
-        });
-    }
-
 }

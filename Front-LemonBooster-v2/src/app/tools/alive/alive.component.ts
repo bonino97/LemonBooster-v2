@@ -3,6 +3,7 @@ import { ActivatedRoute } from '@angular/router';
 import { ToolsService } from 'src/app/services/tools.service';
 import { Component, OnInit } from '@angular/core';
 import { ProgramService } from 'src/app/services/program.service';
+import swal from "sweetalert2";
 
 @Component({
   selector: 'app-alive',
@@ -48,7 +49,36 @@ export class AliveComponent implements OnInit {
         .subscribe((data:any) => {
           this.program = data.data;
         }, (error) => {
-          console.error(error);
+          swal.fire({
+            html: `<span style='color:grey'>${error.error.msg}<span>`,
+            timer: 2000,
+            showConfirmButton: false
+          });
+        });
+      });
+
+      this.toolService.GetExecutedAlive()
+      .subscribe((data:any) => {
+        if(data.executing){
+          this.executing = true;
+          swal.fire({
+            html: `<span style='color:grey'>${data.msg}<span>`,
+            timer: 20000,
+            showConfirmButton: false
+          });
+        } else {
+          this.executing = false;
+          swal.fire({
+            html: `<span style='color:grey'>${data.msg}<span>`,
+            timer: 1000,
+            showConfirmButton: false
+          });
+        }
+      }, (error) => {
+        swal.fire({
+          html: `<span style='color:grey'>${error.error.msg}<span>`,
+          timer: 2500,
+          showConfirmButton: false
         });
       });
   }
@@ -87,7 +117,11 @@ export class AliveComponent implements OnInit {
             
             this.toolService.WsExecuteAlive(Payload); // Ejecuto herramienta.
           }, (error) => {
-            console.error(error);
+            swal.fire({
+              html: `<span style='color:grey'>${error.error.msg}<span>`,
+              timer: 2500,
+              showConfirmButton: false
+            });
           });
       });
       
@@ -97,11 +131,15 @@ export class AliveComponent implements OnInit {
     this.scope = scope;
     this.route.params.subscribe(
       (data) => { 
-        this.programService.GetAlivesByScope(data['url'], 1, 5, this.scope, this.filter)
+        this.toolService.GetAlivesByScope(data['url'], 1, 5, this.scope, this.filter)
         .subscribe(data => {
           this.dataTableValidations(data);
         }, (error) => {
-          console.error(error);
+          swal.fire({
+            html: `<span style='color:grey'>${error.error.msg}<span>`,
+            timer: 2500,
+            showConfirmButton: false
+          });
         });
       });
   }
@@ -110,11 +148,15 @@ export class AliveComponent implements OnInit {
     
     this.route.params.subscribe(
       (data) => { 
-        this.programService.GetAlivesByScope(data['url'], this.nextPage, this.limit, this.scope, this.filter)
+        this.toolService.GetAlivesByScope(data['url'], this.nextPage, this.limit, this.scope, this.filter)
         .subscribe(data => {
           this.dataTableValidations(data);
         }, (error) => {
-          console.error(error);
+          swal.fire({
+            html: `<span style='color:grey'>${error.error.msg}<span>`,
+            timer: 2500,
+            showConfirmButton: false
+          });
         });
       });
   }
@@ -123,11 +165,15 @@ export class AliveComponent implements OnInit {
     
     this.route.params.subscribe(
       (data) => { 
-        this.programService.GetAlivesByScope(data['url'], this.previousPage, this.limit, this.scope, this.filter)
+        this.toolService.GetAlivesByScope(data['url'], this.previousPage, this.limit, this.scope, this.filter)
         .subscribe(data => {
           this.dataTableValidations(data);
         }, (error) => {
-          console.error(error);
+          swal.fire({
+            html: `<span style='color:grey'>${error.error.msg}<span>`,
+            timer: 2500,
+            showConfirmButton: false
+          });
         });
       });
   }
@@ -136,11 +182,15 @@ export class AliveComponent implements OnInit {
   nextFive(){
     this.route.params.subscribe(
       (data) => { 
-        this.programService.GetAlivesByScope(data['url'], this.actualPage+5, this.limit, this.scope, this.filter)
+        this.toolService.GetAlivesByScope(data['url'], this.actualPage+5, this.limit, this.scope, this.filter)
         .subscribe(data => {
           this.dataTableValidations(data);
         }, (error) => {
-          console.error(error);
+          swal.fire({
+            html: `<span style='color:grey'>${error.error.msg}<span>`,
+            timer: 2500,
+            showConfirmButton: false
+          });
         });
       });
   }
@@ -148,14 +198,60 @@ export class AliveComponent implements OnInit {
   previousFive(){
     this.route.params.subscribe(
       (data) => { 
-        this.programService.GetAlivesByScope(data['url'], (this.actualPage-5), this.limit, this.scope, this.filter)
+        this.toolService.GetAlivesByScope(data['url'], (this.actualPage-5), this.limit, this.scope, this.filter)
         .subscribe(data => {
           this.dataTableValidations(data);
         }, (error) => {
-          console.error(error);
+          swal.fire({
+            html: `<span style='color:grey'>${error.error.msg}<span>`,
+            timer: 2500,
+            showConfirmButton: false
+          });
         });
       });
   }
+
+  entriesChange($event) {
+    this.limit = $event.target.value;
+    this.route.params.subscribe(
+      (data) => { 
+        this.toolService.GetAlivesByScope(data['url'], this.actualPage, this.limit, this.scope, this.filter)
+        .subscribe(data => {
+          this.dataTableValidations(data);
+        }, (error) => {
+          swal.fire({
+            html: `<span style='color:grey'>${error.error.msg}<span>`,
+            timer: 2500,
+            showConfirmButton: false
+          });
+        });
+      });
+  }
+
+  filterTable($event) {
+    this.filter = $event.target.value;
+    if ($event.keyCode === 13) {
+      this.route.params.subscribe(
+        (data) => { 
+          this.toolService.GetAlivesByScope(data['url'], this.actualPage, this.limit, this.scope, this.filter)
+          .subscribe(data => {
+            console.log(data);
+            this.dataTableValidations(data);
+          }, (error) => {
+            swal.fire({
+              html: `<span style='color:grey'>${error.error.msg}<span>`,
+              timer: 2500,
+              showConfirmButton: false
+            });
+          });
+        });
+    }
+  }
+
+  openAlive(alive) {
+    window.open(alive, "_blank");
+  }
+
 
   dataTableValidations(data){
     this.totalPages = data.totalPages;
@@ -189,39 +285,6 @@ export class AliveComponent implements OnInit {
     } else {
       this.disableNextButton = true;
     };
-  }
-
-  entriesChange($event) {
-    this.limit = $event.target.value;
-    this.route.params.subscribe(
-      (data) => { 
-        this.programService.GetAlivesByScope(data['url'], this.actualPage, this.limit, this.scope, this.filter)
-        .subscribe(data => {
-          this.dataTableValidations(data);
-        }, (error) => {
-          console.error(error);
-        });
-      });
-  }
-
-  filterTable($event) {
-    this.filter = $event.target.value;
-    if ($event.keyCode === 13) {
-      this.route.params.subscribe(
-        (data) => { 
-          this.programService.GetAlivesByScope(data['url'], this.actualPage, this.limit, this.scope, this.filter)
-          .subscribe(data => {
-            console.log(data);
-            this.dataTableValidations(data);
-          }, (error) => {
-            console.error(error);
-          });
-        });
-    }
-  }
-
-  openAlive(alive) {
-    window.open(alive, "_blank");
   }
 
 }

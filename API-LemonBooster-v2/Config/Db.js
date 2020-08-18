@@ -16,5 +16,5 @@ mongoose.connect(process.env.DB, {
 });
 
 mongoose.connection.on('error', (error) => {
-    console.log('Ocurrio un error con tu Base de Datos: ', error); //Seria ideal Guardar Logs en alguna folder.
+    console.log('An error ocurred with DB Connection: ', error); //Seria ideal Guardar Logs en alguna folder.
 }); 

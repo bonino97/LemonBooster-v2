@@ -10,7 +10,7 @@
 
     </div>
 
-    <div class="card-body" >
+    <div class="card-body animate__animated animate__fadeIn" >
       <div class=" table-responsive" *ngIf="!!program && !executing">
         <table class=" table">
           <thead class=" text-primary">
@@ -52,7 +52,7 @@
 </div>
 
 
-<div class="card border" *ngIf="!!subdomains">
+<div class="card border animate__animated animate__fadeIn" *ngIf="!!subdomains && !executing">
   <div class=" card-body">
     <div class=" toolbar"></div>
     <div class="dataTables_wrapper py-4">
@@ -91,8 +91,8 @@
       </div>
 
 
-    <div class=" table-responsive">
-      <h4 *ngIf="subdomains.length == 0" >There are no subdomains available.</h4>
+    <div class=" table-responsive animate__animated animate__fadeIn">
+      <h4 *ngIf="subdomains.length == 0" class="text-center">There are no subdomains available.</h4>
       <table *ngIf="subdomains.length > 0" class=" table">
         <thead class=" text-primary">
           <tr>

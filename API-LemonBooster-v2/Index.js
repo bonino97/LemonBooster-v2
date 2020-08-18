@@ -5,7 +5,7 @@ const express = require('express');
 const app = express();
 const bodyParser = require('body-parser');
 const cors = require('cors');
-
+const path = require('path');
 const httpServer = http.createServer(app); //Http with express & http with socket.
 const io = SocketIO(this.httpServer).listen(httpServer);
 
@@ -39,6 +39,8 @@ app.use('/api/enumeration', EnumerationRoutes);
 httpServer.listen((process.env.PORT || 5000), () => {
     console.log(`Backend: lemon-booster ~ Online - Running on PORT: ${ process.env.PORT || 5000 }`)
 });
+
+app.use('/Static', express.static(path.join(__dirname, '../LemonBooster-Results/')));
 
 app.set('socketio', io);
 //Socket Start

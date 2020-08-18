@@ -13,7 +13,7 @@ export class ProgramUrlComponent implements OnInit {
   program: any;
 
   _openSeeds: boolean = false;
-  _openEnum: boolean = false;
+  _openEnum: boolean = true;
   _openCrawl: boolean = false;
 
   constructor(

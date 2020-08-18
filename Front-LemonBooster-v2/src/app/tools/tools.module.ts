@@ -11,6 +11,9 @@ import { CidrsComponent } from './cidrs/cidrs.component';
 import { AmassComponent } from './amass/amass.component';
 import { SubdomainsComponent } from './subdomains/subdomains.component';
 import { AliveComponent } from './alive/alive.component';
+import { ScreenshotsComponent } from './screenshots/screenshots.component';
+import { JsscannerComponent } from './jsscanner/jsscanner.component';
+import { ResponseCodesComponent } from './response-codes/response-codes.component';
 
 @NgModule({
   declarations: [
@@ -19,7 +22,10 @@ import { AliveComponent } from './alive/alive.component';
     CidrsComponent,
     AmassComponent,
     SubdomainsComponent,
-    AliveComponent
+    AliveComponent,
+    ScreenshotsComponent,
+    JsscannerComponent,
+    ResponseCodesComponent
   ],
   imports: [
     CommonModule,
@@ -34,7 +40,10 @@ import { AliveComponent } from './alive/alive.component';
     CidrsComponent,
     AmassComponent,
     SubdomainsComponent,
-    AliveComponent
+    AliveComponent,
+    ScreenshotsComponent,
+    JsscannerComponent,
+    ResponseCodesComponent
   ]
 })
 export class ToolsModule { }

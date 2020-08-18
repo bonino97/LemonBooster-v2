@@ -56,6 +56,12 @@ export class ToolsService {
     return this.wsService.Listen('executed-subdomain-enumeration');
   }
 
+  GetProgramSubdomainsByScope(url, page, limit, scope, filter){
+    return this.apiService.GET(`enumeration/${url}/subdomains?page=${page}&limit=${limit}&scope=${scope}&filter=${filter}`); 
+  }
+
+  //ALIVE  
+
   ExecuteAlive(url, params){
     return this.apiService.POST(`enumeration/${url}/alive`, params);
   }
@@ -66,6 +72,61 @@ export class ToolsService {
 
   GetExecutedAlive() {
     return this.wsService.Listen('executed-alive');
+  }
+
+  GetAlivesByScope(url, page, limit, scope, filter) {
+    return this.apiService.GET(`enumeration/${url}/alives?page=${page}&limit=${limit}&scope=${scope}&filter=${filter}`); 
+  }
+
+
+  //SCREENSHOTS
+
+  ExecuteScreenshots(url, params){
+    return this.apiService.POST(`enumeration/${url}/screenshot`, params);
+  }
+
+  WsExecuteScreenshots(payload){
+    this.wsService.Emit('execute-screenshot', payload);
+  }
+
+  GetExecutedScreenshots() {
+    return this.wsService.Listen('executed-screenshot');
+  }
+
+  GetScreenshotsFile(url, scope){
+    return this.apiService.GET(`enumeration/${url}/screenshot?scope=${scope}`);
+  }
+
+  //JSSCANNER
+
+  ExecuteJSScanner(url, params){
+    return this.apiService.POST(`enumeration/${url}/js`, params);
+  }
+
+  WsExecuteJSScanner(payload){
+    this.wsService.Emit('execute-jsscanner', payload);
+  }
+
+  GetExecutedJSScanner() {
+    return this.wsService.Listen('executed-jsscanner');
+  }
+
+  GetJSFile(url, scope, alive){
+    return this.apiService.GET(`enumeration/${url}/js?scope=${scope}&subdomain=${alive}`);
+  }
+
+  //RESPONSECODES 
+
+  ExecuteSubdomainResponseCodes(url, params){
+    return this.apiService.POST(`enumeration/${url}/response-codes`, params);
+  }
+
+  WsExecuteSubdomainResponseCodes(payload){
+    this.wsService.Emit('execute-response-codes', payload);
+  }
+
+  GetExecutedSubdomainResponseCodes() {
+    return this.wsService.Listen('executed-response-codes');
   }
 
 }

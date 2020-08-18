@@ -4,6 +4,7 @@
 
 export const environment = {
   production: false,
+  staticUrl: 'http://localhost:5000/Static/',
   wsUrl: 'http://localhost:5000',
   apiUrl: 'http://localhost:5000/api'
 };

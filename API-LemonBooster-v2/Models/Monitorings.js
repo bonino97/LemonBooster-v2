@@ -17,10 +17,10 @@ const MonitoringsSchema = new mongoose.Schema({
         type: Date,
         default: Date.now()
     },
-    Results: [{ 
+    Results: { 
         Type: Number,
         Data: [String]
-    }]
+    }
 });
 
 

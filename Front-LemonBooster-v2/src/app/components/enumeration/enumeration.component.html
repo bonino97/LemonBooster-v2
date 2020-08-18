@@ -15,12 +15,17 @@
                     </div>
                     <div class="col-md-12">
                         <button class="btn btn-success btn-sm btn-simple btn-block" (click)="open(3)">
+                            Response Codes
+                        </button>
+                    </div>
+                    <div class="col-md-12">
+                        <button class="btn btn-success btn-sm btn-simple btn-block" (click)="open(4)">
                             Screenshot
                         </button>
                     </div>
                     <div class="col-md-12">
-                        <button class="btn btn-success btn-sm btn-simple btn-block" (click)="open(3)">
-                            JS Scanning
+                        <button class="btn btn-success btn-sm btn-simple btn-block" (click)="open(5)">
+                            JS Scanner
                         </button>
                     </div>
                 </div>
@@ -30,5 +35,8 @@
     <div class="col-md-9">
         <app-subdomains *ngIf="_subdomains"></app-subdomains>
         <app-alive *ngIf="_alive"></app-alive>
+        <app-response-codes *ngIf="_responseCodes"></app-response-codes>
+        <app-screenshots *ngIf="_screenshots"></app-screenshots>
+        <app-jsscanner *ngIf="_jsscanner"></app-jsscanner>
     </div>
 </div>
