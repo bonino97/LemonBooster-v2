@@ -7,6 +7,10 @@ import { Component, OnInit } from '@angular/core';
 })
 export class DiscoveryComponent implements OnInit {
 
+  _waybackurls:boolean = true; 
+  _spider:boolean = false; 
+  _directoryBruteforce:boolean = false; 
+
   constructor() { }
 
   ngOnInit(): void {
@@ -15,16 +19,19 @@ export class DiscoveryComponent implements OnInit {
   open(value){
     switch(value){
       case 1: 
-          
+        this._waybackurls = true; 
+        this._spider = false; 
+        this._directoryBruteforce = false; 
         break;
       case 2: 
-
+        this._waybackurls = false; 
+        this._spider = true; 
+        this._directoryBruteforce = false; 
         break;
       case 3: 
-
-        break;
-      case 4: 
-
+        this._waybackurls = false; 
+        this._spider = false; 
+        this._directoryBruteforce = true; 
         break;
     }
   }

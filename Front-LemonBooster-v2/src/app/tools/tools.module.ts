@@ -51,7 +51,10 @@ import { DirectoryBruteforceComponent } from './directory-bruteforce/directory-b
     AliveComponent,
     ScreenshotsComponent,
     JsscannerComponent,
-    ResponseCodesComponent
+    ResponseCodesComponent,
+    WaybackurlsComponent,
+    SpiderComponent,
+    DirectoryBruteforceComponent
   ]
 })
 export class ToolsModule { }

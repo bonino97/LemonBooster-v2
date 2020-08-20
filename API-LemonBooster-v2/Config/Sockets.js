@@ -1,6 +1,8 @@
 const Sockets = require('../Sockets/Index');
 const AmassSockets = require('../Sockets/AmassSocket');
 const EnumerationSockets = require('../Sockets/EnumerationSocket');
+const DiscoverySockets = require('../Sockets/DiscoverySocket');
+
 
 Connection = (io) => {
 

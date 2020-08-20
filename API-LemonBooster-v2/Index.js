@@ -29,18 +29,20 @@ const IndexRoutes = require('./Routes/IndexRoutes');
 const ProgramRoutes = require('./Routes/ProgramRoutes');
 const AmassRoutes = require('./Routes/AmassRoutes');
 const EnumerationRoutes = require('./Routes/EnumerationRoutes');
+const DiscoveryRoutes = require('./Routes/DiscoveryRoutes');
 
 app.use('/api', IndexRoutes());
 app.use('/api/programs', ProgramRoutes);
 app.use('/api/amass', AmassRoutes);
 app.use('/api/enumeration', EnumerationRoutes);
+app.use('/api/discovery', DiscoveryRoutes);
 
 //Http Server Start
 httpServer.listen((process.env.PORT || 5000), () => {
     console.log(`Backend: lemon-booster ~ Online - Running on PORT: ${ process.env.PORT || 5000 }`)
 });
 
-app.use('/Static', express.static(path.join(__dirname, '../LemonBooster-Results/')));
+app.use('/Static', express.static(path.join(__dirname, process.env.RESULTS_DIR)));
 
 app.set('socketio', io);
 //Socket Start
