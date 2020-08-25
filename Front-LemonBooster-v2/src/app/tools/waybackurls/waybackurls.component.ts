@@ -27,6 +27,7 @@ export class WaybackurlsComponent implements OnInit {
   disablePreviousFiveButton: boolean = false;
 
   alives: any;
+  alive: any;
 
   responseCodeSubdomain: any;
   responseCodeSubdomains: any;
@@ -61,7 +62,7 @@ export class WaybackurlsComponent implements OnInit {
         });
       });
 
-    this.toolService.GetExecutedSubdomainResponseCodes()
+    this.toolService.GetExecutedWaybackurls()
     .subscribe((data:any) => {
       if(data.executing){
         this.executing = true;
@@ -102,11 +103,65 @@ export class WaybackurlsComponent implements OnInit {
   }
 
   executeAllWaybackUrls(scope) {
-    console.log(scope);
+    this.route.params.subscribe(
+      (data) => {
+        this.scope = scope;
+        let Scope = {
+          Scope: this.scope
+        }
+
+        this.toolService.ExecuteAllWaybackurls(data['url'], Scope)
+          .subscribe((data:any) => {
+
+            this.executing = true;
+
+            var Payload = {
+              Alives: data.alives,
+              Waybackurls: data.data
+            }
+            
+            this.toolService.WsExecuteAllWaybackurls(Payload); // Ejecuto herramienta.
+
+          }, (error) => {
+            console.log(error);
+            swal.fire({
+              html: `<span style='color:grey'>${error.error.msg}<span>`,
+              timer: 2500,
+              showConfirmButton: false
+            });
+          });
+      });
   }
 
   executeWaybackBySubdomain(alive) {
-    console.log(alive);
+    this.route.params.subscribe(
+      (data) => {
+
+        let Params = {
+          Scope: this.scope,
+          Subdomain: alive
+        }
+
+        this.toolService.ExecuteWaybackurlBySubdomain(data['url'], Params)
+          .subscribe((data:any) => {
+
+            this.executing = true;
+
+            var Payload = {
+              Waybackurls: data.data
+            }
+            
+            this.toolService.WsExecuteWaybackurlsBySubdomain(Payload); // Ejecuto herramienta.
+
+          }, (error) => {
+            console.log(error);
+            swal.fire({
+              html: `<span style='color:grey'>${error.error.msg}<span>`,
+              timer: 2500,
+              showConfirmButton: false
+            });
+          });
+      });
   }
 
 

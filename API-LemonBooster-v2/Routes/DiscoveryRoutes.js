@@ -5,6 +5,8 @@ const app = express();
 
 const DiscoveryController = require('../Controllers/DiscoveryController');
 
-
+//EXECUTE ENUMERATION
+app.post('/:url/waybackurls/all', DiscoveryController.ExecuteAllWaybackurls);
+app.post('/:url/waybackurls', DiscoveryController.ExecuteWaybackurlsBySubdomain);
 
 module.exports = app;

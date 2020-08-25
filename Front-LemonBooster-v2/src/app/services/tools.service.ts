@@ -141,5 +141,29 @@ export class ToolsService {
     return this.apiService.GET(`enumeration/${url}/response-codes?page=${page}&limit=${limit}&scope=${scope}&filter=${filter}`);
   }
 
+  //WAYBACKURLS 
+
+  ExecuteAllWaybackurls(url, params){
+    return this.apiService.POST(`discovery/${url}/waybackurls/all`, params);
+  }
+
+  WsExecuteAllWaybackurls(payload){
+    this.wsService.Emit('execute-waybackurls-all', payload);
+  }
+
+  GetExecutedWaybackurls() {
+    return this.wsService.Listen('executed-waybackurls');
+  }
+
+
+  ExecuteWaybackurlBySubdomain(url, params){
+    return this.apiService.POST(`discovery/${url}/waybackurls`, params);
+  }
+
+
+  WsExecuteWaybackurlsBySubdomain(payload){
+    this.wsService.Emit('execute-waybackurls', payload);
+  }
+
 
 }

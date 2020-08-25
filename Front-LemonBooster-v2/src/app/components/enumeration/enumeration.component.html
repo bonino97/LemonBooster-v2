@@ -2,7 +2,7 @@
     <div class="col-md-3">
         <div class="card border">
             <div class="card-body">
-                <div class="row">
+                <div class="row animate__animated animate__fadeIn">
                     <div class="col-md-12">
                         <button class="btn btn-success btn-sm btn-simple btn-block" (click)="open(1)">
                             Subdomains
@@ -32,7 +32,7 @@
             </div>
         </div>
     </div>
-    <div class="col-md-9">
+    <div class="col-md-9 animate__animated animate__fadeIn">
         <app-subdomains *ngIf="_subdomains"></app-subdomains>
         <app-alive *ngIf="_alive"></app-alive>
         <app-response-codes *ngIf="_responseCodes"></app-response-codes>

@@ -24,6 +24,10 @@ Connection = (io) => {
         EnumerationSockets.ExecutePermutationEnumeration(client);
         EnumerationSockets.ExecuteGithubEnumeration(client);
 
+        // DISCOVERY 
+        DiscoverySockets.ExecuteWaybackurlsAll(client);
+        DiscoverySockets.ExecuteWaybackurlsBySubdomain(client);
+
     });
 
     return Connection;
