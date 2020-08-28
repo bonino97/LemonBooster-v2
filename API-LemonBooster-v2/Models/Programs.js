@@ -27,6 +27,7 @@ const ProgramsSchema = new Schema({
         Subdomain: String
     }],
     Waybackurls: [String],
+    GoSpider: [String],
     Files: [String],
     Url: {
         type: String,

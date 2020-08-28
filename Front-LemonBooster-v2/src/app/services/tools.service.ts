@@ -166,4 +166,29 @@ export class ToolsService {
   }
 
 
+  //GOSPIDER 
+
+  ExecuteAllGoSpider(url, params){
+    return this.apiService.POST(`discovery/${url}/gospider/all`, params);
+  }
+
+  WsExecuteAllGoSpider(payload){
+    this.wsService.Emit('execute-gospider-all', payload);
+  }
+
+  GetExecutedGoSpider() {
+    return this.wsService.Listen('executed-gospider');
+  }
+
+
+  ExecuteGoSpiderBySubdomain(url, params){
+    return this.apiService.POST(`discovery/${url}/gospider`, params);
+  }
+
+
+  WsExecuteGoSpiderBySubdomain(payload){
+    this.wsService.Emit('execute-gospider', payload);
+  }
+
+
 }

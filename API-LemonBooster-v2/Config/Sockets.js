@@ -27,6 +27,9 @@ Connection = (io) => {
         // DISCOVERY 
         DiscoverySockets.ExecuteWaybackurlsAll(client);
         DiscoverySockets.ExecuteWaybackurlsBySubdomain(client);
+        DiscoverySockets.ExecuteGoSpiderAll(client);
+        DiscoverySockets.ExecuteGoSpiderBySubdomain(client);
+        
 
     });
 

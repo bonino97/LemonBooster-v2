@@ -153,6 +153,110 @@ exports.ExecuteWaybackurlsBySubdomain = async (req,res) => {
     }
 }
 
+exports.ExecuteAllGoSpider = async (req,res) => {
+
+    const body = req.body;
+    const url = req.params.url;
+
+    try {
+        const program = await Program.findOne({Url: url}).exec();
+        
+        if(!program){
+            return res.status(404).json({
+                success: false,
+                msg: `Doesn't exist program with this URL.` 
+            });
+        }
+
+        const alives = await Enumerations.findOne({Program: program._id, Type: 2, Scope: body.Scope, Executed: true});
+    
+        if(!alives) {
+            return res.status(404).json({
+                success: false,
+                msg: `You must execute Alive enumeration for this Scanning first.` 
+            });
+        }
+
+        const discovery = new Discoveries({
+            Directory: CreateSpiderDirectory(program),
+            Scope: body.Scope,
+            Program: program._id,
+            Type: 3, // Tipo 3 = Gospider.
+            Executed: false
+        });
+    
+        discovery.save();
+    
+        return res.status(200).json({
+            success:true,
+            data: discovery,
+            alives: alives
+        });
+
+    } catch ( err ) {
+        console.error(err);
+        if(err){
+            return res.status(400).json({
+                success: false,
+                msg: 'Error getting program.',
+                errors: err 
+            });
+        }
+    }
+}
+
+exports.ExecuteGoSpiderBySubdomain = async (req,res) => {
+
+    const body = req.body;
+    const url = req.params.url;
+
+    try {
+        const program = await Program.findOne({Url: url}).exec();
+        
+        if(!program){
+            return res.status(404).json({
+                success: false,
+                msg: `Doesn't exist program with this URL.` 
+            });
+        }
+
+        const alives = await Enumerations.findOne({Program: program._id, Type: 2, Scope: body.Scope, Executed: true});
+    
+        if(!alives) {
+            return res.status(404).json({
+                success: false,
+                msg: `You must execute Alive enumeration for this Scanning first.` 
+            });
+        }
+
+        const discovery = new Discoveries({
+            Directory: CreateSpiderDirectory(program),
+            Scope: body.Scope,
+            Program: program._id,
+            Type: 4, // Tipo 4 = GoSpider by Subdomain.
+            Executed: false,
+            Subdomain: body.Subdomain
+        });
+    
+        discovery.save();
+    
+        return res.status(200).json({
+            success:true,
+            data: discovery
+        });
+
+    } catch ( err ) {
+        console.error(err);
+        if(err){
+            return res.status(400).json({
+                success: false,
+                msg: 'Error getting program.',
+                errors: err 
+            });
+        }
+    }
+}
+
 function CreateDiscoveryDirectory(Program){
 
     const DISCOVERY_DIR = `${Program.Directory}Discovery/`;
@@ -173,4 +277,15 @@ function CreateWaybackurlDirectory(Program){
     }
     
     return WAYBACKURL_DIR;
+}
+
+function CreateSpiderDirectory(Program){
+
+    const SPIDER_DIR = `${CreateDiscoveryDirectory(Program)}Spider`;
+
+    if(!fs.existsSync(SPIDER_DIR) ){
+        shell.exec(`mkdir ${SPIDER_DIR}`);
+    }
+    
+    return SPIDER_DIR;
 }
