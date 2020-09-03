@@ -13,14 +13,15 @@ const MonitoringsSchema = new mongoose.Schema({
         type: String, 
         required: [true, 'Scope Required']
     },
+    Type: {
+        type: Number, 
+        required: [true, 'Monitoring Type Required.']
+    },
     Date: {
         type: Date,
         default: Date.now()
     },
-    Results: { 
-        Type: Number,
-        Data: [String]
-    }
+    Results: [String]
 });
 
 

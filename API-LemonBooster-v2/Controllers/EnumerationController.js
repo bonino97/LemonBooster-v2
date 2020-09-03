@@ -3,22 +3,18 @@
 //LIBRARIES 
 
 const shell = require('shelljs');
-const dateFormat = require('dateformat');
 const fs = require('fs');
 
 //MODELS
 
 const Program = require('../Models/Programs');
 const Enumerations = require('../Models/Enumerations');
-const Monitorings = require('../Models/Monitorings');
 
 const { PaginatedResultsByScope, PaginatedResponseCodesByScope } = require('../Helpers/PaginatedResult');
 
 
 //CONSTANTS
 require('dotenv').config({path: '.env'});
-const RESULTS_DIR = process.env.RESULTS_DIR;
-const PATH_DIR = process.env.PATH_DIR;
 
 
 //=====================================================================

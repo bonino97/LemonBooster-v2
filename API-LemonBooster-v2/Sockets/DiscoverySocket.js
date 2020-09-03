@@ -62,14 +62,12 @@ ExecuteWaybackurlsAll = (client) => {
                 discovery.Executed = true; //Cambio estado a Executed.
                 discovery.save();
         
-                let Results = {
-                    Type: 6,
-                    Data: FileToArray(newWaybackurlsFile)
-                }
+                let Results = FileToArray(newWaybackurlsFile);
         
                 const monitoring = new Monitorings({
                     Program: discovery.Program,
                     Scope: discovery.Scope,
+                    Type: 6,
                     Results: Results
                 });
         
@@ -79,21 +77,18 @@ ExecuteWaybackurlsAll = (client) => {
         
                 if(firstExecution){
         
-                    let Results = {
-                        Type: 6,
-                        Data: FileToArray(allWaybackurlsFile)
-                    }
+                    let Results = FileToArray(allWaybackurlsFile);
 
                     monitoring.Results = Results;
         
-                    Results.Data.forEach(element => {
+                    Results.forEach(element => {
                         if(element.length !== 0){
                             program.Waybackurls.push(element);
                         }
                     });
 
                 } else {
-                    Results.Data.forEach(element => {
+                    Results.forEach(element => {
                         if(element.length !== 0){
                             program.Waybackurls.push(element);
                         }
@@ -161,14 +156,12 @@ ExecuteWaybackurlsBySubdomain = (client) => {
                 discovery.Executed = true; //Cambio estado a Executed.
                 discovery.save();
         
-                let Results = {
-                    Type: 7,
-                    Data: FileToArray(newWaybackurlsFile)
-                }
+                let Results = FileToArray(newWaybackurlsFile);
         
                 const monitoring = new Monitorings({
                     Program: discovery.Program,
                     Scope: discovery.Scope,
+                    Type: 7,
                     Results: Results
                 });
         
@@ -245,14 +238,12 @@ ExecuteGoSpiderAll = (client) => {
                 discovery.Executed = true; //Cambio estado a Executed.
                 discovery.save();
         
-                let Results = {
-                    Type: 8,
-                    Data: FileToArray(newGoSpiderFile)
-                }
+                let Results = FileToArray(newGoSpiderFile);
         
                 const monitoring = new Monitorings({
                     Program: discovery.Program,
                     Scope: discovery.Scope,
+                    Type: 8,
                     Results: Results
                 });
         
@@ -262,21 +253,18 @@ ExecuteGoSpiderAll = (client) => {
         
                 if(firstExecution){
         
-                    let Results = {
-                        Type: 8,
-                        Data: FileToArray(allGoSpiderFile)
-                    }
+                    let Results = FileToArray(allGoSpiderFile);
 
                     monitoring.Results = Results;
         
-                    Results.Data.forEach(element => {
+                    Results.forEach(element => {
                         if(element.length !== 0){
                             program.GoSpider.push(element);
                         }
                     });
 
                 } else {
-                    Results.Data.forEach(element => {
+                    Results.forEach(element => {
                         if(element.length !== 0){
                             program.GoSpider.push(element);
                         }
@@ -344,14 +332,12 @@ ExecuteGoSpiderBySubdomain = (client) => {
                 discovery.Executed = true; //Cambio estado a Executed.
                 discovery.save();
         
-                let Results = {
-                    Type: 9,
-                    Data: FileToArray(newGoSpiderFile)
-                }
+                let Results = FileToArray(newGoSpiderFile);
         
                 const monitoring = new Monitorings({
                     Program: discovery.Program,
                     Scope: discovery.Scope,
+                    Type: 9,
                     Results: Results
                 });
         
@@ -427,14 +413,12 @@ ExecuteHakrawlerAll = (client) => {
                 discovery.Executed = true; //Cambio estado a Executed.
                 discovery.save();
         
-                let Results = {
-                    Type: 10,
-                    Data: FileToArray(newHakrawlerFile)
-                }
+                let Results = FileToArray(newHakrawlerFile);
         
                 const monitoring = new Monitorings({
                     Program: discovery.Program,
                     Scope: discovery.Scope,
+                    Type: 10,
                     Results: Results
                 });
         
@@ -444,21 +428,17 @@ ExecuteHakrawlerAll = (client) => {
         
                 if(firstExecution){
         
-                    let Results = {
-                        Type: 10,
-                        Data: FileToArray(allHakrawlerFile)
-                    }
-
+                    let Results = FileToArray(allHakrawlerFile)
                     monitoring.Results = Results;
         
-                    Results.Data.forEach(element => {
+                    Results.forEach(element => {
                         if(element.length !== 0){
                             program.Hakrawler.push(element);
                         }
                     });
 
                 } else {
-                    Results.Data.forEach(element => {
+                    Results.forEach(element => {
                         if(element.length !== 0){
                             program.Hakrawler.push(element);
                         }
@@ -526,14 +506,12 @@ ExecuteHakrawlerBySubdomain = (client) => {
                 discovery.Executed = true; //Cambio estado a Executed.
                 discovery.save();
         
-                let Results = {
-                    Type: 11,
-                    Data: FileToArray(newHakrawlerFile)
-                }
+                let Results = FileToArray(newHakrawlerFile);
         
                 const monitoring = new Monitorings({
                     Program: discovery.Program,
                     Scope: discovery.Scope,
+                    Type: 11,
                     Results: Results
                 });
         
@@ -569,7 +547,8 @@ ExecuteDirsearchAll = (client) => {
             const list = payload.List;
             const discovery = await Discoveries.findById(id).exec();
     
-            if(discovery){ 
+            if(discovery){
+                var firstExecution = false;
                 let allDirsearchFile = `${discovery.Directory}/Dirsearch-${discovery.Scope.toUpperCase()}.txt`;
                 let newDirsearchFile = `${discovery.Directory}/NewDirsearch-${discovery.Scope.toUpperCase()}-${date}.txt`;
                 let auxNewDirsearchFile = `${discovery.Directory}/AuxNewDirsearch-${discovery.Scope.toUpperCase()}-${date}.txt`;
@@ -609,14 +588,12 @@ ExecuteDirsearchAll = (client) => {
                 discovery.Executed = true; //Cambio estado a Executed.
                 discovery.save();
         
-                let Results = {
-                    Type: 12,
-                    Data: FileToArray(newDirsearchFile)
-                }
+                let Results = FileToArray(newDirsearchFile);
         
                 const monitoring = new Monitorings({
                     Program: discovery.Program,
                     Scope: discovery.Scope,
+                    Type: 12,
                     Results: Results
                 });
         
@@ -626,21 +603,18 @@ ExecuteDirsearchAll = (client) => {
         
                 if(firstExecution){
         
-                    let Results = {
-                        Type: 12,
-                        Data: FileToArray(allDirsearchFile)
-                    }
+                    let Results = FileToArray(allDirsearchFile);
 
                     monitoring.Results = Results;
         
-                    Results.Data.forEach(element => {
+                    Results.forEach(element => {
                         if(element.length !== 0){
                             program.Hakrawler.push(element);
                         }
                     });
 
                 } else {
-                    Results.Data.forEach(element => {
+                    Results.forEach(element => {
                         if(element.length !== 0){
                             program.Hakrawler.push(element);
                         }
@@ -709,14 +683,12 @@ ExecuteDirsearchBySubdomain = (client) => {
                 discovery.Executed = true; //Cambio estado a Executed.
                 discovery.save();
         
-                let Results = {
-                    Type: 13,
-                    Data: FileToArray(newDirsearchFile)
-                }
+                let Results = FileToArray(newDirsearchFile);
         
                 const monitoring = new Monitorings({
                     Program: discovery.Program,
                     Scope: discovery.Scope,
+                    Type: 13,
                     Results: Results
                 });
         

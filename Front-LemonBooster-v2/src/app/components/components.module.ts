@@ -15,6 +15,7 @@ import { ProgramsNavbarComponent } from './programs-navbar/programs-navbar.compo
 import { SeedsComponent } from './seeds/seeds.component';
 import { EnumerationComponent } from './enumeration/enumeration.component';
 import { DiscoveryComponent } from './discovery/discovery.component';
+import { MonitoringComponent } from './monitoring/monitoring.component';
 
 @NgModule({
   declarations: [
@@ -23,7 +24,8 @@ import { DiscoveryComponent } from './discovery/discovery.component';
     ProgramsNavbarComponent,
     SeedsComponent,
     EnumerationComponent,
-    DiscoveryComponent
+    DiscoveryComponent,
+    MonitoringComponent
   ],
   imports: [
     CommonModule,
@@ -39,7 +41,8 @@ import { DiscoveryComponent } from './discovery/discovery.component';
     ProgramsNavbarComponent,
     SeedsComponent,
     EnumerationComponent,
-    DiscoveryComponent
+    DiscoveryComponent,
+    MonitoringComponent
   ]
 })
 export class ComponentsModule { }

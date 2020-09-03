@@ -66,15 +66,14 @@ ExecuteSubdomainEnumeration = (client) => {
                 enumeration.File = allSubdomainsFile; // Guardo File.
                 enumeration.Executed = true; //Cambio estado a Executed.
                 enumeration.save();
+
         
-                let Results = {
-                    Type: 1,
-                    Data: FileToArray(newSubdomainsFile)
-                }
+                let Results = FileToArray(newSubdomainsFile);
         
                 const monitoring = new Monitorings({
                     Program: enumeration.Program,
                     Scope: enumeration.Scope,
+                    Type: 1,
                     Results: Results
                 });
         
@@ -82,14 +81,11 @@ ExecuteSubdomainEnumeration = (client) => {
                 program.Files.push(allSubdomainsFile);
         
                 if(firstExecution){
-                    let Results = {
-                        Type: 1,
-                        Data: FileToArray(allSubdomainsFile)
-                    }
+                    let Results = FileToArray(allSubdomainsFile);
         
                     monitoring.Results = Results;
         
-                    Results.Data.forEach(element => {
+                    Results.forEach(element => {
                         if(element.length !== 0){
                             program.Subdomains.push(element);
                         }
@@ -97,7 +93,7 @@ ExecuteSubdomainEnumeration = (client) => {
         
                 } else {
         
-                    Results.Data.forEach(element => {
+                    Results.forEach(element => {
                         if(element.length !== 0){
                             program.Subdomains.push(element);
                         }
@@ -132,7 +128,7 @@ ExecutePermutationEnumeration = (client) => {
         try {
             const id = payload._id
             const enumeration = await Enumeration.findById(id).exec();
-            console.log(enumeration);
+            
             if(enumeration) {
                 
                 const allSubdomainsFile = `${enumeration.Directory}/Subdomains-${enumeration.Scope.toUpperCase()}.txt`;
@@ -175,21 +171,19 @@ ExecutePermutationEnumeration = (client) => {
                     enumeration.Executed = true; //Cambio estado a Executed.
                     enumeration.save();
 
-                    let Results = {
-                        Type: 1,
-                        Data: FileToArray(newSubdomainsFile)
-                    }
+                    let Results = FileToArray(newSubdomainsFile);
 
                     const monitoring = new Monitorings({
                         Program: enumeration.Program,
                         Scope: enumeration.Scope,
+                        Type: 1,
                         Results: Results
                     });
             
                     const program = await Program.findById(payload.Program);
                     program.Files.push(allSubdomainsFile);
 
-                    Results.Data.forEach(element => {
+                    Results.forEach(element => {
                         if(element.length !== 0){
                             program.Subdomains.push(element);
                         }
@@ -225,7 +219,7 @@ ExecuteGithubEnumeration = (client) => {
         try {
             const id = payload._id
             const enumeration = await Enumeration.findById(id).exec();
-            console.log(enumeration);
+
             if(enumeration) {
                 
                 const allSubdomainsFile = `${enumeration.Directory}/Subdomains-${enumeration.Scope.toUpperCase()}.txt`;
@@ -252,6 +246,7 @@ ExecuteGithubEnumeration = (client) => {
 
 
                     dataArr.forEach(element => {
+                        console.log(`Executing Github in ${element}...`);
                         shell.exec(`python3 ${TOOLS_DIR}/github-search/github-subdomains.py -d ${element.trim()} -t ${GIT_TOKEN} | tee -a ${gitAuxSubdomainsFile}`);
                         shell.exec(`sed 's/Found: //g' ${gitAuxSubdomainsFile} >> ${auxNewSubdomainsFile}`);
                         shell.exec(`rm -r ${gitAuxSubdomainsFile}`);
@@ -268,21 +263,19 @@ ExecuteGithubEnumeration = (client) => {
                     enumeration.Executed = true; //Cambio estado a Executed.
                     enumeration.save();
 
-                    let Results = {
-                        Type: 1,
-                        Data: FileToArray(newSubdomainsFile)
-                    }
+                    let Results = FileToArray(newSubdomainsFile);
 
                     const monitoring = new Monitorings({
                         Program: enumeration.Program,
                         Scope: enumeration.Scope,
+                        Type: 1,
                         Results: Results
                     });
             
                     const program = await Program.findById(payload.Program);
                     program.Files.push(allSubdomainsFile);
 
-                    Results.Data.forEach(element => {
+                    Results.forEach(element => {
                         if(element.length !== 0){
                             program.Subdomains.push(element);
                         }
@@ -368,14 +361,12 @@ ExecuteAlive = (client) => {
                 enumeration.Executed = true; //Cambio estado a Executed.
                 enumeration.save();
         
-                let Results = {
-                    Type: 2,
-                    Data: FileToArray(newAlivesFile)
-                }
+                let Results = FileToArray(newAlivesFile);
         
                 const monitoring = new Monitorings({
                     Program: enumeration.Program,
                     Scope: enumeration.Scope,
+                    Type: 2,
                     Results: Results
                 });
         
@@ -385,19 +376,17 @@ ExecuteAlive = (client) => {
         
                 if(firstExecution){
         
-                    let Results = {
-                        Type: 2,
-                        Data: FileToArray(allAlivesFile)
-                    }
+                    let Results = FileToArray(allAlivesFile);
+
                     monitoring.Results = Results;
         
-                    Results.Data.forEach(element => {
+                    Results.forEach(element => {
                         if(element.length !== 0){
                             program.Alives.push(element);
                         }
                     });
                 } else {
-                    Results.Data.forEach(element => {
+                    Results.forEach(element => {
                         if(element.length !== 0){
                             program.Alives.push(element);
                         }
@@ -547,7 +536,7 @@ ExecuteJSScanner = (client) => {
 ExecuteSubdomainResponseCodes = (client) => {
     client.on('execute-response-codes', async (payload) => {
         try {
-
+            console.log(payload);
             const id = payload.Enumeration._id;
             const enumeration = await Enumeration.findById(id).exec();
             
@@ -593,14 +582,12 @@ ExecuteSubdomainResponseCodes = (client) => {
                 enumeration.Executed = true; //Cambio estado a Executed.
                 enumeration.save();
         
-                let Results = {
-                    Type: 5,
-                    Data: FileToArray(newReponseCodesFile)
-                }
+                let Results = FileToArray(newReponseCodesFile);
         
                 const monitoring = new Monitorings({
                     Program: enumeration.Program,
                     Scope: enumeration.Scope,
+                    Type: 5,
                     Results: Results
                 });
         
@@ -609,12 +596,11 @@ ExecuteSubdomainResponseCodes = (client) => {
                 program.Files.push(reponseCodesFile);
         
                 if(firstExecution){
-                    let Results = {
-                        Type: 5,
-                        Data: FileToArray(reponseCodesFile)
-                    }
+                    let Results = FileToArray(reponseCodesFile);
+
                     monitoring.Results = Results;
-                    Results.Data.forEach(element => {
+
+                    Results.forEach(element => {
                         if(element.length !== 0){ 
                             let statusCode = element.split(' ')[0];
                             let subdomain = element.split(' ')[1];
@@ -627,7 +613,7 @@ ExecuteSubdomainResponseCodes = (client) => {
                         }
                     });
                 } else {
-                    Results.Data.forEach(element => {
+                    Results.forEach(element => {
                         if(element.length !== 0){
                             let statusCode = element.split(' ')[0];
                             let subdomain = element.split(' ')[1];

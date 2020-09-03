@@ -47,7 +47,7 @@
                         </div>
                     </div>
                     <div class="col-md-6">
-                        <button class="btn btn-danger btn-sm btn-simple pull-right">
+                        <button class="btn btn-danger btn-sm btn-simple pull-right" (click)="open(4)">
                             Monitoring
                         </button>
                     </div>
@@ -76,3 +76,4 @@
 <app-seeds *ngIf="_openSeeds"></app-seeds>
 <app-enumeration *ngIf="_openEnum"></app-enumeration>
 <app-discovery *ngIf="_openDiscovery"></app-discovery>
+<app-monitoring *ngIf="_openMonitoring"></app-monitoring>

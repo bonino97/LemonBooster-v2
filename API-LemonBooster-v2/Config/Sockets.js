@@ -19,6 +19,7 @@ Connection = (io) => {
         // ENUMERATION
         EnumerationSockets.ExecuteSubdomainEnumeration(client);
         EnumerationSockets.ExecuteAlive(client);
+        EnumerationSockets.ExecuteSubdomainResponseCodes(client);
         EnumerationSockets.ExecuteScreenshot(client);
         EnumerationSockets.ExecuteJSScanner(client);
         EnumerationSockets.ExecutePermutationEnumeration(client);
