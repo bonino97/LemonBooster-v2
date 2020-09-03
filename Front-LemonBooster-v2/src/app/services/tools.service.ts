@@ -68,6 +68,11 @@ export class ToolsService {
     return this.apiService.GET(`enumeration/${url}/subdomains?page=${page}&limit=${limit}&scope=${scope}&filter=${filter}`); 
   }
 
+  GetSubdomainsResults(url, scope){
+    return this.apiService.GET(`results/${url}/subdomains?scope=${scope}`); 
+  }
+
+
   //ALIVE  
 
   ExecuteAlive(url, params){
@@ -86,6 +91,9 @@ export class ToolsService {
     return this.apiService.GET(`enumeration/${url}/alives?page=${page}&limit=${limit}&scope=${scope}&filter=${filter}`); 
   }
 
+  GetAlivesResults(url, scope){
+    return this.apiService.GET(`results/${url}/alives?scope=${scope}`); 
+  }
 
   //SCREENSHOTS
 
@@ -141,6 +149,11 @@ export class ToolsService {
     return this.apiService.GET(`enumeration/${url}/response-codes?page=${page}&limit=${limit}&scope=${scope}&filter=${filter}`);
   }
 
+  GetResponseCodeResults(url, scope){
+    return this.apiService.GET(`results/${url}/response-codes?scope=${scope}`); 
+  }
+
+
   //WAYBACKURLS 
 
   ExecuteAllWaybackurls(url, params){
@@ -155,7 +168,6 @@ export class ToolsService {
     return this.wsService.Listen('executed-waybackurls');
   }
 
-
   ExecuteWaybackurlBySubdomain(url, params){
     return this.apiService.POST(`discovery/${url}/waybackurls`, params);
   }
@@ -165,6 +177,13 @@ export class ToolsService {
     this.wsService.Emit('execute-waybackurls', payload);
   }
 
+  GetWaybackResults(url, scope){
+    return this.apiService.GET(`results/${url}/wayback?scope=${scope}`); 
+  }
+
+  GetWaybackResultsBySubdomain(url, scope, subdomain){
+    return this.apiService.GET(`results/${url}/wayback-subdomain?scope=${scope}&subdomain=${subdomain}`); 
+  }
 
   //GOSPIDER 
 
@@ -185,10 +204,84 @@ export class ToolsService {
     return this.apiService.POST(`discovery/${url}/gospider`, params);
   }
 
-
   WsExecuteGoSpiderBySubdomain(payload){
     this.wsService.Emit('execute-gospider', payload);
   }
+
+  GetGoSpiderResults(url, scope){
+    return this.apiService.GET(`results/${url}/gospider?scope=${scope}`); 
+  }
+
+  GetGoSpiderResultsBySubdomain(url, scope, subdomain){
+    return this.apiService.GET(`results/${url}/gospider-subdomain?scope=${scope}&subdomain=${subdomain}`); 
+  }
+
+  //HAKRAWLER 
+
+  ExecuteAllHakrawler(url, params){
+    return this.apiService.POST(`discovery/${url}/hakrawler/all`, params);
+  }
+
+  WsExecuteAllHakrawler(payload){
+    this.wsService.Emit('execute-hakrawler-all', payload);
+  }
+
+  GetExecutedHakrawler() {
+    return this.wsService.Listen('executed-hakrawler');
+  }
+
+
+  ExecuteHakrawlerBySubdomain(url, params){
+    return this.apiService.POST(`discovery/${url}/hakrawler`, params);
+  }
+
+
+  WsExecuteHakrawlerBySubdomain(payload){
+    this.wsService.Emit('execute-hakrawler', payload);
+  }
+
+  GetHakrawlerResults(url, scope){
+    return this.apiService.GET(`results/${url}/hakrawler?scope=${scope}`); 
+  }
+
+  GetHakrawlerResultsBySubdomain(url, scope, subdomain){
+    return this.apiService.GET(`results/${url}/hakrawler-subdomain?scope=${scope}&subdomain=${subdomain}`); 
+  }
+
+  //DIRSEARCH 
+
+  GetDirsearchLists(url) {
+    return this.apiService.GET(`discovery/${url}/dirsearch/lists`);
+  }
+
+  ExecuteAllDirsearch(url, params){
+    return this.apiService.POST(`discovery/${url}/dirsearch/all`, params);
+  }
+
+  WsExecuteAllDirsearch(payload){
+    this.wsService.Emit('execute-dirsearch-all', payload);
+  }
+
+  ExecuteDirsearchBySubdomain(url, params){
+    return this.apiService.POST(`discovery/${url}/dirsearch`, params);
+  }
+
+  WsExecuteDirsearchBySubdomain(payload){
+    this.wsService.Emit('execute-dirsearch', payload);
+  }
+
+  GetExecutedDirsearch() {
+    return this.wsService.Listen('executed-dirsearch');
+  }
+
+  GetDirsearchResults(url, scope){
+    return this.apiService.GET(`results/${url}/dirsearch?scope=${scope}`); 
+  }
+
+  GetDirsearchResultsBySubdomain(url, scope, subdomain){
+    return this.apiService.GET(`results/${url}/dirsearch-subdomain?scope=${scope}&subdomain=${subdomain}`); 
+  }
+
 
 
 }

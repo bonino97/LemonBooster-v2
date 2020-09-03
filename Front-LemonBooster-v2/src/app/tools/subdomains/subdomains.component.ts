@@ -5,6 +5,7 @@ import { ActivatedRoute } from '@angular/router';
 import { Socket } from 'ngx-socket-io';
 import swal from "sweetalert2";
 import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { environment } from 'src/environments/environment';
 
 export enum SelectionType {
   single = "single",
@@ -202,6 +203,28 @@ export class SubdomainsComponent implements OnInit {
       });
   }
 
+  getScopeResultFile(scope) {
+    this.scope = scope;
+    this.route.params.subscribe(
+      (data) => { 
+        this.toolService.GetSubdomainsResults(data['url'], scope)
+        .subscribe(data => {
+          
+          var file = data.data.File.split('LemonBooster-Results/');
+          var url = `${environment.staticUrl}${file[1]}`;
+          window.open(url, "_blank");
+
+        }, (error) => {
+          console.log(error);
+          swal.fire({
+            html: `<span style='color:grey'>${error.error.msg}<span>`,
+            timer: 1500,
+            showConfirmButton: false
+          });
+        });
+      });
+  }
+
   getScopeSubdomains(scope){
     this.scope = scope;
     this.route.params.subscribe(
@@ -253,7 +276,6 @@ export class SubdomainsComponent implements OnInit {
         });
       });
   }
-
 
   nextFive(){
     this.route.params.subscribe(

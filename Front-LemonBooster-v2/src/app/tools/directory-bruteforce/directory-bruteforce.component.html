@@ -1,1 +1,191 @@
-<p>directory-bruteforce works!</p>
+
+<div class="card border animate__animated animate__fadeIn">
+    <ngx-loading [show]="executing" [config]="{ backdropBorderRadius: '3px', primaryColour: '#00f2c3', secondaryColour: '#00f2c3', tertiaryColour: '#00f2c3'}"></ngx-loading>
+      <div class="card-header">
+          <div class="row">
+            <div class="col-md-9">
+              <h4>Directory Bruteforcing</h4>
+            </div>
+          </div>
+  
+      </div>
+  
+      <div class="card-body animate__animated animate__fadeIn" >
+        <div class=" table-responsive" *ngIf="!!program && !executing">
+          <table class=" table">
+            <thead class=" text-primary">
+              <tr>
+                <th>Scope</th>
+                <th>Lists</th>
+                <th class=" text-right">Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let scope of program.Scopes" >
+                <td>
+                    {{scope}}
+                </td>
+                <td>
+                    <form [formGroup]="form">
+                        <select class="custom-select form-control" formControlName="SelectedList" (change)="captureList()">
+                            <option selected disabled value="">Choose...</option>
+                            <option *ngFor="let list of dirsearchLists" [value]="list" >{{list}}</option>
+                        </select>
+                    </form>
+                  </td>
+                <td class=" text-right">
+                  <div class="button-group">
+                      <button
+                      class=" btn btn-warning btn-simple btn-sm btn-icon mr-1"
+                      tooltip="Results File"
+                      type="button"
+                      (click)="getScopeResultFile(scope)"
+                      >
+                        <i class="fas fa-eye"></i>
+                      </button>
+                      <button
+                      class=" btn btn-danger btn-simple btn-sm btn-icon mr-1"
+                      tooltip="Execute by Subdomain"
+                      type="button"
+                      (click)="getResponseCodesSubdomains(scope)"
+                      >
+                        <i class="tim-icons icon-notes"></i>
+                      </button>
+                      <button
+                      class=" btn btn-success btn-simple btn-sm btn-icon"
+                      tooltip="Execute All"
+                      type="button"
+                      (click)="executeAllDirsearch(scope)"
+                        >
+                        <i class="fas fa-play"></i>
+                    </button>
+                  </div>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+</div>
+
+<div class="card border animate__animated animate__fadeIn" *ngIf="!!alives && !executing">
+    <div class=" card-body">
+      <div class=" toolbar"></div>
+      <div class="dataTables_wrapper py-4">
+        <div class="row">
+           <div class="col-md-10">
+            <div class="dataTables_length" id="datatable_length">
+              <label>
+                <select
+                  name="datatable_length"
+                  aria-controls="datatable"
+                  class="form-control form-control-sm"
+                  (change)="entriesChange($event)"
+                >
+                  <option value="5" selected [selected]="entries == 5">5</option>
+                  <option value="10" [selected]="entries == 10">10</option>
+                  <option value="25" [selected]="entries == 25">25</option>
+                  <option value="50" [selected]="entries == 50">50</option>
+                </select>
+              </label>
+            </div>
+           </div>
+           <div class="col-md-2">
+            <div id="datatable_filter" class="dataTables_filter">
+              <label>
+                <input
+                  type="search"
+                  class="form-control form-control-sm"
+                  placeholder="Search records"
+                  aria-controls="datatable"
+                  (keyup)="filterTable($event)"
+                />
+              </label>
+            </div>
+           </div>
+        </div>
+  
+  
+      <div class=" table-responsive animate__animated animate__fadeIn">
+        <h4 *ngIf="alives.length == 0" class="text-center" >There are no alive subdomains available.</h4>
+        <table *ngIf="alives.length > 0" class=" table">
+          <thead class=" text-primary">
+            <tr>
+              <th>Status Code</th>
+
+              <th>Subdomain</th>
+
+              <th>Lists</th>
+  
+              <th class=" text-right">Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let alive of alives">
+              <td>{{alive.StatusCode}}</td>
+              <td>{{alive.Subdomain}}</td>
+              <td>
+                <form [formGroup]="form">
+                    <select class="custom-select form-control" formControlName="SelectedList" (change)="captureList()">
+                        <option selected disabled value="">Choose...</option>
+                        <option *ngFor="let list of dirsearchLists" [value]="list" >{{list}}</option>
+                    </select>
+                </form>
+              </td>
+              <td class="pull-right">
+                <div class="row">
+                  <div class="button-group">
+                    <button
+                    class=" btn btn-warning btn-simple btn-sm btn-icon mr-1"
+                    tooltip="Results File"
+                    type="button"
+                    (click)="getScopeResultFileBySubdomain(alive.Subdomain)"
+                    >
+                      <i class="fas fa-eye"></i>
+                    </button>
+                    <button
+                    class=" btn btn-success btn-simple btn-sm btn-icon"
+                    tooltip="Execute"
+                    type="button"
+                    (click)="executeDirsearchBySubdomain(alive.Subdomain)"
+                    >
+                      <i class="fas fa-play"></i>
+                    </button>
+                  </div>
+                </div>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+        <hr class="hr-warning">
+        <div class="row">
+          <div class="col-md-3">
+            <p>Page: <span class=text-warning>{{actualPage}}/{{totalPages}}</span></p>
+          </div>
+          <div class="col-md-9">
+            <nav>
+              <ul class="pagination pagination-warning justify-content-end">
+      
+                <li class="page-item">
+                  <button class="page-link" *ngIf="!disablePreviousFiveButton" (click)="previousFive()">&laquo;</button>
+                </li>
+                <li class="page-item">
+                  <button class="page-link" *ngIf="!disablePreviousButton" (click)="previous()">&lt;</button>
+                </li>  
+      
+                <li class="page-item">
+                  <button class="page-link" *ngIf="!disableNextButton" (click)="next()">&gt;</button>
+                </li>
+      
+                <li class="page-item">
+                  <button class="page-link" *ngIf="!disableNextFiveButton" (click)="nextFive()">&raquo;</button>
+                </li>
+      
+              </ul>
+            </nav>
+          </div>
+        </div>
+        
+      </div>
+    </div>
+</div>

@@ -28,6 +28,7 @@ const ProgramsSchema = new Schema({
     }],
     Waybackurls: [String],
     GoSpider: [String],
+    Hakrawler: [String],
     Files: [String],
     Url: {
         type: String,

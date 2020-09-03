@@ -4,6 +4,8 @@ import { ToolsService } from 'src/app/services/tools.service';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import swal from "sweetalert2";
+import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-spider',
@@ -42,6 +44,9 @@ export class SpiderComponent implements OnInit {
   socketStatus: boolean = false;
   executing: boolean = false;
 
+  formSpiderTool: FormGroup;
+  selectedTool:number = 1;
+
   constructor(
     public route : ActivatedRoute,
     public toolService:ToolsService,
@@ -50,6 +55,11 @@ export class SpiderComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
+
+    this.formSpiderTool = new FormGroup({
+      spiderTool: new FormControl(1, Validators.required)
+    });
+
     this.checkStatus();
     this.route.params.subscribe(
       (data) => {
@@ -62,6 +72,31 @@ export class SpiderComponent implements OnInit {
       });
 
     this.toolService.GetExecutedGoSpider()
+    .subscribe((data:any) => {
+      if(data.executing){
+        this.executing = true;
+        swal.fire({
+          html: `<span style='color:grey'>${data.msg}<span>`,
+          timer: 20000,
+          showConfirmButton: false
+        });
+      } else {
+        this.executing = false;
+        swal.fire({
+          html: `<span style='color:grey'>${data.msg}<span>`,
+          timer: 1000,
+          showConfirmButton: false
+        });
+      }
+    }, (error) => {
+      swal.fire({
+        html: `<span style='color:grey'>${error.error.msg}<span>`,
+        timer: 2500,
+        showConfirmButton: false
+      });
+    });
+
+    this.toolService.GetExecutedHakrawler()
     .subscribe((data:any) => {
       if(data.executing){
         this.executing = true;
@@ -99,6 +134,90 @@ export class SpiderComponent implements OnInit {
       this.socketStatus = false;
       this.executing = true;
     });
+  }
+
+  getGoSpiderResultFile(scope) {
+    this.scope = scope;
+    this.route.params.subscribe(
+      (data) => { 
+        this.toolService.GetGoSpiderResults(data['url'], scope)
+        .subscribe(data => {
+          
+          var file = data.data.File.split('LemonBooster-Results');
+          var url = `${environment.staticUrl}${file[1]}`;
+          window.open(url, "_blank");
+
+        }, (error) => {
+          console.log(error);
+          swal.fire({
+            html: `<span style='color:grey'>${error.error.msg}<span>`,
+            timer: 1500,
+            showConfirmButton: false
+          });
+        });
+      });
+  }
+
+  getGoSpiderResultFileBySubdomain(subdomain) {
+    this.route.params.subscribe(
+      (data) => { 
+        this.toolService.GetGoSpiderResultsBySubdomain(data['url'], this.scope, subdomain)
+        .subscribe(data => {
+          var file = data.data.File.split('LemonBooster-Results/');
+          var url = `${environment.staticUrl}${file[1]}`;
+          window.open(url, "_blank");
+
+        }, (error) => {
+          console.log(error);
+          swal.fire({
+            html: `<span style='color:grey'>${error.error.msg}<span>`,
+            timer: 1500,
+            showConfirmButton: false
+          });
+        });
+      });
+  }
+
+  getHakrawlerResultFile(scope) {
+    this.scope = scope;
+    this.route.params.subscribe(
+      (data) => { 
+        this.toolService.GetHakrawlerResults(data['url'], scope)
+        .subscribe(data => {
+          
+          var file = data.data.File.split('LemonBooster-Results');
+          var url = `${environment.staticUrl}${file[1]}`;
+          window.open(url, "_blank");
+
+        }, (error) => {
+          console.log(error);
+          swal.fire({
+            html: `<span style='color:grey'>${error.error.msg}<span>`,
+            timer: 1500,
+            showConfirmButton: false
+          });
+        });
+      });
+  }
+
+  getHakrawlerResultFileBySubdomain(subdomain) {
+    this.route.params.subscribe(
+      (data) => { 
+        this.toolService.GetHakrawlerResultsBySubdomain(data['url'], this.scope, subdomain)
+        .subscribe(data => {
+          var file = data.data.File.split('LemonBooster-Results/');
+          var url = `${environment.staticUrl}${file[1]}`;
+          window.open(url, "_blank");
+
+        }, (error) => {
+          console.log(error);
+          swal.fire({
+            html: `<span style='color:grey'>${error.error.msg}<span>`,
+            timer: 1500,
+            showConfirmButton: false
+          });
+        });
+      });
   }
 
   executeAllGospider(scope) {
@@ -163,6 +282,72 @@ export class SpiderComponent implements OnInit {
       });
   }
 
+  executeAllHakrawler(scope) {
+    this.route.params.subscribe(
+      (data) => {
+        this.scope = scope;
+
+        let Scope = {
+          Scope: this.scope
+        }
+
+        this.toolService.ExecuteAllHakrawler(data['url'], Scope)
+          .subscribe((data:any) => {
+            console.log(data);
+            this.executing = true;
+
+            var Payload = {
+              Alives: data.alives,
+              Hakrawler: data.data
+            }
+            
+            this.toolService.WsExecuteAllHakrawler(Payload); // Ejecuto herramienta.
+
+          }, (error) => {
+            console.log(error);
+            swal.fire({
+              html: `<span style='color:grey'>${error.error.msg}<span>`,
+              timer: 2500,
+              showConfirmButton: false
+            });
+          });
+      });
+  }
+
+  executeHakrawlerBySubdomain(alive) {
+    this.route.params.subscribe(
+      (data) => {
+
+        let Params = {
+          Scope: this.scope,
+          Subdomain: alive
+        }
+
+        this.toolService.ExecuteHakrawlerBySubdomain(data['url'], Params)
+          .subscribe((data:any) => {
+            console.log(data);
+            this.executing = true;
+
+            var Payload = {
+              Hakrawler: data.data
+            }
+            
+            this.toolService.WsExecuteHakrawlerBySubdomain(Payload); // Ejecuto herramienta.
+
+          }, (error) => {
+            console.log(error);
+            swal.fire({
+              html: `<span style='color:grey'>${error.error.msg}<span>`,
+              timer: 2500,
+              showConfirmButton: false
+            });
+          });
+      });
+  }
+
+  selectTool(e){
+    this.selectedTool = this.formSpiderTool.value.spiderTool;
+  }
 
   getResponseCodesSubdomains(scope){
     this.scope = scope;

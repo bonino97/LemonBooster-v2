@@ -4,6 +4,7 @@ import { ToolsService } from 'src/app/services/tools.service';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import swal from "sweetalert2";
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-response-codes',
@@ -147,6 +148,28 @@ export class ResponseCodesComponent implements OnInit {
           swal.fire({
             html: `<span style='color:grey'>${error.error.msg}<span>`,
             timer: 2500,
+            showConfirmButton: false
+          });
+        });
+      });
+  }
+
+  getScopeResultFile(scope) {
+    this.scope = scope;
+    this.route.params.subscribe(
+      (data) => { 
+        this.toolService.GetResponseCodeResults(data['url'], scope)
+        .subscribe(data => {
+          
+          var file = data.data.File.split('LemonBooster-Results/');
+          var url = `${environment.staticUrl}${file[1]}`;
+          window.open(url, "_blank");
+
+        }, (error) => {
+          console.log(error);
+          swal.fire({
+            html: `<span style='color:grey'>${error.error.msg}<span>`,
+            timer: 1500,
             showConfirmButton: false
           });
         });

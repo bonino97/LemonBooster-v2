@@ -29,8 +29,10 @@ Connection = (io) => {
         DiscoverySockets.ExecuteWaybackurlsBySubdomain(client);
         DiscoverySockets.ExecuteGoSpiderAll(client);
         DiscoverySockets.ExecuteGoSpiderBySubdomain(client);
-        
-
+        DiscoverySockets.ExecuteHakrawlerAll(client);
+        DiscoverySockets.ExecuteHakrawlerBySubdomain(client);
+        DiscoverySockets.ExecuteDirsearchAll(client);
+        DiscoverySockets.ExecuteDirsearchBySubdomain(client);
     });
 
     return Connection;

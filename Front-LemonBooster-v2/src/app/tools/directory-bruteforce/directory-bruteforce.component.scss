@@ -1,0 +1,16 @@
+.border{
+    border: 0.0625rem solid #00f2c3 !important;
+}
+
+.custom-select {
+
+	color: #00f2c3;
+    border: 1px solid #00f2c3;
+    padding: 0.375rem 1.5rem 0.275rem 0.75rem !important;
+    height: 6%;
+
+    -moz-appearance:none; /* Firefox */
+    -webkit-appearance:none; /* Safari and Chrome */
+    appearance:none;
+    
+}

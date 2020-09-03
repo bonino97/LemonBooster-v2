@@ -30,12 +30,14 @@ const ProgramRoutes = require('./Routes/ProgramRoutes');
 const AmassRoutes = require('./Routes/AmassRoutes');
 const EnumerationRoutes = require('./Routes/EnumerationRoutes');
 const DiscoveryRoutes = require('./Routes/DiscoveryRoutes');
+const ResultsRoutes = require('./Routes/ResultsRoutes');
 
 app.use('/api', IndexRoutes());
 app.use('/api/programs', ProgramRoutes);
 app.use('/api/amass', AmassRoutes);
 app.use('/api/enumeration', EnumerationRoutes);
 app.use('/api/discovery', DiscoveryRoutes);
+app.use('/api/results', ResultsRoutes);
 
 //Http Server Start
 httpServer.listen((process.env.PORT || 5000), () => {

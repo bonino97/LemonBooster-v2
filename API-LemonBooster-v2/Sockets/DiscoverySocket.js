@@ -12,6 +12,7 @@ const date = dateFormat(new Date(), "yyyy-mm-dd-HH-MM");
 
 const GO_DIR=`${process.env.GO_DIR}`;
 const TOOLS_DIR=`${process.env.TOOLS_DIR}`;
+const LIST_DIR=`${process.env.LIST_DIR}`;
 
 
 ExecuteWaybackurlsAll = (client) => {
@@ -379,6 +380,370 @@ ExecuteGoSpiderBySubdomain = (client) => {
     });
 }
 
+ExecuteHakrawlerAll = (client) => {
+    client.on('execute-hakrawler-all', async (payload) => {
+        try {
+            const id = payload.Hakrawler._id;
+            const discovery = await Discoveries.findById(id).exec();
+    
+            if(discovery){
+                var firstExecution = false;
+                let allHakrawlerFile = `${discovery.Directory}/Hakrawler-${discovery.Scope.toUpperCase()}.txt`;
+                let newHakrawlerFile = `${discovery.Directory}/NewHakrawler-${discovery.Scope.toUpperCase()}-${date}.txt`;
+                let auxNewHakrawlerFile = `${discovery.Directory}/AuxNewHakrawler-${discovery.Scope.toUpperCase()}-${date}`;
+        
+                /* SINTAXIS DE LA HERRAMIENTA */            
+                const hakrawler = `cat ${payload.Alives.File} | ${GO_DIR}hakrawler -depth 2 -plain | tee -a ${auxNewHakrawlerFile}`;
+                
+                discovery.Syntax = [hakrawler];
+                discovery.PathDirectory = payload.Hakrawler.Program.PathDirectory;
+                
+                client.emit('executed-hakrawler', {
+                    success: true,
+                    executing: true,
+                    msg: `Executing Hakrawler for all Alive Subdomains on ${discovery.Scope}...`
+                });
+                    
+                shell.exec(hakrawler); //Ejecuto Hakrawler
+        
+                if(!fs.existsSync(allHakrawlerFile)){
+                    fs.appendFileSync(allHakrawlerFile, '', (err) => {
+                        if (err) {
+                            return fs.appendFileSync(`${discovery.Directory}/Error.txt`, err);
+                        }
+                    });
+
+                    firstExecution = true;
+                    shell.exec(`cat ${auxNewHakrawlerFile} >> ${allHakrawlerFile}`); 
+                }
+            
+                shell.exec(`awk 'NR == FNR{ a[$0] = 1;next } !a[$0]' ${allHakrawlerFile} ${auxNewHakrawlerFile} >> ${newHakrawlerFile}`); //Se utiliza para monitoreo
+                shell.exec(`rm -r ${auxNewHakrawlerFile}`); //Elimino txt auxiliar.
+        
+                shell.exec(`cat ${newHakrawlerFile} >> ${allHakrawlerFile}`);
+        
+                discovery.NewFile = newHakrawlerFile; // Guardo New Hakrawler / Monitoreo..
+                discovery.File = allHakrawlerFile; // Guardo File.
+                discovery.Executed = true; //Cambio estado a Executed.
+                discovery.save();
+        
+                let Results = {
+                    Type: 10,
+                    Data: FileToArray(newHakrawlerFile)
+                }
+        
+                const monitoring = new Monitorings({
+                    Program: discovery.Program,
+                    Scope: discovery.Scope,
+                    Results: Results
+                });
+        
+                const program = await Program.findById(payload.Hakrawler.Program);
+        
+                program.Files.push(allHakrawlerFile);
+        
+                if(firstExecution){
+        
+                    let Results = {
+                        Type: 10,
+                        Data: FileToArray(allHakrawlerFile)
+                    }
+
+                    monitoring.Results = Results;
+        
+                    Results.Data.forEach(element => {
+                        if(element.length !== 0){
+                            program.Hakrawler.push(element);
+                        }
+                    });
+
+                } else {
+                    Results.Data.forEach(element => {
+                        if(element.length !== 0){
+                            program.Hakrawler.push(element);
+                        }
+                    });
+                }
+        
+                monitoring.save();
+                program.save();
+        
+                client.emit('executed-hakrawler', {
+                    success: true,
+                    executing: false,
+                    msg: `Hakrawler executed Succesfully...`
+                });
+            } else {
+                client.emit('executed-hakrawler', {
+                    success: false,
+                    executing: false,
+                    msg: `Something wrong, please refresh or try again...`
+                });
+            }
+        } catch (e) {
+            console.error(e);
+        }
+    });
+}
+
+ExecuteHakrawlerBySubdomain = (client) => {
+    client.on('execute-hakrawler', async (payload) => {
+        try {
+            const id = payload.Hakrawler._id;
+            const discovery = await Discoveries.findById(id).exec();
+    
+            if(discovery){
+                let subdomain = discovery.Subdomain.split('://');
+                let allHakrawlerFile = `${discovery.Directory}/SubdomainHakrawler-${subdomain[0].toUpperCase()}-${subdomain[1].toUpperCase()}.txt`;
+                let newHakrawlerFile = `${discovery.Directory}/NewSubdomainHakrawler-${subdomain[0].toUpperCase()}-${subdomain[1].toUpperCase()}-${date}.txt`;
+                let auxNewHakrawlerFile = `${discovery.Directory}/AuxNewSubdomainHakrawler-${subdomain[0].toUpperCase()}-${subdomain[1].toUpperCase()}-${date}.txt`;
+        
+                /* SINTAXIS DE CADA HERRAMIENTA */            
+                const hakrawler = `echo ${discovery.Subdomain} | ${GO_DIR}hakrawler -plain -depth 3 | tee -a ${auxNewHakrawlerFile}`;
+                
+                discovery.Syntax = [hakrawler];
+                discovery.PathDirectory = payload.Hakrawler.Program.PathDirectory;
+                
+                client.emit('executed-hakrawler', {
+                    success: true,
+                    executing: true,
+                    msg: `Executing Hakrawler for Subdomain: ${discovery.Subdomain}...`
+                });
+                    
+                shell.exec(hakrawler); //Ejecuto Httprobe
+        
+                if(!fs.existsSync(allHakrawlerFile)){
+                    shell.exec(`cat ${auxNewHakrawlerFile} >> ${allHakrawlerFile}`); 
+                }
+            
+                shell.exec(`awk 'NR == FNR{ a[$0] = 1;next } !a[$0]' ${allHakrawlerFile} ${auxNewHakrawlerFile} >> ${newHakrawlerFile}`); //Se utiliza para monitoreo
+                shell.exec(`rm -r ${auxNewHakrawlerFile}`); //Elimino txt auxiliar.
+        
+                shell.exec(`cat ${newHakrawlerFile} >> ${allHakrawlerFile}`);
+        
+                discovery.NewFile = newHakrawlerFile; // Guardo New GoSpider / Monitoreo..
+                discovery.File = allHakrawlerFile; // Guardo File.
+                discovery.Executed = true; //Cambio estado a Executed.
+                discovery.save();
+        
+                let Results = {
+                    Type: 11,
+                    Data: FileToArray(newHakrawlerFile)
+                }
+        
+                const monitoring = new Monitorings({
+                    Program: discovery.Program,
+                    Scope: discovery.Scope,
+                    Results: Results
+                });
+        
+                const program = await Program.findById(payload.Hakrawler.Program);
+        
+                program.Files.push(allHakrawlerFile);
+        
+                monitoring.save();
+                program.save();
+        
+                client.emit('executed-hakrawler', {
+                    success: true,
+                    executing: false,
+                    msg: `Hakrawler executed Succesfully...`
+                });
+            } else {
+                client.emit('executed-hakrawler', {
+                    success: false,
+                    executing: false,
+                    msg: `Something wrong, please refresh or try again...`
+                });
+            }
+        } catch (e) {
+            console.error(e);
+        }
+    });
+}
+
+ExecuteDirsearchAll = (client) => {
+    client.on('execute-dirsearch-all', async (payload) => {
+        try {
+            const id = payload.Dirsearch._id;
+            const list = payload.List;
+            const discovery = await Discoveries.findById(id).exec();
+    
+            if(discovery){ 
+                let allDirsearchFile = `${discovery.Directory}/Dirsearch-${discovery.Scope.toUpperCase()}.txt`;
+                let newDirsearchFile = `${discovery.Directory}/NewDirsearch-${discovery.Scope.toUpperCase()}-${date}.txt`;
+                let auxNewDirsearchFile = `${discovery.Directory}/AuxNewDirsearch-${discovery.Scope.toUpperCase()}-${date}.txt`;
+        
+                /* SINTAXIS DE CADA HERRAMIENTA */            
+                const dirsearch = `python3 ${TOOLS_DIR}dirsearch/dirsearch.py -L ${payload.Alives.File} -w ${LIST_DIR}${list} -e html,js,php,png,jpg,sql,json,xml,htm,css,asp,jsp,aspx,jspx,git -x 404 -t 50 -b --plain-text-report=${auxNewDirsearchFile}`;
+                
+                discovery.Syntax = [dirsearch];
+                discovery.PathDirectory = payload.Dirsearch.Program.PathDirectory;
+                
+                client.emit('executed-dirsearch', {
+                    success: true,
+                    executing: true,
+                    msg: `Executing Dirsearch for all Alive Subdomains on ${discovery.Scope}...`
+                });
+                    
+                shell.exec(dirsearch); //Ejecuto Dirsearch
+        
+                if(!fs.existsSync(allDirsearchFile)){
+                    fs.appendFileSync(allDirsearchFile, '', (err) => {
+                        if (err) {
+                            return fs.appendFileSync(`${discovery.Directory}/Error.txt`, err);
+                        }
+                    });
+
+                    firstExecution = true;
+                    shell.exec(`cat ${auxNewDirsearchFile} >> ${allDirsearchFile}`); 
+                }
+            
+                shell.exec(`awk 'NR == FNR{ a[$0] = 1;next } !a[$0]' ${allDirsearchFile} ${auxNewDirsearchFile} >> ${newDirsearchFile}`); //Se utiliza para monitoreo
+                shell.exec(`rm -r ${auxNewDirsearchFile}`); //Elimino txt auxiliar.
+        
+                shell.exec(`cat ${newDirsearchFile} >> ${allDirsearchFile}`);
+        
+                discovery.NewFile = newDirsearchFile; // Guardo NewDirsearch / Monitoreo..
+                discovery.File = allDirsearchFile; // Guardo File.
+                discovery.Executed = true; //Cambio estado a Executed.
+                discovery.save();
+        
+                let Results = {
+                    Type: 12,
+                    Data: FileToArray(newDirsearchFile)
+                }
+        
+                const monitoring = new Monitorings({
+                    Program: discovery.Program,
+                    Scope: discovery.Scope,
+                    Results: Results
+                });
+        
+                const program = await Program.findById(payload.Dirsearch.Program);
+        
+                program.Files.push(allDirsearchFile);
+        
+                if(firstExecution){
+        
+                    let Results = {
+                        Type: 12,
+                        Data: FileToArray(allDirsearchFile)
+                    }
+
+                    monitoring.Results = Results;
+        
+                    Results.Data.forEach(element => {
+                        if(element.length !== 0){
+                            program.Hakrawler.push(element);
+                        }
+                    });
+
+                } else {
+                    Results.Data.forEach(element => {
+                        if(element.length !== 0){
+                            program.Hakrawler.push(element);
+                        }
+                    });
+                }
+        
+                monitoring.save();
+                program.save();
+        
+                client.emit('executed-dirsearch', {
+                    success: true,
+                    executing: false,
+                    msg: `Dirsearch executed Succesfully...`
+                });
+            } else {
+                client.emit('executed-dirsearch', {
+                    success: false,
+                    executing: false,
+                    msg: `Something wrong, please refresh or try again...`
+                });
+            }
+        } catch (e) {
+            console.error(e);
+        }
+    });
+}
+
+ExecuteDirsearchBySubdomain = (client) => {
+    client.on('execute-dirsearch', async (payload) => {
+        try {
+            const id = payload.Dirsearch._id;
+            const list = payload.List;
+            const discovery = await Discoveries.findById(id).exec();
+    
+            if(discovery){
+                let subdomain = discovery.Subdomain.split('://');
+                let allDirsearchFile = `${discovery.Directory}/SubdomainDirsearch-${subdomain[0].toUpperCase()}-${subdomain[1].toUpperCase()}.txt`;
+                let newDirsearchFile = `${discovery.Directory}/NewSubdomainDirsearch-${subdomain[0].toUpperCase()}-${subdomain[1].toUpperCase()}-${date}.txt`;
+                let auxNewDirsearchFile = `${discovery.Directory}/AuxNewSubdomainDirsearch-${subdomain[0].toUpperCase()}-${subdomain[1].toUpperCase()}-${date}.txt`;
+        
+                /* SINTAXIS DE CADA HERRAMIENTA */            
+                const dirsearch = `python3 ${TOOLS_DIR}dirsearch/dirsearch.py -u ${discovery.Subdomain} -w ${LIST_DIR}${list} -e html,js,php,png,jpg,sql,json,xml,htm,css,asp,jsp,aspx,jspx,git -x 404 -t 50 -b --plain-text-report=${auxNewDirsearchFile}`;
+                
+                discovery.Syntax = [dirsearch];
+                discovery.PathDirectory = payload.Dirsearch.Program.PathDirectory;
+                
+                client.emit('executed-dirsearch', {
+                    success: true,
+                    executing: true,
+                    msg: `Executing Dirsearch for Subdomain: ${discovery.Subdomain}...`
+                });
+                    
+                shell.exec(dirsearch); //Ejecuto Dirsearch
+        
+                if(!fs.existsSync(allDirsearchFile)){
+                    shell.exec(`cat ${auxNewDirsearchFile} >> ${allDirsearchFile}`); 
+                }
+            
+                shell.exec(`awk 'NR == FNR{ a[$0] = 1;next } !a[$0]' ${allDirsearchFile} ${auxNewDirsearchFile} >> ${newDirsearchFile}`); //Se utiliza para monitoreo
+                shell.exec(`rm -r ${auxNewDirsearchFile}`); //Elimino txt auxiliar.
+        
+                shell.exec(`cat ${newDirsearchFile} >> ${allDirsearchFile}`);
+        
+                discovery.NewFile = newDirsearchFile; // Guardo NewDirsearch / Monitoreo..
+                discovery.File = allDirsearchFile; // Guardo File.
+                discovery.Executed = true; //Cambio estado a Executed.
+                discovery.save();
+        
+                let Results = {
+                    Type: 13,
+                    Data: FileToArray(newDirsearchFile)
+                }
+        
+                const monitoring = new Monitorings({
+                    Program: discovery.Program,
+                    Scope: discovery.Scope,
+                    Results: Results
+                });
+        
+                const program = await Program.findById(payload.Dirsearch.Program);
+        
+                program.Files.push(allDirsearchFile);
+        
+                monitoring.save();
+                program.save();
+        
+                client.emit('executed-dirsearch', {
+                    success: true,
+                    executing: false,
+                    msg: `Dirsearch executed Succesfully...`
+                });
+            } else {
+                client.emit('executed-dirsearch', {
+                    success: false,
+                    executing: false,
+                    msg: `Something wrong, please refresh or try again...`
+                });
+            }
+        } catch (e) {
+            console.error(e);
+        }
+    });
+}
 
 
 function FileToArray(file){
@@ -396,5 +761,9 @@ module.exports = {
     ExecuteWaybackurlsAll,
     ExecuteWaybackurlsBySubdomain,
     ExecuteGoSpiderAll,
-    ExecuteGoSpiderBySubdomain
+    ExecuteGoSpiderBySubdomain,
+    ExecuteHakrawlerAll,
+    ExecuteHakrawlerBySubdomain,
+    ExecuteDirsearchAll,
+    ExecuteDirsearchBySubdomain
 }

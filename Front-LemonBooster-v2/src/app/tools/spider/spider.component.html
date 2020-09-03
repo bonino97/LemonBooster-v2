@@ -6,11 +6,24 @@
             <div class="col-md-9">
               <h4>Spidering</h4>
             </div>
+            <div class="col-md-12">
+              <form [formGroup]="formSpiderTool">
+                <div class="form-group form-inline animate__animated animate__fadeIn">
+                  <div class="form-check form-check-inline">
+                    <input class="form-check-input" formControlName="spiderTool" type="radio" [value]="1" [checked]="true" (change)="selectTool($event)">
+                    GoSpider
+                  </div>
+                  <div class="form-check form-check-inline">
+                    <input class="form-check-input" formControlName="spiderTool" type="radio" [value]="2" (change)="selectTool($event)">
+                    Hakrawler
+                  </div>
+                </div>
+              </form>
+            </div>
           </div>
-  
       </div>
   
-      <div class="card-body animate__animated animate__fadeIn" >
+      <div class="card-body animate__animated animate__fadeIn" *ngIf="selectedTool == 1">
         <div class=" table-responsive" *ngIf="!!program && !executing">
           <table class=" table">
             <thead class=" text-primary">
@@ -26,6 +39,14 @@
                 </td>
                 <td class=" text-right">
                   <div class="button-group">
+                      <button
+                      class=" btn btn-warning btn-simple btn-sm btn-icon mr-1"
+                      tooltip="Results File"
+                      type="button"
+                      (click)="getGoSpiderResultFile(scope)"
+                      >
+                        <i class="fas fa-eye"></i>
+                      </button>
                       <button
                       class=" btn btn-danger btn-simple btn-sm btn-icon mr-1"
                       tooltip="Execute by Subdomain"
@@ -49,12 +70,60 @@
           </table>
         </div>
       </div>
+
+      <div class="card-body animate__animated animate__fadeIn" *ngIf="selectedTool == 2">
+        <div class=" table-responsive" *ngIf="!!program && !executing">
+          <table class=" table">
+            <thead class=" text-primary">
+              <tr>
+                <th>Scope</th>
+                <th class=" text-right">Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let scope of program.Scopes" >
+                <td>
+                    {{scope}}
+                </td>
+                <td class=" text-right">
+                  <div class="button-group">
+                      <button
+                      class=" btn btn-warning btn-simple btn-sm btn-icon mr-1"
+                      tooltip="Results File"
+                      type="button"
+                      (click)="getHakrawlerResultFile(scope)"
+                      >
+                        <i class="fas fa-eye"></i>
+                      </button>
+                      <button
+                      class=" btn btn-danger btn-simple btn-sm btn-icon mr-1"
+                      tooltip="Execute by Subdomain"
+                      type="button"
+                      (click)="getResponseCodesSubdomains(scope)"
+                      >
+                        <i class="tim-icons icon-notes"></i>
+                      </button>
+                      <button
+                      class=" btn btn-success btn-simple btn-sm btn-icon"
+                      tooltip="Execute All"
+                      type="button"
+                      (click)="executeAllHakrawler(scope)"
+                    >
+                        <i class="fas fa-play"></i>
+                    </button>
+                  </div>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
 </div>
 
 <div class="card border animate__animated animate__fadeIn" *ngIf="!!alives && !executing">
     <div class=" card-body">
       <div class=" toolbar"></div>
-      <div class="dataTables_wrapper py-4">
+      <div class="dataTables_wrapper py-4" *ngIf="selectedTool == 1" >
         <div class="row">
            <div class="col-md-10">
             <div class="dataTables_length" id="datatable_length">
@@ -89,64 +158,176 @@
         </div>
   
   
-      <div class=" table-responsive animate__animated animate__fadeIn">
-        <h4 *ngIf="alives.length == 0" class="text-center" >There are no alive subdomains available.</h4>
-        <table *ngIf="alives.length > 0" class=" table">
-          <thead class=" text-primary">
-            <tr>
-              <th>Status Code</th>
+        <div class=" table-responsive animate__animated animate__fadeIn">
+          <h4 *ngIf="alives.length == 0" class="text-center" >There are no alive subdomains available.</h4>
+          <table *ngIf="alives.length > 0" class=" table">
+            <thead class=" text-primary">
+              <tr>
+                <th>Status Code</th>
 
-              <th>Subdomain</th>
-  
-              <th class=" text-right">Actions</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr *ngFor="let alive of alives">
-              <td>{{alive.StatusCode}}</td>
-              <td>{{alive.Subdomain}}</td>
-              <td class="text-right">
-                <button
-                class=" btn btn-success btn-simple btn-sm btn-icon"
-                tooltip="Execute"
-                type="button"
-                (click)="executeGospiderBySubdomain(alive.Subdomain)"
-                >
-                <i class="fas fa-play"></i>
-                </button>
-              </td>
-            </tr>
-          </tbody>
-        </table>
-        <hr class="hr-warning">
-        <div class="row">
-          <div class="col-md-3">
-            <p>Page: <span class=text-warning>{{actualPage}}/{{totalPages}}</span></p>
-          </div>
-          <div class="col-md-9">
-            <nav>
-              <ul class="pagination pagination-warning justify-content-end">
-      
-                <li class="page-item">
-                  <button class="page-link" *ngIf="!disablePreviousFiveButton" (click)="previousFive()">&laquo;</button>
-                </li>
-                <li class="page-item">
-                  <button class="page-link" *ngIf="!disablePreviousButton" (click)="previous()">&lt;</button>
-                </li>  
-      
-                <li class="page-item">
-                  <button class="page-link" *ngIf="!disableNextButton" (click)="next()">&gt;</button>
-                </li>
-      
-                <li class="page-item">
-                  <button class="page-link" *ngIf="!disableNextFiveButton" (click)="nextFive()">&raquo;</button>
-                </li>
-      
-              </ul>
-            </nav>
-          </div>
-        </div>
+                <th>Subdomain</th>
+    
+                <th class=" text-right">Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let alive of alives">
+                <td>{{alive.StatusCode}}</td>
+                <td>{{alive.Subdomain}}</td>
+                <td class="text-right">
+                  <button
+                  class=" btn btn-warning btn-simple btn-sm btn-icon mr-1"
+                  tooltip="Results File"
+                  type="button"
+                  (click)="getGoSpiderResultFileBySubdomain(alive.Subdomain)"
+                  >
+                    <i class="fas fa-eye"></i>
+                  </button>
+                  <button
+                  class=" btn btn-success btn-simple btn-sm btn-icon"
+                  tooltip="Execute"
+                  type="button"
+                  (click)="executeGospiderBySubdomain(alive.Subdomain)"
+                  >
+                  <i class="fas fa-play"></i>
+                  </button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+          <hr class="hr-warning">
+          <div class="row">
+            <div class="col-md-3">
+              <p>Page: <span class=text-warning>{{actualPage}}/{{totalPages}}</span></p>
+            </div>
+            <div class="col-md-9">
+              <nav>
+                <ul class="pagination pagination-warning justify-content-end">
         
+                  <li class="page-item">
+                    <button class="page-link" *ngIf="!disablePreviousFiveButton" (click)="previousFive()">&laquo;</button>
+                  </li>
+                  <li class="page-item">
+                    <button class="page-link" *ngIf="!disablePreviousButton" (click)="previous()">&lt;</button>
+                  </li>  
+        
+                  <li class="page-item">
+                    <button class="page-link" *ngIf="!disableNextButton" (click)="next()">&gt;</button>
+                  </li>
+        
+                  <li class="page-item">
+                    <button class="page-link" *ngIf="!disableNextFiveButton" (click)="nextFive()">&raquo;</button>
+                  </li>
+        
+                </ul>
+              </nav>
+            </div>
+          </div>
+
+        </div>
+      </div>
+      <div class="dataTables_wrapper py-4" *ngIf="selectedTool == 2" >
+        <div class="row">
+           <div class="col-md-10">
+            <div class="dataTables_length" id="datatable_length">
+              <label>
+                <select
+                  name="datatable_length"
+                  aria-controls="datatable"
+                  class="form-control form-control-sm"
+                  (change)="entriesChange($event)"
+                >
+                  <option value="5" selected [selected]="entries == 5">5</option>
+                  <option value="10" [selected]="entries == 10">10</option>
+                  <option value="25" [selected]="entries == 25">25</option>
+                  <option value="50" [selected]="entries == 50">50</option>
+                </select>
+              </label>
+            </div>
+           </div>
+           <div class="col-md-2">
+            <div id="datatable_filter" class="dataTables_filter">
+              <label>
+                <input
+                  type="search"
+                  class="form-control form-control-sm"
+                  placeholder="Search records"
+                  aria-controls="datatable"
+                  (keyup)="filterTable($event)"
+                />
+              </label>
+            </div>
+           </div>
+        </div>
+  
+  
+        <div class=" table-responsive animate__animated animate__fadeIn">
+          <h4 *ngIf="alives.length == 0" class="text-center" >There are no alive subdomains available.</h4>
+          <table *ngIf="alives.length > 0" class=" table">
+            <thead class=" text-primary">
+              <tr>
+                <th>Status Code</th>
+
+                <th>Subdomain</th>
+    
+                <th class=" text-right">Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let alive of alives">
+                <td>{{alive.StatusCode}}</td>
+                <td>{{alive.Subdomain}}</td>
+                <td class="text-right">
+                  <button
+                  class=" btn btn-warning btn-simple btn-sm btn-icon mr-1"
+                  tooltip="Results File"
+                  type="button"
+                  (click)="getHakrawlerResultFileBySubdomain(alive.Subdomain)"
+                  >
+                    <i class="fas fa-eye"></i>
+                  </button>
+                  <button
+                  class=" btn btn-success btn-simple btn-sm btn-icon"
+                  tooltip="Execute"
+                  type="button"
+                  (click)="executeHakrawlerBySubdomain(alive.Subdomain)"
+                  >
+                  <i class="fas fa-play"></i>
+                  </button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+          <hr class="hr-warning">
+          <div class="row">
+            <div class="col-md-3">
+              <p>Page: <span class=text-warning>{{actualPage}}/{{totalPages}}</span></p>
+            </div>
+            <div class="col-md-9">
+              <nav>
+                <ul class="pagination pagination-warning justify-content-end">
+        
+                  <li class="page-item">
+                    <button class="page-link" *ngIf="!disablePreviousFiveButton" (click)="previousFive()">&laquo;</button>
+                  </li>
+                  <li class="page-item">
+                    <button class="page-link" *ngIf="!disablePreviousButton" (click)="previous()">&lt;</button>
+                  </li>  
+        
+                  <li class="page-item">
+                    <button class="page-link" *ngIf="!disableNextButton" (click)="next()">&gt;</button>
+                  </li>
+        
+                  <li class="page-item">
+                    <button class="page-link" *ngIf="!disableNextFiveButton" (click)="nextFive()">&raquo;</button>
+                  </li>
+        
+                </ul>
+              </nav>
+            </div>
+          </div>
+
+        </div>
       </div>
     </div>
 </div>
