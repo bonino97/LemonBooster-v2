@@ -107,7 +107,7 @@ ExecuteWaybackurlsAll = (client) => {
                 client.emit('executed-waybackurls', {
                     success: false,
                     executing: false,
-                    msg: `Something wrong, please refresh or try again...`
+                    msg: `Loading results, please try again...`
                 });
             }
         } catch (e) {
@@ -181,7 +181,7 @@ ExecuteWaybackurlsBySubdomain = (client) => {
                 client.emit('executed-waybackurls', {
                     success: false,
                     executing: false,
-                    msg: `Something wrong, please refresh or try again...`
+                    msg: `Loading results, please try again...`
                 });
             }
         } catch (e) {
@@ -283,7 +283,7 @@ ExecuteGoSpiderAll = (client) => {
                 client.emit('executed-gospider', {
                     success: false,
                     executing: false,
-                    msg: `Something wrong, please refresh or try again...`
+                    msg: `Loading results, please try again...`
                 });
             }
         } catch (e) {
@@ -357,7 +357,7 @@ ExecuteGoSpiderBySubdomain = (client) => {
                 client.emit('executed-gospider', {
                     success: false,
                     executing: false,
-                    msg: `Something wrong, please refresh or try again...`
+                    msg: `Loading results, please try again...`
                 });
             }
         } catch (e) {
@@ -457,7 +457,7 @@ ExecuteHakrawlerAll = (client) => {
                 client.emit('executed-hakrawler', {
                     success: false,
                     executing: false,
-                    msg: `Something wrong, please refresh or try again...`
+                    msg: `Loading results, please try again...`
                 });
             }
         } catch (e) {
@@ -531,7 +531,7 @@ ExecuteHakrawlerBySubdomain = (client) => {
                 client.emit('executed-hakrawler', {
                     success: false,
                     executing: false,
-                    msg: `Something wrong, please refresh or try again...`
+                    msg: `Loading results, please try again...`
                 });
             }
         } catch (e) {
@@ -633,7 +633,7 @@ ExecuteDirsearchAll = (client) => {
                 client.emit('executed-dirsearch', {
                     success: false,
                     executing: false,
-                    msg: `Something wrong, please refresh or try again...`
+                    msg: `Loading results, please try again...`
                 });
             }
         } catch (e) {
@@ -708,7 +708,7 @@ ExecuteDirsearchBySubdomain = (client) => {
                 client.emit('executed-dirsearch', {
                     success: false,
                     executing: false,
-                    msg: `Something wrong, please refresh or try again...`
+                    msg: `Loading results, please try again...`
                 });
             }
         } catch (e) {

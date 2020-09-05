@@ -113,7 +113,7 @@ ExecuteSubdomainEnumeration = (client) => {
                 client.emit('executed-subdomain-enumeration', {
                     success: false,
                     executing: false,
-                    msg: `Something wrong, please refresh or try again...`
+                    msg: `Loading results, please try again...`
                 });
             }
         } catch (e) {
@@ -204,7 +204,7 @@ ExecutePermutationEnumeration = (client) => {
                 client.emit('executed-subdomain-enumeration', {
                     success: false,
                     executing: false,
-                    msg: `Something wrong, please refresh or try again...`
+                    msg: `Loading results, please try again...`
                 });
             }
         } catch (e) {
@@ -296,7 +296,7 @@ ExecuteGithubEnumeration = (client) => {
                 client.emit('executed-subdomain-enumeration', {
                     success: false,
                     executing: false,
-                    msg: `Something wrong, please refresh or try again...`
+                    msg: `Loading results, please try again...`
                 });
             }
         } catch (e) {
@@ -405,7 +405,7 @@ ExecuteAlive = (client) => {
                 client.emit('executed-alive', {
                     success: false,
                     executing: false,
-                    msg: `Something wrong, please refresh or try again...`
+                    msg: `Loading results, please try again...`
                 });
             }
         } catch (e) {
@@ -463,7 +463,7 @@ ExecuteScreenshot = (client) => {
                 client.emit('executed-screenshot', {
                     success: false,
                     executing: false,
-                    msg: `Something wrong, please refresh or try again...`
+                    msg: `Loading results, please try again...`
                 });
             }
             
@@ -523,7 +523,7 @@ ExecuteJSScanner = (client) => {
                 client.emit('executed-jsscanner', {
                     success: false,
                     executing: false,
-                    msg: `Something wrong, please refresh or try again...`
+                    msg: `Loading results, please try again...`
                 });
             }
         }
@@ -641,7 +641,7 @@ ExecuteSubdomainResponseCodes = (client) => {
                 client.emit('executed-response-codes', {
                     success: false,
                     executing: false,
-                    msg: `Something wrong, please refresh or try again...`
+                    msg: `Loading results, please try again...`
                 });
             }
             
