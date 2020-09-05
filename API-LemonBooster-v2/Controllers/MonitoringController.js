@@ -4,6 +4,7 @@
 
 const shell = require('shelljs');
 const fs = require('fs');
+const moment = require('moment');
 
 //MODELS
 
@@ -15,23 +16,44 @@ const Monitorings = require('../Models/Monitorings');
 //CONSTANTS
 require('dotenv').config({path: '.env'});
 
-const { PaginatedResultsByScope, PaginatedResponseCodesByScope } = require('../Helpers/PaginatedResult');
+const { PaginatedMonitoringResults } = require('../Helpers/PaginatedResult');
 
-exports.GetSubdomainsMonitoring = async (req,res) => {
+exports.GetMonitoringByDate = async (req,res) => {
     try{
-        
+
         const program = await Program.findOne({Url: req.params.url});
-        const monitoring = await Monitorings.find({Program: program._id, Scope: req.query.scope, Type: 1});
+        const monitoring = await Monitorings.find({Program: program._id, Scope: req.query.scope, Type: req.query.type, Date: { $gte: req.query.startDate, $lte: req.query.endDate }}); //new Date(req.query.date)
 
-        console.log(monitoring);
-        // const page = parseInt(req.query.page);
-        // const limit = parseInt(req.query.limit);
-        // const scope = req.query.scope;
-        // const filter = req.query.filter;
+        if(monitoring.length === 0){
+            return res.status(404).json({
+                success: false,
+                msg: 'There are no new results with this date...'
+            });
+        }
 
-        // const programs = await PaginatedResultsByScope(program.Subdomains, page, limit, scope, filter);
+        const page = parseInt(req.query.page);
+        const limit = parseInt(req.query.limit);
+        const filter = req.query.filter;
+        var totalArray = [];
 
-        return res.status(200).json(programs);
+        monitoring.forEach(elem => {
+            elem.Results.forEach(elem => {
+                if(elem.length > 0){
+                    totalArray.push(elem);
+                }
+            });
+        });
+
+        const monitorings = await PaginatedMonitoringResults(totalArray, page, limit, filter);
+
+        if(monitorings.results.length === 0){
+            return res.status(404).json({
+                success: false,
+                msg: 'There are no new results with this monitoring...'
+            });
+        }
+
+        return res.status(200).json(monitorings);
 
     } catch(e) {
         console.error(e);

@@ -1,13 +1,17 @@
 
+
+
 import { ToolsModule } from './../tools/tools.module';
 import { RouterModule } from '@angular/router';
 import { CollapseModule } from 'ngx-bootstrap/collapse';
 import { BsDropdownModule } from "ngx-bootstrap/dropdown";
 import { ModalModule } from "ngx-bootstrap/modal";
-
+import { AngularMultiSelectModule } from "angular2-multiselect-dropdown";
 
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { BsDatepickerModule } from "ngx-bootstrap/datepicker";
+import { FormsModule } from '@angular/forms';
 
 import { SidebarComponent } from './sidebar/sidebar.component';
 import { NavbarComponent } from './navbar/navbar.component';
@@ -33,7 +37,10 @@ import { MonitoringComponent } from './monitoring/monitoring.component';
     CollapseModule.forRoot(),
     ModalModule.forRoot(),
     RouterModule,
-    ToolsModule
+    ToolsModule,
+    BsDatepickerModule.forRoot(),
+    FormsModule,
+    AngularMultiSelectModule
   ],
   exports: [
     SidebarComponent,

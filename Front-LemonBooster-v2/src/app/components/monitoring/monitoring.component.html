@@ -1,12 +1,177 @@
 <div class="row animate__animated animate__fadeIn">
-    <div class="col-md-12">
+    <div class="col-md-3">
         <div class="card border">
-            <div class="card-header">
-                <h3>asd</h3>
-            </div>
             <div class="card-body">
-                <h5>asdasd</h5>
+                <div class="row">
+                    <div class="col-md-12">
+                        <p> Scopes: </p>
+                        <angular2-multiselect
+                        [data]="scopeList"
+                        [ngModel]="[]"
+                        [settings]="{
+                        singleSelection: true,
+                        text: 'Single Select',
+                        classes: 'selectpicker btn-danger',
+                        lazyLoading: true,
+                        maxHeight: 200
+                        }"
+                        (onSelect)="selectedScope($event)"
+                    >
+                    </angular2-multiselect>
+                    </div>
+                    <div class="col-md-12 mt-2">
+                        <p> Date: </p>
+                        <div class=" form-group">
+                            <input
+                              bsDaterangepicker
+                              placeholder="Select Daterange"
+                              class="form-control border"
+                              data-datepicker-color="danger"
+                              [bsConfig]="{ isAnimated: true, containerClass: 'theme-red'}"
+                              [(ngModel)]="newDate"
+                              id="datepicker"
+                              type="text"
+                              (ngModelChange)="onDate($event)"
+                              autocomplete="off"
+                            />
+                        </div>
+                    </div>
+                    <div class="col-md-12 mt-2">
+                        <p> Type: </p>
+                        <angular2-multiselect
+                        [data]="typeList"
+                        [ngModel]="[]"
+                        [settings]="{
+                        singleSelection: true,
+                        text: 'Single Select',
+                        classes: 'selectpicker btn-danger',
+                        lazyLoading: true,
+                        maxHeight: 200
+                        }"
+                        (onSelect)="selectedType($event)"
+                        >
+                        </angular2-multiselect>
+                    </div>
+                    <div class="col-md-12 mt-4">
+                        <button class="btn btn-danger btn-sm animation-on-hover btn-block" (click)="searchMonitoringInstances()">
+                            Search
+                        </button>
+                    </div>
+                </div>
+
+
             </div>
         </div>
+    </div>
+
+    <div class="col-md-9">
+        <div class="card border animate__animated animate__fadeIn" *ngIf="!!results">
+            <div class=" card-body">
+              <div class=" toolbar"></div>
+              <div class="dataTables_wrapper py-4">
+                <div class="row">
+                  <div class="col-md-10">
+                    <div class="dataTables_length" id="datatable_length">
+                      <label>
+                        <select
+                          name="datatable_length"
+                          aria-controls="datatable"
+                          class="form-control form-control-sm"
+                          (change)="entriesChange($event)"
+                        >
+                          <option value="5" selected [selected]="entries == 5">5</option>
+                          <option value="10" [selected]="entries == 10">10</option>
+                          <option value="25" [selected]="entries == 25">25</option>
+                          <option value="50" [selected]="entries == 50">50</option>
+                        </select>
+                      </label>
+                    </div>
+                  </div>
+          
+                  <div class="col-md-2">
+                    <div id="datatable_filter" class="dataTables_filter">
+                      <label>
+                        <input
+                          type="search"
+                          class="form-control form-control-sm"
+                          placeholder="Search records"
+                          aria-controls="datatable"
+                          (keyup)="filterTable($event)"
+                        />
+                      </label>
+                    </div>
+                  </div>
+                </div>
+          
+          
+              <div class=" table-responsive animate__animated animate__fadeIn">
+                <h4 *ngIf="results.length == 0" class="text-center">There are no results available.</h4>
+                <table *ngIf="results.length > 0" class=" table">
+                  <thead class=" text-primary">
+                    <tr>
+                      <th>RESULTS</th>
+          
+                      <th class=" text-right">ACTIONS</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr *ngFor="let result of results">
+                      <td>{{result}}</td>
+                      <td class="text-right">
+                        <button
+                        *ngIf="type === 1"
+                        class=" btn btn-warning btn-simple btn-sm btn-icon"
+                        tooltip="View"
+                        type="button"
+                        (click)="openSubdomain(result)"
+                        >
+                          <i class="fas fa-eye"></i>
+                        </button>
+                        <button
+                        *ngIf="type === 2 || type === 6"
+                        class=" btn btn-warning btn-simple btn-sm btn-icon"
+                        tooltip="View"
+                        type="button"
+                        (click)="openAlive(result)"
+                        >
+                          <i class="fas fa-eye"></i>
+                        </button>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+                <hr class="hr-warning">
+                <div class="row">
+                  <div class="col-md-3">
+                    <p>Page: <span class=text-warning>{{actualPage}}/{{totalPages}}</span></p>
+                  </div>
+                  <div class="col-md-9">
+                    <nav>
+                      <ul class="pagination pagination-warning justify-content-end">
+              
+                        <li class="page-item">
+                          <button class="page-link" *ngIf="!disablePreviousFiveButton" (click)="previousFive()">&laquo;</button>
+                        </li>
+                        <li class="page-item">
+                          <button class="page-link" *ngIf="!disablePreviousButton" (click)="previous()">&lt;</button>
+                        </li>  
+              
+                        <li class="page-item">
+                          <button class="page-link" *ngIf="!disableNextButton" (click)="next()">&gt;</button>
+                        </li>
+              
+                        <li class="page-item">
+                          <button class="page-link" *ngIf="!disableNextFiveButton" (click)="nextFive()">&raquo;</button>
+                        </li>
+              
+                      </ul>
+                    </nav>
+                  </div>
+                </div>
+                
+              </div>
+            </div>
+          </div>
+          
     </div>
 </div>
