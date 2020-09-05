@@ -282,6 +282,10 @@ export class ToolsService {
     return this.apiService.GET(`results/${url}/dirsearch-subdomain?scope=${scope}&subdomain=${subdomain}`); 
   }
 
+  //MONITORING
 
+  GetMonitoringResults(url, scope, type, page, limit, startDate, endDate, filter){
+    return this.apiService.GET(`monitoring/${url}?scope=${scope}&type=${type}&startDate=${startDate}&endDate=${endDate}&page=${page}&limit=${limit}&filter=${filter}`);
+  }
 
 }
