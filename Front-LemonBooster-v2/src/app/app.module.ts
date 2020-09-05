@@ -2,6 +2,7 @@
 
 
 
+
 /* MODULES */
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
@@ -12,6 +13,7 @@ import { RouterModule } from '@angular/router';
 import { PagesModule } from './pages/pages.module';
 import { DashboardModule } from './dashboard/dashboard.module';
 import { ComponentsModule } from './components/components.module';
+import { FormsModule } from '@angular/forms';
 
 /* COMPONENTS */
 import { AppComponent } from './app.component';
@@ -36,7 +38,8 @@ const config: SocketIoConfig = {
     PagesModule,
     ComponentsModule,
     DashboardModule,
-    BrowserAnimationsModule
+    BrowserAnimationsModule,
+    FormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]
