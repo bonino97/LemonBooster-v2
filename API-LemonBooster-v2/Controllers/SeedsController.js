@@ -10,18 +10,18 @@ const fs = require('fs');
 //MODELS
 
 const Program = require('../Models/Programs');
-const Amass = require('../Models/Amass');
+const Seeds = require('../Models/Seeds');
 
 //CONSTS
 
 const date = dateFormat(new Date(), "yyyy-mm-dd-HH-MM");
 
 //=====================================================================
-// Obtain Program by Url and create Amass Instance.
+// Obtain Program by Url and create Seeds Instance.
 //=====================================================================
 
 
-exports.GetAmass = async (req,res) => {
+exports.GetSeeds = async (req,res) => {
     try{
         const url = req.params.url;
 
@@ -76,19 +76,19 @@ exports.ExecuteAmassWithASNs = async (req,res) => {
             });
         }
 
-        const amass = new Amass({
+        const seeds = new Seeds({
             Program: program, 
-            Directory: CreateAmassDirectory(program),
+            Directory: CreateSeedsDirectory(program),
             ASNs: body.ASNs,
             Syntax: `amass intel -asn ${body.ASNs.toString()}`
         }); 
 
 
-        amass.save();
+        seeds.save();
 
         return res.status(200).json({
             success:true,
-            data: amass
+            data: seeds
         });
     });
 
@@ -114,19 +114,19 @@ exports.ExecuteAmassWithCIDRs = async (req,res) => {
             });
         }
 
-        const amass = new Amass({
+        const seeds = new Seeds({
             Program: program, 
-            Directory: CreateAmassDirectory(program),
+            Directory: CreateSeedsDirectory(program),
             CIDRs: body.CIDRs,
             Syntax: `amass intel -cidr ${body.CIDRs.toString()}`
         }); 
 
 
-        amass.save();
+        seeds.save();
 
         return res.status(200).json({
             success:true,
-            data: amass
+            data: seeds
         });
     });
 
@@ -139,12 +139,12 @@ exports.ExecuteAmassWithCIDRs = async (req,res) => {
 /* ##################===FUNCTIONS===########################## */
 /* ########################################################### */
 
-function CreateAmassDirectory(Program){
+function CreateSeedsDirectory(Program){
 
-    const AMASS_DIR = `${Program.Directory}Amass`;
+    const SEEDS_DIR = `${Program.Directory}Seeds`;
 
-    if(!fs.existsSync(AMASS_DIR) ){
-        shell.exec(`mkdir ${AMASS_DIR}`);
+    if(!fs.existsSync(SEEDS_DIR) ){
+        shell.exec(`mkdir ${SEEDS_DIR}`);
     }
-    return AMASS_DIR;
+    return SEEDS_DIR;
 }

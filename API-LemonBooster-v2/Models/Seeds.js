@@ -3,14 +3,14 @@ var Schema = mongoose.Schema;
 mongoose.Promise = global.Promise;
 mongoose.pluralize(null);
 
-const AmassSchema = new mongoose.Schema({ 
+const SeedsSchema = new mongoose.Schema({ 
     Program: { 
         type: Schema.ObjectId, 
         ref: 'Program' 
     },
     Directory: { 
         type: String, 
-        required: [true, 'Amass Directory Required']
+        required: [true, 'Seeds Directory Required']
     },
     Syntax: String,
     ASNs: [String],
@@ -22,4 +22,4 @@ const AmassSchema = new mongoose.Schema({
 });
 
 
-module.exports = mongoose.model('Amass', AmassSchema);
+module.exports = mongoose.model('Seeds', SeedsSchema);

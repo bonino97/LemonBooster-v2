@@ -1,5 +1,5 @@
 const Sockets = require('../Sockets/Index');
-const AmassSockets = require('../Sockets/AmassSocket');
+const SeedsSocket = require('../Sockets/SeedsSocket');
 const EnumerationSockets = require('../Sockets/EnumerationSocket');
 const DiscoverySockets = require('../Sockets/DiscoverySocket');
 
@@ -13,8 +13,8 @@ Connection = (io) => {
         
         Sockets.Disconnect(client);
         // AMASS
-        AmassSockets.ExecuteAmassWithASNs(client);
-        AmassSockets.ExecuteAmassWithCIDRs(client);
+        SeedsSocket.ExecuteAmassWithASNs(client);
+        SeedsSocket.ExecuteAmassWithCIDRs(client);
 
         // ENUMERATION
         EnumerationSockets.ExecuteSubdomainEnumeration(client);
