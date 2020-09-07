@@ -1,4 +1,5 @@
 <div class="row mt-3 animate__animated animate__fadeIn" *ngIf="!!program">
+    <ngx-loading [show]="executing" [config]="{ backdropBorderRadius: '3px', primaryColour: '#00f2c3', secondaryColour: '#00f2c3', tertiaryColour: '#00f2c3'}"></ngx-loading>
     <div class="col-md-6 ml-auto mr-auto">
         <div class="card border">
             <div class="card-header">
@@ -24,14 +25,20 @@
             <div class="card-body">
                 <div class="row">
                     <div class="col-md-12">
-
-                        <ul class="list-unstyled">
-                            <li class="text">Scope:
-                                <ul>
-                                  <li class="text-warning font-weight-bold" *ngFor="let scope of program.Scopes">{{scope}}</li>
-                                </ul>
-                            </li>
-                        </ul>
+                        <div class=" table-full-width table-responsive">
+                            <table class=" table">
+                              <tbody>
+                                <tr *ngFor="let scope of program.Scopes">
+                                  <td>
+                                    <p >{{scope}}</p>
+                                  </td>
+                                  <td class=" td-actions text-right">
+                                    <button class="btn btn-success btn-simple btn-sm btn-icon" tooltip="One-Click Recon" (click)="executeCompleteScan(scope)"><i class="fas fa-play"></i></button>
+                                  </td>
+                                </tr>
+                              </tbody>
+                            </table>
+                        </div>
 
                     </div>
                 </div>
@@ -42,8 +49,8 @@
                     <div class="col-md-6">
                         <div class="button-group">
                             <!-- <button class="btn btn-success btn-sm btn-simple" (click)="open(1)" >Seeds</button> -->
-                            <button class="btn btn-success btn-sm btn-simple" (click)="open(2)" >Enum</button>
-                            <button class="btn btn-success btn-sm btn-simple" (click)="open(3)" >Disc</button>
+                            <button class="btn btn-success btn-sm btn-simple mr-2" (click)="open(2)" >Enumeration</button>
+                            <button class="btn btn-success btn-sm btn-simple" (click)="open(3)" >Discovery</button>
                         </div>
                     </div>
                     <div class="col-md-6">

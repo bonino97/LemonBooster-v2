@@ -2,6 +2,7 @@ const Sockets = require('../Sockets/Index');
 const SeedsSocket = require('../Sockets/SeedsSocket');
 const EnumerationSockets = require('../Sockets/EnumerationSocket');
 const DiscoverySockets = require('../Sockets/DiscoverySocket');
+const CompleteScanSockets = require('../Sockets/CompleteScanSocket');
 
 
 Connection = (io) => {
@@ -34,6 +35,8 @@ Connection = (io) => {
         DiscoverySockets.ExecuteHakrawlerBySubdomain(client);
         DiscoverySockets.ExecuteDirsearchAll(client);
         DiscoverySockets.ExecuteDirsearchBySubdomain(client);
+
+        CompleteScanSockets.ExecuteCompleteScan(client);
     });
 
     return Connection;

@@ -66,6 +66,15 @@
 
     <div class="col-md-9">
         <div class="card border animate__animated animate__fadeIn" *ngIf="!!results">
+
+            <div class="card-header">
+              <div class="row">
+                <div class="col-md-9">
+                  <h4>New Results Between {{startDate | date}} - {{endDate | date}}</h4>
+                </div>
+              </div>
+            </div>
+
             <div class=" card-body">
               <div class=" toolbar"></div>
               <div class="dataTables_wrapper py-4">

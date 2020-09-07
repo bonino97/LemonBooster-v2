@@ -54,7 +54,9 @@ exports.ExecuteSubdomainEnumeration = async (req,res) => {
     const url = req.params.url;
     
     try {
+        
         const program = await Program.findOne({Url: url});
+
         if(!program){
             return res.status(404).json({
                 success: false,

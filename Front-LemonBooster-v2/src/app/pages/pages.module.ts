@@ -6,6 +6,7 @@ import { RouterModule } from "@angular/router";
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { HttpClientModule } from "@angular/common/http";
 import { ComponentsModule } from './../components/components.module';
+import { TooltipModule } from "ngx-bootstrap/tooltip";
 
 /* COMPONENTS */
 import { LoginComponent } from './login/login.component';
@@ -22,7 +23,8 @@ import { EditProgramComponent } from './edit-program/edit-program.component';
     FormsModule,
     ReactiveFormsModule.withConfig({ warnOnNgModelWithFormControl: "never" }),
     HttpClientModule,
-    ComponentsModule
+    ComponentsModule,
+    TooltipModule.forRoot(),
   ],
   declarations: [
     LoginComponent,

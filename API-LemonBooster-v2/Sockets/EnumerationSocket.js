@@ -14,6 +14,10 @@ const TOOLS_DIR=`${process.env.TOOLS_DIR}`;
 const GOBUSTERDNS_DICT =`${process.env.GOBUSTERDNS_DICT}`;
 const GIT_TOKEN = `${process.env.GIT_TOKEN}`;
 
+const APIKEY_VIRUSTOTAL = `${process.env.APIKEY_VIRUSTOTAL}`;
+const APIKEY_FB_TOKEN = `${process.env.APIKEY_FB_TOKEN}`;
+const APIKEY_SECURITYTRAILS = `${process.env.APIKEY_SECURITYTRAILS}`;
+
 
 
 ExecuteSubdomainEnumeration = (client) => {
@@ -32,13 +36,15 @@ ExecuteSubdomainEnumeration = (client) => {
                 let findomainFile = `${enumeration.Directory}/Findomain-${enumeration.Scope}-${date}.txt`;
                 let subfinderFile = `${enumeration.Directory}/Subfinder-${enumeration.Scope}-${date}.txt`;
                 let assetFinderFile = `${enumeration.Directory}/Assetfinder-${enumeration.Scope}-${date}.txt`;
+                let amassFile = `${enumeration.Directory}/Amass-${enumeration.Scope}-${date}.txt`;
         
                 /* SINTAXIS DE CADA HERRAMIENTA */
                 const findomain = `findomain -t ${enumeration.Scope} -u ${findomainFile}`;
                 const subfinder = `subfinder -d ${enumeration.Scope} -t 65 -timeout 15 -o ${subfinderFile}`;
-                const assetFinder = `${GO_DIR}assetfinder --subs-only ${enumeration.Scope} | tee -a ${assetFinderFile}`; 
+                const assetFinder = `${GO_DIR}assetfinder --subs-only ${enumeration.Scope} | tee -a ${assetFinderFile}`;
+                const amass = `amass enum -passive -d ${enumeration.Scope} -o ${amassFile}`; 
         
-                enumeration.Syntax=[findomain,subfinder,assetFinder];
+                enumeration.Syntax=[findomain,subfinder,assetFinder,amass];
         
                 client.emit('executed-subdomain-enumeration', {
                     success: true,
@@ -49,8 +55,9 @@ ExecuteSubdomainEnumeration = (client) => {
                 shell.exec(findomain); //Ejecuto Findomain
                 shell.exec(subfinder); //Ejecuto Subfinder
                 shell.exec(assetFinder); //Ejecuto Assetfinder
+                shell.exec(amass); //Ejecuto Amass
         
-                shell.exec(`cat ${findomainFile} ${subfinderFile} ${assetFinderFile} >> ${auxNewSubdomainsFile}`); // Guardo todos los resultados en un Txt Auxiliar
+                shell.exec(`cat ${findomainFile} ${subfinderFile} ${assetFinderFile} ${amassFile} >> ${auxNewSubdomainsFile}`); // Guardo todos los resultados en un Txt Auxiliar
                 shell.exec(`sort -u ${auxNewSubdomainsFile} -o ${auxNewSubdomainsFile}`); // Ordeno y filtro resultados.
         
                 if(!fs.existsSync(allSubdomainsFile)){
@@ -59,7 +66,7 @@ ExecuteSubdomainEnumeration = (client) => {
                 }
             
                 shell.exec(`awk 'NR == FNR{ a[$0] = 1;next } !a[$0]' ${allSubdomainsFile} ${auxNewSubdomainsFile} >> ${newSubdomainsFile}`); // Filtro entre AllSubd y NewSub para luego armar un Txt de NuevosSubdominios a Monitorear.
-                shell.exec(`rm -r ${auxNewSubdomainsFile} ${findomainFile} ${subfinderFile} ${assetFinderFile}`); //Elimino txts.
+                shell.exec(`rm -r ${auxNewSubdomainsFile} ${findomainFile} ${subfinderFile} ${assetFinderFile} ${amassFile}`); //Elimino txts.
                 shell.exec(`cat ${newSubdomainsFile} >> ${allSubdomainsFile}`); // Guardo todos los resultados en AllSubdomains.
         
                 enumeration.NewFile = newSubdomainsFile; // Guardo New Subdomains.
@@ -118,8 +125,7 @@ ExecuteSubdomainEnumeration = (client) => {
             }
         } catch (e) {
             console.error(e);
-        }
-        
+        }  
     });
 }
 
@@ -536,7 +542,7 @@ ExecuteJSScanner = (client) => {
 ExecuteSubdomainResponseCodes = (client) => {
     client.on('execute-response-codes', async (payload) => {
         try {
-            console.log(payload);
+            
             const id = payload.Enumeration._id;
             const enumeration = await Enumeration.findById(id).exec();
             

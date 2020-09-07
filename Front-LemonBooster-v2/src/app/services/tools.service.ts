@@ -288,4 +288,14 @@ export class ToolsService {
     return this.apiService.GET(`monitoring/${url}?scope=${scope}&type=${type}&startDate=${startDate}&endDate=${endDate}&page=${page}&limit=${limit}&filter=${filter}`);
   }
 
+  //COMPLETE SCAN
+
+  WsExecuteCompleteScan(payload){
+    this.wsService.Emit('execute-complete-scan', payload);
+  }
+
+  GetCompletedScan(){
+    return this.wsService.Listen('completed-scan');
+  }
+
 }

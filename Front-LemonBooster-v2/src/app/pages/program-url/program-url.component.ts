@@ -1,6 +1,10 @@
-import { ProgramService } from './../../services/program.service';
+import { ProgramService } from 'src/app/services/program.service';
 import { Component, OnInit } from '@angular/core';
+import { ToolsService } from 'src/app/services/tools.service';
 import { ActivatedRoute } from '@angular/router';
+import { Socket } from 'ngx-socket-io';
+import swal from "sweetalert2";
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-program-url',
@@ -12,17 +16,27 @@ export class ProgramUrlComponent implements OnInit {
   error:any;
   program: any;
 
+  url: any;
+  scope:any;
+
   _openSeeds: boolean = false;
   _openEnum: boolean = true;
   _openDiscovery: boolean = false;
   _openMonitoring: boolean = false;
 
+  socketStatus: boolean = false;
+  executing: boolean = false;
+
   constructor(
     public route : ActivatedRoute,
-    public programService: ProgramService
+    public programService: ProgramService,
+    public toolService:ToolsService,
+    public socket: Socket
   ) { }
 
   ngOnInit(): void {
+
+    this.checkStatus();
 
     this.route.params.subscribe(
     (data) => {
@@ -36,6 +50,45 @@ export class ProgramUrlComponent implements OnInit {
         });
     });
 
+    this.toolService.GetCompletedScan()
+      .subscribe((data:any) => {
+        if(data.executing){
+          this.executing = true;
+          swal.fire({
+            html: `<span style='color:grey'>${data.msg}<span>`,
+            timer: 20000,
+            showConfirmButton: false
+          });
+        } else {
+          this.executing = false;
+          swal.fire({
+            html: `<span style='color:grey'>${data.msg}<span>`,
+            timer: 1000,
+            showConfirmButton: false
+          });
+        }
+      }, (error) => {
+        swal.fire({
+          html: `<span style='color:grey'>${error.error.msg}<span>`,
+          timer: 20000,
+          showConfirmButton: false
+        });
+      });
+
+  }
+
+  checkStatus(){
+    this.socket.on('connect', () => {
+      console.log('Connected to Server.');
+      this.socketStatus = true;
+      this.executing = false;
+    });
+
+    this.socket.on('disconnect', () => {
+      console.log('Disconnected from Server.');
+      this.socketStatus = false;
+      this.executing = true;
+    });
   }
 
   open(value){
@@ -65,6 +118,25 @@ export class ProgramUrlComponent implements OnInit {
         this._openMonitoring = true;
         break;
     }
+  }
+
+  executeCompleteScan(scope){
+
+    this.scope = scope;
+
+    this.route.params.subscribe(
+      (data) => {
+        this.url = data['url'];
+      });
+
+    let payload = {
+      Url: this.url,
+      Scope: this.scope
+    }
+
+    console.log(payload);
+
+    this.toolService.WsExecuteCompleteScan(payload); // Ejecuto herramienta.
   }
 
 }

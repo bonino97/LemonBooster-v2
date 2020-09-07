@@ -1,11 +1,16 @@
 <div class="full-page login-page animate__animated animate__fadeIn">
     <div class=" content">
       <div class=" container">
+        <div class="row">
+          <div class="col-md-12">
+            <h2>LemonBooster</h2>
+          </div>
+        </div>
         <div class=" col-lg-4 col-md-6 ml-auto mr-auto animate__animated animate__fadeIn">
           <form [formGroup]="loginForm" (ngSubmit)="onSubmit()" class=" form">
             <div class=" card card-login card-white border">
               <div class=" card-header">
-                <img alt="" src="assets/img/card-primary.png" />
+                <img alt="" src="assets/img/card-success.png" />
   
                 <h1 class=" card-title">Log in</h1>
               </div>
@@ -56,7 +61,7 @@
               <div class=" card-footer">
                 <button 
                   [disabled]="loginForm.invalid"
-                  class="btn btn-primary btn-lg btn-block animation-on-hover mb-3" type="submit">
+                  class="btn btn-success btn-lg btn-block animation-on-hover mb-3" type="submit">
                   Login
                 </button>
                 <div class=" pull-left">
