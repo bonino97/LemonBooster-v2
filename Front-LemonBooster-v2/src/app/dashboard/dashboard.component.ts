@@ -19,6 +19,9 @@ export class DashboardComponent implements OnInit {
   }
 
   checkStatus(){
+    
+    this.executing = true;
+
     this.socket.on('connect', () => {
       console.log('Connected to Server.');
       this.socketStatus = true;

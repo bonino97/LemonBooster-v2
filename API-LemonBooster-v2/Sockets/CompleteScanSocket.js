@@ -539,7 +539,6 @@ async function ExecuteWaybackurl(program, payload, client) {
             }
     
             monitoring.save();
-            program.save();
     
             client.emit('completed-scan', {
                 success: true,

@@ -56,7 +56,7 @@ export class ProgramUrlComponent implements OnInit {
           this.executing = true;
           swal.fire({
             html: `<span style='color:grey'>${data.msg}<span>`,
-            timer: 20000,
+            timer: 25000,
             showConfirmButton: false
           });
         } else {
@@ -70,7 +70,7 @@ export class ProgramUrlComponent implements OnInit {
       }, (error) => {
         swal.fire({
           html: `<span style='color:grey'>${error.error.msg}<span>`,
-          timer: 20000,
+          timer: 25000,
           showConfirmButton: false
         });
       });
