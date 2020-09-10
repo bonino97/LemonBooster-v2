@@ -40,9 +40,9 @@ exports.ExecuteCompleteScan = async (client) => {
 
             await ExecuteSubdomainEnumeration(program, payload, client);
             await ExecuteAlive(program, payload, client);
-            // await ExecuteScreenshot(program, payload, client);
-            // await ExecuteSubdomainResponseCodes(program, payload, client);
-            // await ExecuteWaybackurl(program, payload, client);
+            await ExecuteScreenshot(program, payload, client);
+            await ExecuteSubdomainResponseCodes(program, payload, client);
+            await ExecuteWaybackurl(program, payload, client);
             await ExecuteGoSpider(program, payload, client);
             await ExecuteHakrawler(program, payload, client);
         
@@ -745,6 +745,7 @@ async function ExecuteHakrawler(program, payload, client) {
             }
     
             monitoring.save();
+            program.save();
     
             client.emit('completed-scan', {
                 success: true,
