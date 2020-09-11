@@ -24,7 +24,7 @@
       </div>
   
       <div class="card-body animate__animated animate__fadeIn" *ngIf="selectedTool == 1">
-        <div class=" table-responsive" *ngIf="!!program && !executing">
+        <div class=" table-full-width" *ngIf="!!program && !executing">
           <table class=" table">
             <thead class=" text-primary">
               <tr>
@@ -72,7 +72,7 @@
       </div>
 
       <div class="card-body animate__animated animate__fadeIn" *ngIf="selectedTool == 2">
-        <div class=" table-responsive" *ngIf="!!program && !executing">
+        <div class=" table-full-width" *ngIf="!!program && !executing">
           <table class=" table">
             <thead class=" text-primary">
               <tr>
@@ -158,7 +158,7 @@
         </div>
   
   
-        <div class=" table-responsive animate__animated animate__fadeIn">
+        <div class=" table-full-width animate__animated animate__fadeIn">
           <h4 *ngIf="alives.length == 0" class="text-center" >There are no alive subdomains available.</h4>
           <table *ngIf="alives.length > 0" class=" table">
             <thead class=" text-primary">
@@ -261,7 +261,7 @@
         </div>
   
   
-        <div class=" table-responsive animate__animated animate__fadeIn">
+        <div class=" table-full-width animate__animated animate__fadeIn">
           <h4 *ngIf="alives.length == 0" class="text-center" >There are no alive subdomains available.</h4>
           <table *ngIf="alives.length > 0" class=" table">
             <thead class=" text-primary">
