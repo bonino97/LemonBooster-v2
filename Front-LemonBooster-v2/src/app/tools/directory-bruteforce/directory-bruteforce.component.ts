@@ -225,6 +225,7 @@ export class DirectoryBruteforceComponent implements OnInit {
                 Dirsearch: data.data,
                 List: this.selectedList
               }            
+              console.log(Payload);
               this.toolService.WsExecuteDirsearchBySubdomain(Payload); // Ejecuto herramienta.
   
             }, (error) => {
@@ -249,7 +250,7 @@ export class DirectoryBruteforceComponent implements OnInit {
     this.scope = scope;
     this.route.params.subscribe(
       (data) => { 
-        this.toolService.GetSubdomainResponseCodes(data['url'], 1, 5, this.scope, this.filter)
+        this.toolService.GetAlivesByScope(data['url'], 1, 5, this.scope, this.filter)
         .subscribe(data => {
           this.dataTableValidations(data);
         }, (error) => {
@@ -266,7 +267,7 @@ export class DirectoryBruteforceComponent implements OnInit {
     
     this.route.params.subscribe(
       (data) => { 
-        this.toolService.GetSubdomainResponseCodes(data['url'], this.nextPage, this.limit, this.scope, this.filter)
+        this.toolService.GetAlivesByScope(data['url'], this.nextPage, this.limit, this.scope, this.filter)
         .subscribe(data => {
           this.dataTableValidations(data);
         }, (error) => {
@@ -283,7 +284,7 @@ export class DirectoryBruteforceComponent implements OnInit {
     
     this.route.params.subscribe(
       (data) => { 
-        this.toolService.GetSubdomainResponseCodes(data['url'], this.previousPage, this.limit, this.scope, this.filter)
+        this.toolService.GetAlivesByScope(data['url'], this.previousPage, this.limit, this.scope, this.filter)
         .subscribe(data => {
           this.dataTableValidations(data);
         }, (error) => {
@@ -299,7 +300,7 @@ export class DirectoryBruteforceComponent implements OnInit {
   nextFive(){
     this.route.params.subscribe(
       (data) => { 
-        this.toolService.GetSubdomainResponseCodes(data['url'], this.actualPage+5, this.limit, this.scope, this.filter)
+        this.toolService.GetAlivesByScope(data['url'], this.actualPage+5, this.limit, this.scope, this.filter)
         .subscribe(data => {
           this.dataTableValidations(data);
         }, (error) => {
@@ -315,7 +316,7 @@ export class DirectoryBruteforceComponent implements OnInit {
   previousFive(){
     this.route.params.subscribe(
       (data) => { 
-        this.toolService.GetSubdomainResponseCodes(data['url'], (this.actualPage-5), this.limit, this.scope, this.filter)
+        this.toolService.GetAlivesByScope(data['url'], (this.actualPage-5), this.limit, this.scope, this.filter)
         .subscribe(data => {
           this.dataTableValidations(data);
         }, (error) => {
@@ -332,7 +333,7 @@ export class DirectoryBruteforceComponent implements OnInit {
     this.limit = $event.target.value;
     this.route.params.subscribe(
       (data) => { 
-        this.toolService.GetSubdomainResponseCodes(data['url'], this.actualPage, this.limit, this.scope, this.filter)
+        this.toolService.GetAlivesByScope(data['url'], this.actualPage, this.limit, this.scope, this.filter)
         .subscribe(data => {
           this.dataTableValidations(data);
         }, (error) => {
@@ -350,7 +351,7 @@ export class DirectoryBruteforceComponent implements OnInit {
     if ($event.keyCode === 13) {
       this.route.params.subscribe(
         (data) => { 
-          this.toolService.GetSubdomainResponseCodes(data['url'], this.actualPage, this.limit, this.scope, this.filter)
+          this.toolService.GetAlivesByScope(data['url'], this.actualPage, this.limit, this.scope, this.filter)
           .subscribe(data => {
             console.log(data);
             this.dataTableValidations(data);
@@ -368,6 +369,7 @@ export class DirectoryBruteforceComponent implements OnInit {
   dataTableValidations(data){
     this.totalPages = data.totalPages;
     this.alives = [];
+    console.log(data);
   
     this.alives = data.results;
     this.actualPage = data.actualPage;

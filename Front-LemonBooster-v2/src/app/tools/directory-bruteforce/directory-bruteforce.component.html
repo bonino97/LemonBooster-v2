@@ -111,8 +111,6 @@
         <table *ngIf="alives.length > 0" class=" table">
           <thead class=" text-primary">
             <tr>
-              <th>Status Code</th>
-
               <th>Subdomain</th>
 
               <th>Lists</th>
@@ -122,8 +120,7 @@
           </thead>
           <tbody>
             <tr *ngFor="let alive of alives">
-              <td>{{alive.StatusCode}}</td>
-              <td>{{alive.Subdomain}}</td>
+              <td>{{alive}}</td>
               <td>
                 <form [formGroup]="form">
                     <select class="custom-select form-control" formControlName="SelectedList" (change)="captureList()">
@@ -139,7 +136,7 @@
                     class=" btn btn-warning btn-simple btn-sm btn-icon mr-1"
                     tooltip="Results File"
                     type="button"
-                    (click)="getScopeResultFileBySubdomain(alive.Subdomain)"
+                    (click)="getScopeResultFileBySubdomain(alive)"
                     >
                       <i class="fas fa-eye"></i>
                     </button>
@@ -147,7 +144,7 @@
                     class=" btn btn-success btn-simple btn-sm btn-icon"
                     tooltip="Execute"
                     type="button"
-                    (click)="executeDirsearchBySubdomain(alive.Subdomain)"
+                    (click)="executeDirsearchBySubdomain(alive)"
                     >
                       <i class="fas fa-play"></i>
                     </button>
