@@ -4,15 +4,19 @@ import { Routes, RouterModule } from '@angular/router';
 import { LoginComponent } from './pages/login/login.component';
 
 
+import { AuthGuard } from './services/auth.guard';
+
+
 const routes: Routes = [
   {
     path: "",
-    redirectTo: "/programs",
+    redirectTo: "/login",
     pathMatch: "full"
   },
   {
     path: "",
     component: DashboardComponent,
+    canActivate: [AuthGuard],
     children: [
       {
         path: "",
@@ -22,7 +26,7 @@ const routes: Routes = [
     ]
   },
   { path: 'login', component: LoginComponent },
-  { path: '**', component: DashboardComponent }
+  { path: '**', component: LoginComponent }
 ];
 
 @NgModule({

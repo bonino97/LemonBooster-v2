@@ -11,7 +11,7 @@ export const DashboardRoutes: Routes = [
   { path: 'programs', component: ProgramsComponent }, 
   { path: 'programs/new-program', component: NewProgramComponent },
   { path: 'programs/:url/edit', component: EditProgramComponent },
-
+  { path: 'programs/:url', component: ProgramUrlComponent },
 
   
   { path: 'findomain', component: ComingSoonComponent },

@@ -43,7 +43,10 @@ export class LoginComponent implements OnInit, OnDestroy {
   }
 
   onSubmit(){
-    console.log(this.loginForm.value);
+    if(this.loginForm.value.email === 'hackers@ekoparty.com' && this.loginForm.value.password === "WeAreSpeakers!") {
+      localStorage.setItem('EkopartyAccess', 'yes');
+      this.router.navigate(['programs']);
+    }
   }
 
 

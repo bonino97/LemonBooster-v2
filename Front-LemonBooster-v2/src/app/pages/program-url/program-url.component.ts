@@ -43,10 +43,12 @@ export class ProgramUrlComponent implements OnInit {
         this.programService.GetProgram(data['url'])
         .subscribe((data) => {
           this.program = data.data;
+          console.log(data);
         }, (error) => {
           if(!error.error.success){
             this.error = error.error.msg;
           }
+          console.log(error);
         });
     });
 
