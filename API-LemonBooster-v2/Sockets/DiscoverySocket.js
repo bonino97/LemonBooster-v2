@@ -204,7 +204,7 @@ ExecuteGoSpiderAll = (client) => {
                 // let auxNewGoSpiderFile = `${discovery.Directory}/AuxNewGoSpider-${discovery.Scope.toUpperCase()}-${date}.txt`;
         
                 /* SINTAXIS DE LA HERRAMIENTA */            
-                const goSpider = `${GO_DIR}gospider -S ${payload.Alives.File} -d 0 --sitemap -t 3 | tee -a ${auxNewGoSpiderFile}`;
+                const goSpider = `${GO_DIR}gospider -S ${payload.Alives.File} -d 0 --sitemap -t 3 -c 50 | tee -a ${auxNewGoSpiderFile}`;
                 
                 discovery.Syntax = [goSpider];
                 discovery.PathDirectory = payload.GoSpider.Program.PathDirectory;
@@ -305,7 +305,7 @@ ExecuteGoSpiderBySubdomain = (client) => {
                 let auxNewGoSpiderFile = `${discovery.Directory}/AuxNewSubdomainGoSpider-${subdomain[0].toUpperCase()}-${subdomain[1].toUpperCase()}-${date}.txt`;
         
                 /* SINTAXIS DE CADA HERRAMIENTA */            
-                const goSpider = `${GO_DIR}gospider -s ${discovery.Subdomain} -d 0 --sitemap -t 3 | tee -a ${auxNewGoSpiderFile}`;
+                const goSpider = `${GO_DIR}gospider -s ${discovery.Subdomain} -d 0 --sitemap -t 10 -c 50 | tee -a ${auxNewGoSpiderFile}`;
                 
                 discovery.Syntax = [goSpider];
                 discovery.PathDirectory = payload.GoSpider.Program.PathDirectory;
