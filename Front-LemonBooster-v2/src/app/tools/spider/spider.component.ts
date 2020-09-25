@@ -353,7 +353,7 @@ export class SpiderComponent implements OnInit {
     this.scope = scope;
     this.route.params.subscribe(
       (data) => { 
-        this.toolService.GetSubdomainResponseCodes(data['url'], 1, 5, this.scope, this.filter)
+        this.toolService.GetAlivesByScope(data['url'], 1, 5, this.scope, this.filter)
         .subscribe(data => {
           this.dataTableValidations(data);
         }, (error) => {
@@ -370,7 +370,7 @@ export class SpiderComponent implements OnInit {
     
     this.route.params.subscribe(
       (data) => { 
-        this.toolService.GetSubdomainResponseCodes(data['url'], this.nextPage, this.limit, this.scope, this.filter)
+        this.toolService.GetAlivesByScope(data['url'], this.nextPage, this.limit, this.scope, this.filter)
         .subscribe(data => {
           this.dataTableValidations(data);
         }, (error) => {
@@ -387,7 +387,7 @@ export class SpiderComponent implements OnInit {
     
     this.route.params.subscribe(
       (data) => { 
-        this.toolService.GetSubdomainResponseCodes(data['url'], this.previousPage, this.limit, this.scope, this.filter)
+        this.toolService.GetAlivesByScope(data['url'], this.previousPage, this.limit, this.scope, this.filter)
         .subscribe(data => {
           this.dataTableValidations(data);
         }, (error) => {
@@ -404,7 +404,7 @@ export class SpiderComponent implements OnInit {
   nextFive(){
     this.route.params.subscribe(
       (data) => { 
-        this.toolService.GetSubdomainResponseCodes(data['url'], this.actualPage+5, this.limit, this.scope, this.filter)
+        this.toolService.GetAlivesByScope(data['url'], this.actualPage+5, this.limit, this.scope, this.filter)
         .subscribe(data => {
           this.dataTableValidations(data);
         }, (error) => {
@@ -420,7 +420,7 @@ export class SpiderComponent implements OnInit {
   previousFive(){
     this.route.params.subscribe(
       (data) => { 
-        this.toolService.GetSubdomainResponseCodes(data['url'], (this.actualPage-5), this.limit, this.scope, this.filter)
+        this.toolService.GetAlivesByScope(data['url'], (this.actualPage-5), this.limit, this.scope, this.filter)
         .subscribe(data => {
           this.dataTableValidations(data);
         }, (error) => {
@@ -437,7 +437,7 @@ export class SpiderComponent implements OnInit {
     this.limit = $event.target.value;
     this.route.params.subscribe(
       (data) => { 
-        this.toolService.GetSubdomainResponseCodes(data['url'], this.actualPage, this.limit, this.scope, this.filter)
+        this.toolService.GetAlivesByScope(data['url'], this.actualPage, this.limit, this.scope, this.filter)
         .subscribe(data => {
           this.dataTableValidations(data);
         }, (error) => {
@@ -455,7 +455,7 @@ export class SpiderComponent implements OnInit {
     if ($event.keyCode === 13) {
       this.route.params.subscribe(
         (data) => { 
-          this.toolService.GetSubdomainResponseCodes(data['url'], this.actualPage, this.limit, this.scope, this.filter)
+          this.toolService.GetAlivesByScope(data['url'], this.actualPage, this.limit, this.scope, this.filter)
           .subscribe(data => {
             console.log(data);
             this.dataTableValidations(data);

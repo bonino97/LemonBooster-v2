@@ -102,8 +102,6 @@
         <table *ngIf="alives.length > 0" class=" table">
           <thead class=" text-primary">
             <tr>
-              <th>Status Code</th>
-
               <th>Subdomain</th>
   
               <th class=" text-right">Actions</th>
@@ -111,14 +109,13 @@
           </thead>
           <tbody>
             <tr *ngFor="let alive of alives">
-              <td>{{alive.StatusCode}}</td>
-              <td>{{alive.Subdomain}}</td>
+              <td>{{alive}}</td>
               <td class="text-right">
                 <button
                 class=" btn btn-warning btn-simple btn-sm btn-icon mr-1"
                 tooltip="Results File"
                 type="button"
-                (click)="getScopeResultFileBySubdomain(alive.Subdomain)"
+                (click)="getScopeResultFileBySubdomain(alive)"
                 >
                   <i class="fas fa-eye"></i>
                 </button>
@@ -126,7 +123,7 @@
                 class=" btn btn-success btn-simple btn-sm btn-icon"
                 tooltip="Execute"
                 type="button"
-                (click)="executeWaybackBySubdomain(alive.Subdomain)"
+                (click)="executeWaybackBySubdomain(alive)"
                 >
                   <i class="fas fa-play"></i>
                 </button>
