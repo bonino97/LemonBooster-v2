@@ -20,7 +20,7 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended:true}));
 
 app.use(cors({
-    origin: ['http://localhost:5001', 'http://127.0.0.1:5001'],
+    origin: ['http://localhost:5001', 'http://127.0.0.1:5001', 'http://lemonsec.com', 'http://booster.lemonsec.com', 'https://lemonsec.com', 'https://booster.lemonsec.com'],
     credentials: true
 })); // Initializing CORS, dont remember import.
 
