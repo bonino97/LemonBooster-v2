@@ -430,7 +430,7 @@ ExecuteScreenshot = (client) => {
 
             if(enumeration) {
                 /* SINTAXIS */            
-                const aquatone = `cat ${payload.Alives.File} | ${GO_DIR}aquatone -out ${enumeration.Directory} -t 20`;
+                const aquatone = `cat ${payload.Alives.File} | ${GO_DIR}aquatone -out ${enumeration.Directory} -threads 20`;
                 
                 enumeration.Syntax = aquatone;
                 
