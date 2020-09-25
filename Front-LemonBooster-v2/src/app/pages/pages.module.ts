@@ -14,6 +14,8 @@ import { NewProgramComponent } from './new-program/new-program.component';
 import { ProgramsComponent } from './programs/programs.component';
 import { ProgramUrlComponent } from './program-url/program-url.component';
 import { EditProgramComponent } from './edit-program/edit-program.component';
+import { ComingSoonComponent } from './coming-soon/coming-soon.component';
+
 
 
 @NgModule({
@@ -31,7 +33,8 @@ import { EditProgramComponent } from './edit-program/edit-program.component';
     NewProgramComponent,
     ProgramsComponent,
     ProgramUrlComponent,
-    EditProgramComponent
+    EditProgramComponent,
+    ComingSoonComponent
   ],
   exports: [
   ]
