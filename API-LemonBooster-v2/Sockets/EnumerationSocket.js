@@ -42,7 +42,7 @@ ExecuteSubdomainEnumeration = (client) => {
                 const findomain = `findomain -t ${enumeration.Scope} -u ${findomainFile}`;
                 const subfinder = `subfinder -d ${enumeration.Scope} -t 100 -timeout 5 -o ${subfinderFile}`;
                 const assetFinder = `${GO_DIR}assetfinder --subs-only ${enumeration.Scope} | tee -a ${assetFinderFile}`;
-                const amass = `amass enum -active -brute -d ${enumeration.Scope} -max-dns-queries 200 -o ${amassFile} `; 
+                const amass = `amass enum -passive -d ${enumeration.Scope} -max-dns-queries 200 -o ${amassFile} `; 
         
                 enumeration.Syntax=[findomain,subfinder,assetFinder,amass];
         

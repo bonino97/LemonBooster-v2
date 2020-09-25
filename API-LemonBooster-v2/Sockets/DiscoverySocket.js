@@ -554,7 +554,7 @@ ExecuteDirsearchAll = (client) => {
                 let auxNewDirsearchFile = `${discovery.Directory}/AuxNewDirsearch-${discovery.Scope.toUpperCase()}-${date}.txt`;
         
                 /* SINTAXIS DE CADA HERRAMIENTA */            
-                const dirsearch = `python3 ${TOOLS_DIR}dirsearch/dirsearch.py -L ${payload.Alives.File} -w ${LIST_DIR}${list} -e html,js,php,png,jpg,sql,json,xml,htm,css,asp,jsp,aspx,jspx,git -x 404 -t 50 -b --plain-text-report=${auxNewDirsearchFile}`;
+                const dirsearch = `python3 ${TOOLS_DIR}dirsearch/dirsearch.py -L ${payload.Alives.File} -w ${LIST_DIR}${list} -e html,js,php,png,jpg,sql,json,xml,htm,css,asp,jsp,aspx,jspx,git -x 404 -t 80 -b --plain-text-report=${auxNewDirsearchFile}`;
                 
                 discovery.Syntax = [dirsearch];
                 discovery.PathDirectory = payload.Dirsearch.Program.PathDirectory;
@@ -656,7 +656,7 @@ ExecuteDirsearchBySubdomain = (client) => {
                 let auxNewDirsearchFile = `${discovery.Directory}/AuxNewSubdomainDirsearch-${subdomain[0].toUpperCase()}-${subdomain[1].toUpperCase()}-${date}.txt`;
         
                 /* SINTAXIS DE CADA HERRAMIENTA */            
-                const dirsearch = `python3 ${TOOLS_DIR}dirsearch/dirsearch.py -u ${discovery.Subdomain} -w ${LIST_DIR}${list} -e html,js,php,png,jpg,sql,json,xml,htm,css,asp,jsp,aspx,jspx,git -x 404 -t 50 -b --plain-text-report=${auxNewDirsearchFile}`;
+                const dirsearch = `python3 ${TOOLS_DIR}dirsearch/dirsearch.py -u ${discovery.Subdomain} -w ${LIST_DIR}${list} -e html,js,php,png,jpg,sql,json,xml,htm,css,asp,jsp,aspx,jspx,git -x 404 -t 80 -b --plain-text-report=${auxNewDirsearchFile}`;
                 
                 discovery.Syntax = [dirsearch];
                 discovery.PathDirectory = payload.Dirsearch.Program.PathDirectory;
