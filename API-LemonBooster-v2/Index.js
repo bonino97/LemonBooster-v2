@@ -11,6 +11,7 @@ const io = SocketIO(this.httpServer).listen(httpServer);
 
 const socket = require('./Config/Sockets');
 
+io.origins('*:*');
 
 require('./Config/Db');
 require('dotenv').config({path: '.env'});
