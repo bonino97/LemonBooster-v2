@@ -1,5 +1,4 @@
-import { Component, OnInit } from '@angular/core';
-
+import { Component, OnInit } from "@angular/core";
 
 export interface RouteInfo {
   path: string;
@@ -10,7 +9,6 @@ export interface RouteInfo {
   isCollapsed?: boolean;
   isCollapsing?: any;
 }
-
 
 export const ROUTES: RouteInfo[] = [
   {
@@ -48,23 +46,20 @@ export const ROUTES: RouteInfo[] = [
     title: "JSearch",
     type: "link",
     icontype: "tim-icons icon-paper",
-  }
+  },
 ];
 
-
 @Component({
-  selector: 'app-sidebar',
-  templateUrl: './sidebar.component.html',
-  styleUrls: ['./sidebar.component.scss']
+  selector: "app-sidebar",
+  templateUrl: "./sidebar.component.html",
+  styleUrls: ["./sidebar.component.scss"],
 })
 export class SidebarComponent implements OnInit {
-
   menuItems: any;
 
-  constructor() { }
+  constructor() {}
 
   ngOnInit() {
-    this.menuItems = ROUTES.filter(menuItem => menuItem);
+    this.menuItems = ROUTES.filter((menuItem) => menuItem);
   }
-
 }
