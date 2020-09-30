@@ -189,6 +189,8 @@ echo "Installing GithubSubdomains..."
 git clone https://github.com/gwen001/github-search.git
 cd ~/tools/github-search
 pip3 install -r requirements.txt
+pip3 install -r requirements2.txt
+pip3 install -r requirements3.txt
 cd ~/tools/
 echo "Done!"
 
@@ -212,7 +214,7 @@ echo "Done!"
 echo "Installing Subfinder..."
 mkdir ~/tools/subfinder
 cd ~/tools/subfinder
-wget https://github.com/projectdiscovery/subfinder/releases/download/v2.3.2/subfinder-linux-amd64.tar
+wget https://github.com/projectdiscovery/subfinder/releases/download/v2.4.5/subfinder_2.4.5_linux_arm64.tar.gz
 tar -xzvf subfinder-linux-amd64.tar
 mv subfinder-linux-amd64 /usr/bin/subfinder
 cd ~/tools/
