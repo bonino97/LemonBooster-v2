@@ -292,7 +292,6 @@ export class JsscannerComponent implements OnInit {
         (data) => { 
           this.toolService.GetAlivesByScope(data['url'], this.actualPage, this.limit, this.scope, this.filter)
           .subscribe(data => {
-            console.log(data);
             this.dataTableValidations(data);
           }, (error) => {
             swal.fire({

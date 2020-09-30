@@ -134,7 +134,7 @@ export class DirectoryBruteforceComponent implements OnInit {
           window.open(url, "_blank");
 
         }, (error) => {
-          console.log(error);
+          console.error(error);
           swal.fire({
             html: `<span style='color:grey'>${error.error.msg}<span>`,
             timer: 1500,
@@ -154,7 +154,7 @@ export class DirectoryBruteforceComponent implements OnInit {
           window.open(url, "_blank");
 
         }, (error) => {
-          console.log(error);
+          console.error(error);
           swal.fire({
             html: `<span style='color:grey'>${error.error.msg}<span>`,
             timer: 1500,
@@ -175,7 +175,6 @@ export class DirectoryBruteforceComponent implements OnInit {
   
           this.toolService.ExecuteAllDirsearch(data['url'], Scope)
             .subscribe((data:any) => {
-              console.log(data);
               this.executing = true;
   
               var Payload = {
@@ -187,7 +186,7 @@ export class DirectoryBruteforceComponent implements OnInit {
               this.toolService.WsExecuteAllDirsearch(Payload); // Ejecuto herramienta.
   
             }, (error) => {
-              console.log(error);
+              console.error(error);
               swal.fire({
                 html: `<span style='color:grey'>${error.error.msg}<span>`,
                 timer: 2500,
@@ -229,7 +228,7 @@ export class DirectoryBruteforceComponent implements OnInit {
               this.toolService.WsExecuteDirsearchBySubdomain(Payload); // Ejecuto herramienta.
   
             }, (error) => {
-              console.log(error);
+              console.error(error);
               swal.fire({
                 html: `<span style='color:grey'>${error.error.msg}<span>`,
                 timer: 2500,
@@ -353,7 +352,6 @@ export class DirectoryBruteforceComponent implements OnInit {
         (data) => { 
           this.toolService.GetAlivesByScope(data['url'], this.actualPage, this.limit, this.scope, this.filter)
           .subscribe(data => {
-            console.log(data);
             this.dataTableValidations(data);
           }, (error) => {
             swal.fire({
@@ -369,7 +367,6 @@ export class DirectoryBruteforceComponent implements OnInit {
   dataTableValidations(data){
     this.totalPages = data.totalPages;
     this.alives = [];
-    console.log(data);
   
     this.alives = data.results;
     this.actualPage = data.actualPage;

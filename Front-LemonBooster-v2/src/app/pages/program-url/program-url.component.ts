@@ -43,12 +43,11 @@ export class ProgramUrlComponent implements OnInit {
         this.programService.GetProgram(data['url'])
         .subscribe((data) => {
           this.program = data.data;
-          console.log(data);
         }, (error) => {
           if(!error.error.success){
             this.error = error.error.msg;
           }
-          console.log(error);
+          console.error(error);
         });
     });
 
@@ -135,8 +134,6 @@ export class ProgramUrlComponent implements OnInit {
       Url: this.url,
       Scope: this.scope
     }
-
-    console.log(payload);
 
     this.toolService.WsExecuteCompleteScan(payload); // Ejecuto herramienta.
   }

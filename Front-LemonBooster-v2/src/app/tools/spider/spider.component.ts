@@ -148,7 +148,7 @@ export class SpiderComponent implements OnInit {
           window.open(url, "_blank");
 
         }, (error) => {
-          console.log(error);
+          console.error(error);
           swal.fire({
             html: `<span style='color:grey'>${error.error.msg}<span>`,
             timer: 1500,
@@ -168,7 +168,7 @@ export class SpiderComponent implements OnInit {
           window.open(url, "_blank");
 
         }, (error) => {
-          console.log(error);
+          console.error(error);
           swal.fire({
             html: `<span style='color:grey'>${error.error.msg}<span>`,
             timer: 1500,
@@ -190,7 +190,7 @@ export class SpiderComponent implements OnInit {
           window.open(url, "_blank");
 
         }, (error) => {
-          console.log(error);
+          console.error(error);
           swal.fire({
             html: `<span style='color:grey'>${error.error.msg}<span>`,
             timer: 1500,
@@ -210,7 +210,7 @@ export class SpiderComponent implements OnInit {
           window.open(url, "_blank");
 
         }, (error) => {
-          console.log(error);
+          console.error(error);
           swal.fire({
             html: `<span style='color:grey'>${error.error.msg}<span>`,
             timer: 1500,
@@ -230,7 +230,6 @@ export class SpiderComponent implements OnInit {
 
         this.toolService.ExecuteAllGoSpider(data['url'], Scope)
           .subscribe((data:any) => {
-            console.log(data);
             this.executing = true;
 
             var Payload = {
@@ -241,7 +240,7 @@ export class SpiderComponent implements OnInit {
             this.toolService.WsExecuteAllGoSpider(Payload); // Ejecuto herramienta.
 
           }, (error) => {
-            console.log(error);
+            console.error(error);
             swal.fire({
               html: `<span style='color:grey'>${error.error.msg}<span>`,
               timer: 2500,
@@ -272,7 +271,7 @@ export class SpiderComponent implements OnInit {
             this.toolService.WsExecuteGoSpiderBySubdomain(Payload); // Ejecuto herramienta.
 
           }, (error) => {
-            console.log(error);
+            console.error(error);
             swal.fire({
               html: `<span style='color:grey'>${error.error.msg}<span>`,
               timer: 2500,
@@ -293,7 +292,6 @@ export class SpiderComponent implements OnInit {
 
         this.toolService.ExecuteAllHakrawler(data['url'], Scope)
           .subscribe((data:any) => {
-            console.log(data);
             this.executing = true;
 
             var Payload = {
@@ -304,7 +302,7 @@ export class SpiderComponent implements OnInit {
             this.toolService.WsExecuteAllHakrawler(Payload); // Ejecuto herramienta.
 
           }, (error) => {
-            console.log(error);
+            console.error(error);
             swal.fire({
               html: `<span style='color:grey'>${error.error.msg}<span>`,
               timer: 2500,
@@ -325,7 +323,6 @@ export class SpiderComponent implements OnInit {
 
         this.toolService.ExecuteHakrawlerBySubdomain(data['url'], Params)
           .subscribe((data:any) => {
-            console.log(data);
             this.executing = true;
 
             var Payload = {
@@ -335,7 +332,7 @@ export class SpiderComponent implements OnInit {
             this.toolService.WsExecuteHakrawlerBySubdomain(Payload); // Ejecuto herramienta.
 
           }, (error) => {
-            console.log(error);
+            console.error(error);
             swal.fire({
               html: `<span style='color:grey'>${error.error.msg}<span>`,
               timer: 2500,
@@ -457,7 +454,6 @@ export class SpiderComponent implements OnInit {
         (data) => { 
           this.toolService.GetAlivesByScope(data['url'], this.actualPage, this.limit, this.scope, this.filter)
           .subscribe(data => {
-            console.log(data);
             this.dataTableValidations(data);
           }, (error) => {
             swal.fire({

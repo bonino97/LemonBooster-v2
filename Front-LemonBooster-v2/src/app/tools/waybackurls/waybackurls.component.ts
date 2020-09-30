@@ -122,7 +122,7 @@ export class WaybackurlsComponent implements OnInit {
           this.toolService.WsExecuteAllWaybackurls(Payload); // Ejecuto herramienta.
         },
         (error) => {
-          console.log(error);
+          console.error(error);
           swal.fire({
             html: `<span style='color:grey'>${error.error.msg}<span>`,
             timer: 2500,
@@ -153,7 +153,7 @@ export class WaybackurlsComponent implements OnInit {
             this.toolService.WsExecuteWaybackurlsBySubdomain(Payload); // Ejecuto herramienta.
           },
           (error) => {
-            console.log(error);
+            console.error(error);
             swal.fire({
               html: `<span style='color:grey'>${error.error.msg}<span>`,
               timer: 2500,
@@ -189,13 +189,12 @@ export class WaybackurlsComponent implements OnInit {
     this.route.params.subscribe((data) => {
       this.toolService.GetWaybackResults(data["url"], scope).subscribe(
         (data) => {
-          console.log(data);
           var file = data.data.File.split("LemonBooster-Results/");
           var url = `${environment.staticUrl}${file[1]}`;
           window.open(url, "_blank");
         },
         (error) => {
-          console.log(error);
+          console.error(error);
           swal.fire({
             html: `<span style='color:grey'>${error.error.msg}<span>`,
             timer: 1500,
@@ -217,7 +216,7 @@ export class WaybackurlsComponent implements OnInit {
             window.open(url, "_blank");
           },
           (error) => {
-            console.log(error);
+            console.error(error);
             swal.fire({
               html: `<span style='color:grey'>${error.error.msg}<span>`,
               timer: 1500,
@@ -372,7 +371,7 @@ export class WaybackurlsComponent implements OnInit {
           )
           .subscribe(
             (data) => {
-              console.log(data);
+
               this.dataTableValidations(data);
             },
             (error) => {

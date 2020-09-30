@@ -166,7 +166,7 @@ export class ResponseCodesComponent implements OnInit {
           window.open(url, "_blank");
 
         }, (error) => {
-          console.log(error);
+          console.error(error);
           swal.fire({
             html: `<span style='color:grey'>${error.error.msg}<span>`,
             timer: 1500,
@@ -266,7 +266,6 @@ export class ResponseCodesComponent implements OnInit {
         (data) => { 
           this.toolService.GetSubdomainResponseCodes(data['url'], this.actualPage, this.limit, this.scope, this.filter)
           .subscribe(data => {
-            console.log(data);
             this.dataTableValidations(data);
           }, (error) => {
             swal.fire({

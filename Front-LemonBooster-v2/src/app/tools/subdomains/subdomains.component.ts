@@ -116,7 +116,6 @@ export class SubdomainsComponent implements OnInit {
   }
 
   executeSubdomainEnumeration(scope){
-    console.log();
     switch(this.selectEnumerationForm.value.enumRadio){
       case 1: 
         this.commonSubdomainEnumeration(scope);
@@ -215,7 +214,7 @@ export class SubdomainsComponent implements OnInit {
           window.open(url, "_blank");
 
         }, (error) => {
-          console.log(error);
+          console.error(error);
           swal.fire({
             html: `<span style='color:grey'>${error.error.msg}<span>`,
             timer: 1500,
@@ -233,7 +232,7 @@ export class SubdomainsComponent implements OnInit {
         .subscribe(data => {
           this.dataTableValidations(data);
         }, (error) => {
-          console.log(error);
+          console.error(error);
           swal.fire({
             html: `<span style='color:grey'>${error.error.msg}<span>`,
             timer: 1500,
@@ -367,7 +366,6 @@ export class SubdomainsComponent implements OnInit {
         (data) => { 
           this.toolService.GetProgramSubdomainsByScope(data['url'], this.actualPage, this.limit, this.scope, this.filter)
           .subscribe(data => {
-            console.log(data);
             this.dataTableValidations(data);
           }, (error) => {
             swal.fire({

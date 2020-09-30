@@ -41,7 +41,7 @@ export class AmassComponent implements OnInit {
           this.program = data.data;
         });
       });
-    this.toolService.GetExecutedAmass().subscribe(data => console.log(data));
+    this.toolService.GetExecutedAmass().subscribe();
   }
 
   onCheckboxChangeAsns(e){
@@ -84,7 +84,6 @@ export class AmassComponent implements OnInit {
         this.toolService.WsExecuteAmassWithASNs(this.asnForm.value); // Ejecuto herramienta.
         this.toolService.ExecuteAmassWithASNs(data['url'], this.asnForm.value) // Guardo resultados.
         .subscribe((data:any) => {
-          console.log(data);
         });
       });
   }
@@ -95,7 +94,6 @@ export class AmassComponent implements OnInit {
         this.toolService.WsExecuteAmassWithCIDRs(this.cidrForm.value); // Ejecuto herramienta.
         this.toolService.ExecuteAmassWithCIDRs(data['url'], this.cidrForm.value) // Guardo resultados.
         .subscribe((data:any) => {
-          console.log(data);
         });
       });
   }
