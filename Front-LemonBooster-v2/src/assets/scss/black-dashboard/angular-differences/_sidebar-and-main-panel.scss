@@ -31,13 +31,13 @@
 }
 .sidebar:before,
 .off-canvas-sidebar:before {
-  border-bottom: 5px solid $danger;
+  border-bottom: 5px solid #00f2c3;
 }
 .sidebar,
 .off-canvas-sidebar {
   &,
   &[data="red"] {
-    @include linear-gradient($danger-states, $danger);
+    @include linear-gradient($success, $success);
   }
   &[data="primary"] {
     @include linear-gradient($primary-states, $primary);

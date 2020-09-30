@@ -5,6 +5,7 @@ import { LoginComponent } from './pages/login/login.component';
 
 
 import { AuthGuard } from './services/auth.guard';
+import { DocsComponent } from './pages/docs/docs.component';
 
 
 const routes: Routes = [
@@ -25,6 +26,7 @@ const routes: Routes = [
       }
     ]
   },
+  { path: 'docs', component: DocsComponent },
   { path: 'login', component: LoginComponent },
   { path: '**', component: LoginComponent }
 ];

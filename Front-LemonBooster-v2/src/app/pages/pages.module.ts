@@ -15,6 +15,7 @@ import { ProgramsComponent } from './programs/programs.component';
 import { ProgramUrlComponent } from './program-url/program-url.component';
 import { EditProgramComponent } from './edit-program/edit-program.component';
 import { ComingSoonComponent } from './coming-soon/coming-soon.component';
+import { DocsComponent } from './docs/docs.component';
 
 
 
@@ -34,7 +35,8 @@ import { ComingSoonComponent } from './coming-soon/coming-soon.component';
     ProgramsComponent,
     ProgramUrlComponent,
     EditProgramComponent,
-    ComingSoonComponent
+    ComingSoonComponent,
+    DocsComponent
   ],
   exports: [
   ]
