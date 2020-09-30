@@ -1,1 +1,135 @@
-<p>register works!</p>
+<div class="full-page register-page">
+    <div class=" content">
+      <div class=" container">
+        
+        <h1 class="text-success">LemonBooster</h1>
+          
+        <div class=" row animate__animated animate__fadeIn">
+          <div class=" col-md-5 ml-auto">
+            <div class=" info-area info-horizontal mt-5">
+              <div class=" icon icon-warning">
+                <i class=" tim-icons icon-triangle-right-17"> </i>
+              </div>
+              <div class=" description">
+                <h3 class=" info-title">Confidentiality</h3>
+              </div>
+            </div>
+            <div class=" info-area info-horizontal">
+              <div class=" icon icon-primary">
+                <i class=" tim-icons icon-wifi"> </i>
+              </div>
+              <div class=" description">
+                <h3 class=" info-title">Integrity </h3>
+              </div>
+            </div>
+            <div class=" info-area info-horizontal">
+              <div class=" icon icon-info">
+                <i class=" tim-icons icon-trophy"> </i>
+              </div>
+              <div class=" description">
+                <h3 class=" info-title">Availability </h3>
+              </div>
+            </div>
+          </div>
+          <div class=" col-md-7 mr-auto animate__animated animate__fadeIn">
+            <div class=" card card-register border card-black">
+              <div class=" card-header">
+                <img
+                  alt="Card image"
+                  class=" card-img"
+                  src="assets/img/card-success.png"
+                />
+  
+                <h5 class="card-title">sign up</h5>
+              </div>
+  
+  
+              <form class=" form" [formGroup]="registerForm" (ngSubmit)="onSubmit()">
+                <div class=" card-body">
+  
+                  <div class=" input-group has-label" [ngClass]="{'input-group-focus': focus === true}">
+  
+                    <div class=" input-group-prepend">
+                      <div class=" input-group-text">
+                        <i class=" tim-icons icon-email-85"> </i>
+                      </div>
+                    </div>
+                    
+                    <input
+                      class=" form-control"
+                      placeholder="Email"
+                      type="text"
+                      (blur)="focus = false"
+                      (focus)="focus = true"
+                      formControlName="email"
+                      [class.is-invalid]="(f.email.invalid) && (f.email.dirty || f.email.touched)"
+                      [class.is-valid]="(!f.email.invalid) && (f.email.dirty || f.email.touched)"
+                      autocomplete="off"
+                    />
+                    <div class="invalid-feedback  animate__animated animate__fadeIn">* Please enter a valid email address.</div>
+  
+                  </div>
+  
+                  <div class=" input-group" [ngClass]="{ 'input-group-focus': focus1 === true }">
+                    <div class=" input-group-prepend">
+                      <div class=" input-group-text">
+                        <i class=" tim-icons icon-key-25"> </i>
+                      </div>
+                    </div>
+                    <input
+                      class=" form-control"
+                      placeholder="Password"
+                      type="password"
+                      (blur)="focus1 = false"
+                      (focus)="focus1 = true"
+                      formControlName="password"
+                      [class.is-invalid]="(f.password.invalid) && (f.password.dirty || f.password.touched)"
+                      [class.is-valid]="(!f.password.invalid) && (f.password.dirty || f.password.touched)"
+                    />
+                    <div class="invalid-feedback  animate__animated animate__fadeIn">* Password must be contains more than 6 characters.</div>
+                  </div>
+  
+                  <div class=" input-group" [ngClass]="{ 'input-group-focus': focus3 === true }">
+                    <div class=" input-group-prepend">
+                      <div class=" input-group-text">
+                        <i class=" tim-icons icon-lock-circle"> </i>
+                      </div>
+                    </div>
+                    <input
+                      class=" form-control"
+                      placeholder="Repeat Password"
+                      type="password"
+                      (blur)="focus3 = false"
+                      (focus)="focus3 = true"
+                      formControlName="repeatPassword"
+                      [class.is-invalid]="(f.repeatPassword.invalid) && (f.repeatPassword.dirty || f.repeatPassword.touched)"
+                      [class.is-valid]="(!f.repeatPassword.invalid) && (f.repeatPassword.dirty || f.repeatPassword.touched)"
+                    />
+                    <div class="invalid-feedback  animate__animated animate__fadeIn">* Passwords must be equals.</div>
+                  </div>
+                  
+                  <div class=" form-check text-left">
+                    <label class=" form-check-label">
+                      
+                      <a [routerLink]="['/login']" routerLinkActive="router-link-active"  href="javascript:void(0)"> ¿Do you already have an account?</a>
+                      
+                    </label>
+                  </div>          
+                </div>
+                <div class=" card-footer">
+                  <button 
+                    [disabled]="registerForm.invalid"
+                    class=" btn btn-success btn-round btn-lg"
+                    type="submit"
+                  >
+                    Register
+                  </button>
+                </div>
+  
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
