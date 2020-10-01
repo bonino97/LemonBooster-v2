@@ -33,7 +33,6 @@ export class ApiService {
 
   PUT(entity, data:any):Observable<any>{
     let params = JSON.stringify(data);
-    console.log(params);
     let headers = new HttpHeaders().set('Content-Type','application/json');
     
     return this.http.put(`${this.url}/${entity}`, params, {
