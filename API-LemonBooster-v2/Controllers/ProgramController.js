@@ -71,7 +71,6 @@ exports.GetPrograms = async (req, res) => {
 
 exports.GetProgram = async (req, res) => {
   try {
-    var programsResult = {};
     const url = req.params.url;
 
     await Programs.findOne({ Url: url }, (err, program) => {
@@ -90,18 +89,9 @@ exports.GetProgram = async (req, res) => {
         });
       }
 
-      programsResult = {
-        _id: program._id,
-        Name: program.Name,
-        Scopes: program.Scopes,
-        Directory: program.Directory,
-        PathDirectory: program.PathDirectory,
-        Url: program.Url,
-      }
-
       return res.status(200).json({
         success: true,
-        data: programsResult,
+        data: program,
       });
     });
   } catch (e) {
