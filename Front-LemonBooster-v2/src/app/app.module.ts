@@ -11,9 +11,9 @@ import { SocketIoModule, SocketIoConfig } from 'ngx-socket-io'; //Sockets
 import { AppRoutingModule } from './app-routing.module';
 import { RouterModule } from '@angular/router';
 import { PagesModule } from './pages/pages.module';
-import { DashboardModule } from './dashboard/dashboard.module';
 import { ComponentsModule } from './components/components.module';
 import { FormsModule } from '@angular/forms';
+import { AuthModule } from './auth/auth.module';
 
 /* COMPONENTS */
 import { AppComponent } from './app.component';
@@ -36,8 +36,8 @@ const config: SocketIoConfig = {
     SocketIoModule.forRoot(config),
     RouterModule,
     PagesModule,
+    AuthModule,
     ComponentsModule,
-    DashboardModule,
     BrowserAnimationsModule,
     FormsModule
   ],

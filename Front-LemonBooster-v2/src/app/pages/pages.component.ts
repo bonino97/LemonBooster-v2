@@ -2,11 +2,11 @@ import { Component, OnInit } from '@angular/core';
 import { Socket } from 'ngx-socket-io';
 
 @Component({
-  selector: 'app-dashboard',
-  templateUrl: './dashboard.component.html',
-  styleUrls: ['./dashboard.component.scss']
+  selector: 'app-pages',
+  templateUrl: './pages.component.html',
+  styleUrls: ['./pages.component.scss']
 })
-export class DashboardComponent implements OnInit {
+export class PagesComponent implements OnInit {
   socketStatus: boolean;
   executing: boolean;
 
@@ -34,5 +34,4 @@ export class DashboardComponent implements OnInit {
       this.executing = true;
     });
   }
-
 }

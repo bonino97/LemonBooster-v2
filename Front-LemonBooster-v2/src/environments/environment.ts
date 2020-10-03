@@ -2,19 +2,19 @@
 // `ng build --prod` replaces `environment.ts` with `environment.prod.ts`.
 // The list of file replacements can be found in `angular.json`.
 
-// export const environment = {
-//   production: false,
-//   staticUrl: 'http://localhost:5000/Static/',
-//   wsUrl: 'http://localhost:5000',
-//   apiUrl: 'http://localhost:5000/api'
-// };
-
 export const environment = {
   production: false,
-  staticUrl: 'http://45.33.18.14:5000/Static/',
-  wsUrl: 'http://45.33.18.14:5000',
-  apiUrl: 'http://45.33.18.14:5000/api'
+  staticUrl: 'http://localhost:5000/Static/',
+  wsUrl: 'http://localhost:5000',
+  apiUrl: 'http://localhost:5000/api'
 };
+
+// export const environment = {
+//   production: false,
+//   staticUrl: 'http://45.33.18.14:5000/Static/',
+//   wsUrl: 'http://45.33.18.14:5000',
+//   apiUrl: 'http://45.33.18.14:5000/api'
+// };
 
 
 /*

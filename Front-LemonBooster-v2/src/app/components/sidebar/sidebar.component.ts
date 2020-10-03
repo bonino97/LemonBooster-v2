@@ -12,37 +12,37 @@ export interface RouteInfo {
 
 export const ROUTES: RouteInfo[] = [
   {
-    path: "/programs",
+    path: "/programs/list",
     title: "Programs",
     type: "link",
     icontype: "tim-icons icon-chart-pie-36",
   },
   {
-    path: "/findomain",
+    path: "/programs/findomain",
     title: "Findomain",
     type: "link",
     icontype: "tim-icons icon-atom",
   },
   {
-    path: "/linkfinder",
+    path: "/programs/linkfinder",
     title: "LinkFinder",
     type: "link",
     icontype: "tim-icons icon-bullet-list-67",
   },
   {
-    path: "/arjun",
+    path: "/programs/arjun",
     title: "Arjun",
     type: "link",
     icontype: "tim-icons icon-app",
   },
   {
-    path: "/dirsearch",
+    path: "/programs/dirsearch",
     title: "Dirsearch",
     type: "link",
     icontype: "tim-icons icon-attach-87",
   },
   {
-    path: "/jsearch",
+    path: "/programs/jsearch",
     title: "JSearch",
     type: "link",
     icontype: "tim-icons icon-paper",

@@ -7,16 +7,17 @@ import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { HttpClientModule } from "@angular/common/http";
 import { ComponentsModule } from './../components/components.module';
 import { TooltipModule } from "ngx-bootstrap/tooltip";
+import { NgxLoadingModule } from 'ngx-loading';
+import { PagesRoutingModule } from './pages-routing.module';
 
 /* COMPONENTS */
-import { LoginComponent } from './login/login.component';
 import { NewProgramComponent } from './new-program/new-program.component';
 import { ProgramsComponent } from './programs/programs.component';
 import { ProgramUrlComponent } from './program-url/program-url.component';
 import { EditProgramComponent } from './edit-program/edit-program.component';
 import { ComingSoonComponent } from './coming-soon/coming-soon.component';
 import { DocsComponent } from './docs/docs.component';
-import { RegisterComponent } from './register/register.component';
+import { PagesComponent } from './pages.component';
 
 
 
@@ -26,19 +27,20 @@ import { RegisterComponent } from './register/register.component';
     RouterModule,
     FormsModule,
     ReactiveFormsModule.withConfig({ warnOnNgModelWithFormControl: "never" }),
+    PagesRoutingModule,
     HttpClientModule,
     ComponentsModule,
     TooltipModule.forRoot(),
+    NgxLoadingModule
   ],
   declarations: [
-    LoginComponent,
     NewProgramComponent,
     ProgramsComponent,
     ProgramUrlComponent,
     EditProgramComponent,
     ComingSoonComponent,
     DocsComponent,
-    RegisterComponent
+    PagesComponent
   ],
   exports: [
   ]
