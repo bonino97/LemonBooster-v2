@@ -23,23 +23,14 @@ exports.ExecuteCompleteScan = async (client) => {
     client.on('execute-complete-scan', async (payload) => {
 
         try {
-            const program = await Program.findOne({Url: payload.Url});
 
-            if(!program){
-                client.emit('completed-scan', {
-                    success: false,
-                    executing: false,
-                    msg: `Doesn't exist program with this URL.`
-                });
-            }
-
-            await ExecuteSubdomainEnumeration(program, payload, client);
-            await ExecuteAlive(program, payload, client);
-            await ExecuteScreenshot(program, payload, client);
-            await ExecuteSubdomainResponseCodes(program, payload, client);
-            await ExecuteWaybackurl(program, payload, client);
-            await ExecuteGoSpider(program, payload, client);
-            await ExecuteHakrawler(program, payload, client);
+            await ExecuteSubdomainEnumeration(payload, client);
+            await ExecuteAlive(payload, client);
+            await ExecuteScreenshot(payload, client);
+            await ExecuteSubdomainResponseCodes(payload, client);
+            await ExecuteWaybackurl(payload, client);
+            await ExecuteGoSpider(payload, client);
+            await ExecuteHakrawler(payload, client);
         
         } 
         catch (e) {
@@ -50,9 +41,20 @@ exports.ExecuteCompleteScan = async (client) => {
 }
 
 
-async function ExecuteSubdomainEnumeration(program, payload, client) {
+async function ExecuteSubdomainEnumeration(payload, client) {
 
     try {
+
+        const program = await Program.findOne({Url: payload.Url});
+
+        if(!program){
+            client.emit('completed-scan', {
+                success: false,
+                executing: false,
+                msg: `Doesn't exist program with this URL.`
+            });
+        }
+
         const enumeration = new Enumerations({
             Directory: CreateSubdomainEnumerationDirectory(program),
             Scope: payload.Scope,
@@ -60,7 +62,6 @@ async function ExecuteSubdomainEnumeration(program, payload, client) {
             Type: 1, // Tipo 1 = Subdomain Enumeration.
             Executed: false
         });
-
 
         if(enumeration) {
             var firstExecution = false;
@@ -145,6 +146,7 @@ async function ExecuteSubdomainEnumeration(program, payload, client) {
             }
     
             monitoring.save();
+            program.save();
     
             client.emit('completed-scan', {
                 success: true,
@@ -164,8 +166,18 @@ async function ExecuteSubdomainEnumeration(program, payload, client) {
 
 }
 
-async function ExecuteAlive(program, payload, client){
+async function ExecuteAlive(payload, client){
     try {
+
+        const program = await Program.findOne({Url: payload.Url});
+
+        if(!program){
+            client.emit('completed-scan', {
+                success: false,
+                executing: false,
+                msg: `Doesn't exist program with this URL.`
+            });
+        }
 
         const enumeration = new Enumerations({
             Directory: CreateAliveDirectory(program),
@@ -247,6 +259,7 @@ async function ExecuteAlive(program, payload, client){
             }
     
             monitoring.save();
+            program.save();
     
             client.emit('completed-scan', {
                 success: true,
@@ -265,8 +278,18 @@ async function ExecuteAlive(program, payload, client){
     }
 }
 
-async function ExecuteScreenshot(program, payload, client) {
+async function ExecuteScreenshot(payload, client) {
     try {
+
+        const program = await Program.findOne({Url: payload.Url});
+
+        if(!program){
+            client.emit('completed-scan', {
+                success: false,
+                executing: false,
+                msg: `Doesn't exist program with this URL.`
+            });
+        }
 
         const executedEnumeration = await Enumerations.findOne({Program: program._id, Type: 3, Scope: payload.Scope});
     
@@ -332,8 +355,19 @@ async function ExecuteScreenshot(program, payload, client) {
     }        
 }
 
-async function ExecuteSubdomainResponseCodes(program, payload, client) {
+async function ExecuteSubdomainResponseCodes(payload, client) {
     try {
+
+        const program = await Program.findOne({Url: payload.Url});
+
+        if(!program){
+            client.emit('completed-scan', {
+                success: false,
+                executing: false,
+                msg: `Doesn't exist program with this URL.`
+            });
+        }
+
         const enumeration = new Enumerations({
             Directory: CreateResponseCodesDirectory(program),
             Scope: payload.Scope,
@@ -429,6 +463,7 @@ async function ExecuteSubdomainResponseCodes(program, payload, client) {
             }
     
             monitoring.save();
+            program.save();
 
             client.emit('completed-scan', {
                 success: true,
@@ -451,8 +486,18 @@ async function ExecuteSubdomainResponseCodes(program, payload, client) {
     }
 }
 
-async function ExecuteWaybackurl(program, payload, client) {
+async function ExecuteWaybackurl(payload, client) {
     try {
+
+        const program = await Program.findOne({Url: payload.Url});
+
+        if(!program){
+            client.emit('completed-scan', {
+                success: false,
+                executing: false,
+                msg: `Doesn't exist program with this URL.`
+            });
+        }
 
         const discovery = new Discoveries({
             Directory: CreateWaybackurlDirectory(program),
@@ -534,6 +579,7 @@ async function ExecuteWaybackurl(program, payload, client) {
             }
     
             monitoring.save();
+            program.save();
     
             client.emit('completed-scan', {
                 success: true,
@@ -554,8 +600,18 @@ async function ExecuteWaybackurl(program, payload, client) {
     }
 }
 
-async function ExecuteGoSpider(program, payload, client) {
+async function ExecuteGoSpider(payload, client) {
     try {
+
+        const program = await Program.findOne({Url: payload.Url});
+
+        if(!program){
+            client.emit('completed-scan', {
+                success: false,
+                executing: false,
+                msg: `Doesn't exist program with this URL.`
+            });
+        }
 
         const discovery = new Discoveries({
             Directory: CreateSpiderDirectory(program),
@@ -637,7 +693,8 @@ async function ExecuteGoSpider(program, payload, client) {
             }
     
             monitoring.save();
-    
+            program.save();
+
             client.emit('completed-scan', {
                 success: true,
                 executing: false,
@@ -657,8 +714,18 @@ async function ExecuteGoSpider(program, payload, client) {
     }
 }
 
-async function ExecuteHakrawler(program, payload, client) {
+async function ExecuteHakrawler(payload, client) {
     try {
+
+        const program = await Program.findOne({Url: payload.Url});
+
+        if(!program){
+            client.emit('completed-scan', {
+                success: false,
+                executing: false,
+                msg: `Doesn't exist program with this URL.`
+            });
+        }
 
         const discovery = new Discoveries({
             Directory: CreateSpiderDirectory(program),
