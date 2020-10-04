@@ -12,14 +12,9 @@ const date = dateFormat(new Date(), "yyyy-mm-dd-HH-MM");
 
 const GO_DIR=`${process.env.GO_DIR}`;
 const TOOLS_DIR=`${process.env.TOOLS_DIR}`;
-const GOBUSTERDNS_DICT =`${process.env.GOBUSTERDNS_DICT}`;
-const GIT_TOKEN = `${process.env.GIT_TOKEN}`;
 
 const LIST_DIR=`${process.env.LIST_DIR}`;
 
-const APIKEY_VIRUSTOTAL = `${process.env.APIKEY_VIRUSTOTAL}`;
-const APIKEY_FB_TOKEN = `${process.env.APIKEY_FB_TOKEN}`;
-const APIKEY_SECURITYTRAILS = `${process.env.APIKEY_SECURITYTRAILS}`;
 
 const allSubdomainsFile = '';
 const allAlivesFile = '';
@@ -48,7 +43,7 @@ exports.ExecuteCompleteScan = async (client) => {
         
         } 
         catch (e) {
-            
+            console.error(e)
         }
 
     });
