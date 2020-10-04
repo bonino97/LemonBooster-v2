@@ -52,7 +52,7 @@ export class NewProgramComponent implements OnInit {
               timer: 1200,
               showConfirmButton: false
             }).then( () => {
-              this.router.navigate([`/programs`]);
+              this.router.navigate([`/programs/list`]);
             });
           }
       }, (error) => {

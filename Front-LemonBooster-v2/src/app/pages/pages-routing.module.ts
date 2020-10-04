@@ -9,10 +9,10 @@ import { NgModule } from '@angular/core';
 
 
 const PagesRoutes: Routes = [
-  { path: 'list', component: ProgramsComponent }, 
-  { path: 'new-program', component: NewProgramComponent },
-  { path: ':url/edit', component: EditProgramComponent },
-  { path: ':url', component: ProgramUrlComponent },
+  { path: 'programs/list', component: ProgramsComponent }, 
+  { path: 'programs/new-program', component: NewProgramComponent },
+  { path: 'programs/:url/edit', component: EditProgramComponent },
+  { path: 'programs/:url', component: ProgramUrlComponent },
 
   { path: 'findomain', component: ComingSoonComponent },
   { path: 'linkfinder', component: ComingSoonComponent },
