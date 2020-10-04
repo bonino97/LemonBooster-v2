@@ -15,8 +15,7 @@ const appRoutes: Routes = [
     path: '',
     component: PagesComponent,
     loadChildren: () => import('./pages/pages.module').then(m => m.PagesModule),
-    canActivate: [AuthGuard],
-    canLoad: [AuthGuard]
+    canActivate: [AuthGuard]
   },
   {
     path: 'docs',
