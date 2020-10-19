@@ -23,7 +23,12 @@ const appRoutes: Routes = [
   },
   {
     path: '**',
-    redirectTo: 'auth/login'
+    redirectTo: 'programs/list'
+  },
+  {
+    path: '',
+    redirectTo: 'programs/list',
+    pathMatch: 'full'
   }
 ];
 
