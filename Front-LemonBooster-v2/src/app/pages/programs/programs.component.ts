@@ -22,9 +22,9 @@ export class ProgramsComponent implements OnInit {
       this.programs = data.data;  
       this.executing = false;
     }, (error:any) => {
+      this.executing = false;
       if(!error.error.success && error.status === 404){
         this.error = error.error.msg;
-        this.executing = false;
       }
       console.error(error);
     });

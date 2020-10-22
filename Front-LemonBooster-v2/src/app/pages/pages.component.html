@@ -4,16 +4,7 @@
       <app-navbar></app-navbar>
   
       <div class="content">
-        <ngx-loading
-          [show]="executing"
-          [config]="{
-            backdropBorderRadius: '3px',
-            primaryColour: '#00f2c3',
-            secondaryColour: '#00f2c3',
-            tertiaryColour: '#00f2c3'
-          }"
-        ></ngx-loading>
-        <router-outlet *ngIf="!executing"></router-outlet>
+        <router-outlet></router-outlet>
       </div>
     </div>
   </div>
