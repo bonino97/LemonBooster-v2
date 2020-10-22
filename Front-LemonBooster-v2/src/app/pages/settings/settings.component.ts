@@ -50,6 +50,7 @@ export class SettingsComponent implements OnInit {
         this.formControls.IpVPS.setValue(data.data.IpVPS);
         localStorage.setItem('IpVPS', data.data.IpVPS);
         this.loading = false;
+        location.reload();
       },
       (error: any) => {
         swal.fire({
