@@ -20,10 +20,12 @@ require('dotenv').config({path: '.env'});
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended:true}));
 
-app.use(cors({
-    origin: ['http://localhost:5001', 'http://127.0.0.1:5001', 'http://lemonsec.com', 'http://booster.lemonsec.com', 'https://lemonsec.com', 'https://booster.lemonsec.com, http://beta.lemonbooster.com, https://beta.lemonbooster.com, http://lemonbooster.com, https://lemonbooster.com'],
-    credentials: true
-})); // Initializing CORS, dont remember import.
+// app.use(cors({
+//     origin: ['http://localhost:5001', 'http://127.0.0.1:5001', 'http://lemonsec.com', 'http://booster.lemonsec.com', 'https://lemonsec.com', 'https://booster.lemonsec.com, http://beta.lemonbooster.com, https://beta.lemonbooster.com, http://lemonbooster.com, https://lemonbooster.com'],
+//     credentials: true
+// })); // Initializing CORS, dont remember import.
+
+app.use(cors());
 
 /* ROUTES */
 const IndexRoutes = require('./Routes/IndexRoutes');
