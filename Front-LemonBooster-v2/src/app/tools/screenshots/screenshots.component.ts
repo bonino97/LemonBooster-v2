@@ -126,7 +126,7 @@ export class ScreenshotsComponent implements OnInit {
         this.toolService.GetScreenshotsFile(data['url'], scope).subscribe(
           (data:any) => {
             this.screenshotFile = data.data.UrlFile;
-            window.open(`${environment.staticUrl}${this.screenshotFile}`, "_blank");
+            window.open(`http://${localStorage.getItem('IpVPS')}:5000/Static/${this.screenshotFile}`, "_blank");
           },(error) => {
           swal.fire({
             html: `<span style='color:grey'>${error.error.msg}<span>`,

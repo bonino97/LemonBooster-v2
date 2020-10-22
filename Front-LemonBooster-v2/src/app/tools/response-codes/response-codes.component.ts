@@ -162,7 +162,7 @@ export class ResponseCodesComponent implements OnInit {
         .subscribe(data => {
           
           var file = data.data.File.split('LemonBooster-Results/');
-          var url = `${environment.staticUrl}${file[1]}`;
+          var url = `http://${localStorage.getItem('IpVPS')}:5000/Static/${file[1]}`;
           window.open(url, "_blank");
 
         }, (error) => {

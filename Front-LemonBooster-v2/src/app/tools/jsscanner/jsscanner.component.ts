@@ -130,7 +130,7 @@ export class JsscannerComponent implements OnInit {
         this.toolService.GetJSFile(data['url'], this.scope, alive).subscribe(
           (data:any) => {
             this.jsFile = data.data.UrlFile;
-            window.open(`${environment.staticUrl}${this.jsFile}`, "_blank");
+            window.open(`http://${localStorage.getItem('IpVPS')}:5000/Static/${this.jsFile}`, "_blank");
           },(error) => {
           swal.fire({
             html: `<span style='color:grey'>${error.error.msg}<span>`,

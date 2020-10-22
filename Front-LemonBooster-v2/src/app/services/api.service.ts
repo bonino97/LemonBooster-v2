@@ -14,7 +14,7 @@ export class ResponseGeneric {
 })
 export class ApiService {
 
-  url = 'http://'+localStorage.getItem('IpVPS')+':5000/api';
+  url = `http://${localStorage.getItem('IpVPS')}:5000/api`;
 
   constructor(
     private http: HttpClient,

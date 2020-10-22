@@ -144,7 +144,7 @@ export class SpiderComponent implements OnInit {
         .subscribe(data => {
           
           var file = data.data.File.split('LemonBooster-Results');
-          var url = `${environment.staticUrl}${file[1]}`;
+          var url = `http://${localStorage.getItem('IpVPS')}:5000/Static/${file[1]}`;
           window.open(url, "_blank");
 
         }, (error) => {
@@ -164,7 +164,7 @@ export class SpiderComponent implements OnInit {
         this.toolService.GetGoSpiderResultsBySubdomain(data['url'], this.scope, subdomain)
         .subscribe(data => {
           var file = data.data.File.split('LemonBooster-Results/');
-          var url = `${environment.staticUrl}${file[1]}`;
+          var url = `http://${localStorage.getItem('IpVPS')}:5000/Static/${file[1]}`;
           window.open(url, "_blank");
 
         }, (error) => {
@@ -186,7 +186,7 @@ export class SpiderComponent implements OnInit {
         .subscribe(data => {
           
           var file = data.data.File.split('LemonBooster-Results');
-          var url = `${environment.staticUrl}${file[1]}`;
+          var url = `http://${localStorage.getItem('IpVPS')}:5000/Static/${file[1]}`;
           window.open(url, "_blank");
 
         }, (error) => {
@@ -206,7 +206,7 @@ export class SpiderComponent implements OnInit {
         this.toolService.GetHakrawlerResultsBySubdomain(data['url'], this.scope, subdomain)
         .subscribe(data => {
           var file = data.data.File.split('LemonBooster-Results/');
-          var url = `${environment.staticUrl}${file[1]}`;
+          var url = `http://${localStorage.getItem('IpVPS')}:5000/Static/${file[1]}`;
           window.open(url, "_blank");
 
         }, (error) => {
