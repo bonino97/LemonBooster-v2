@@ -1,10 +1,5 @@
 #!/bin/bash
 
-echo "Updating Packages..."
-
-sudo apt-get -y update
-sudo apt-get -y upgrade
-
 echo "Installing GNUPG..."
 sudo apt-get install gnupg
 
