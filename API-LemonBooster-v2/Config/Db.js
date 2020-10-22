@@ -5,9 +5,9 @@ require('dotenv').config({path: '.env'});
 mongoose.connect(process.env.DB, { 
     useNewUrlParser: true,  
     useFindAndModify: false,    
-    socketTimeoutMS: 30000,
+    socketTimeoutMS: 300000,
     keepAlive: true,
-    reconnectTries: 30000 
+    reconnectTries: 300000
 }, (err, res) => { 
     if(err){
         throw err;
