@@ -23,7 +23,7 @@ import { environment } from 'src/environments/environment';
 
 
 const config: SocketIoConfig = { 
-  url: environment.wsUrl, options: {} 
+  url: `http://${localStorage.getItem('IpVPS')}:5000`, options: {} 
 };
 
 @NgModule({

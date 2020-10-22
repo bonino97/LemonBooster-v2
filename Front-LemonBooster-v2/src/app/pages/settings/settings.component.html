@@ -1,0 +1,55 @@
+<div class="row animate__animated animate__fadeIn">
+  <div class="col-lg-6">
+    <div class="card border">
+      <div class="card-header">
+        <div class="row">
+          <div class="col-md-9">
+            <p class="category">Add your configuration</p>
+          </div>
+          <div class="col-md-3">
+            <button
+              class="btn btn-danger btn-sm btn-simple pull-right"
+              [routerLink]="['/programs/list']"
+            >
+              <i class="fas fa-arrow-left"></i>
+            </button>
+          </div>
+        </div>
+      </div>
+      <div class="card-body">
+        <form [formGroup]="form" (ngSubmit)="addSettings()">
+          <div class="row">
+            <div class="col-md-12">
+              <div class="form-group">
+                <label for="program">
+                  VPS Ip: &nbsp;&nbsp;&nbsp;<span
+                    style="color: rgb(241, 66, 66)"
+                    >* Only IP, Without PORT & Without HTTP</span
+                  ></label
+                >
+                <input
+                  formControlName="IpVPS"
+                  class="form-control"
+                  placeholder="Add the IP for your VPS."
+                  type="text"
+                  required
+                />
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-6 ml-auto mr-auto">
+              <button
+                class="btn btn-success btn-sm btn-simple btn-block"
+                type="submit"
+                [disabled]="form.invalid"
+              >
+                Submit
+              </button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

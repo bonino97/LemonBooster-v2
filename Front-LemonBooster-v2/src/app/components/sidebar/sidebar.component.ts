@@ -1,4 +1,5 @@
 import { Component, OnInit } from "@angular/core";
+import { Router } from "@angular/router";
 
 export interface RouteInfo {
   path: string;
@@ -18,35 +19,53 @@ export const ROUTES: RouteInfo[] = [
     icontype: "tim-icons icon-chart-pie-36",
   },
   {
-    path: "/findomain",
-    title: "Findomain",
+    path: "/settings",
+    title: "Settings",
+    type: "link",
+    icontype: "tim-icons icon-settings-gear-63",
+  },
+  {
+    path: "/tools",
+    title: "tools",
     type: "link",
     icontype: "tim-icons icon-atom",
   },
   {
-    path: "/linkfinder",
-    title: "LinkFinder",
+    path: "/profile",
+    title: "Profile",
     type: "link",
-    icontype: "tim-icons icon-bullet-list-67",
+    icontype: "tim-icons icon-single-02",
   },
-  {
-    path: "/arjun",
-    title: "Arjun",
-    type: "link",
-    icontype: "tim-icons icon-app",
-  },
-  {
-    path: "/dirsearch",
-    title: "Dirsearch",
-    type: "link",
-    icontype: "tim-icons icon-attach-87",
-  },
-  {
-    path: "/jsearch",
-    title: "JSearch",
-    type: "link",
-    icontype: "tim-icons icon-paper",
-  },
+  // {
+  //   path: "/findomain",
+  //   title: "Findomain",
+  //   type: "link",
+  //   icontype: "tim-icons icon-atom",
+  // },
+  // {
+  //   path: "/linkfinder",
+  //   title: "LinkFinder",
+  //   type: "link",
+  //   icontype: "tim-icons icon-bullet-list-67",
+  // },
+  // {
+  //   path: "/arjun",
+  //   title: "Arjun",
+  //   type: "link",
+  //   icontype: "tim-icons icon-app",
+  // },
+  // {
+  //   path: "/dirsearch",
+  //   title: "Dirsearch",
+  //   type: "link",
+  //   icontype: "tim-icons icon-attach-87",
+  // },
+  // {
+  //   path: "/jsearch",
+  //   title: "JSearch",
+  //   type: "link",
+  //   icontype: "tim-icons icon-paper",
+  // },
 ];
 
 @Component({
@@ -57,9 +76,14 @@ export const ROUTES: RouteInfo[] = [
 export class SidebarComponent implements OnInit {
   menuItems: any;
 
-  constructor() {}
+  constructor(private router: Router) {}
 
   ngOnInit() {
     this.menuItems = ROUTES.filter((menuItem) => menuItem);
+  }
+
+  logout() {
+    localStorage.removeItem("LemonToken");
+    this.router.navigate(["auth/login"]);
   }
 }

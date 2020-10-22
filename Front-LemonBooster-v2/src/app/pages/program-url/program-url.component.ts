@@ -35,7 +35,7 @@ export class ProgramUrlComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-
+    this.executing = true;
     this.checkStatus();
 
     this.route.params.subscribe(
@@ -43,7 +43,9 @@ export class ProgramUrlComponent implements OnInit {
         this.programService.GetProgram(data['url'])
         .subscribe((data) => {
           this.program = data.data;
+          this.executing = false;
         }, (error) => {
+          this.executing = false;
           if(!error.error.success){
             this.error = error.error.msg;
           }

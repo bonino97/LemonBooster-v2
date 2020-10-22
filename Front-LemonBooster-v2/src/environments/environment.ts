@@ -6,7 +6,8 @@ export const environment = {
   production: false,
   staticUrl: 'http://localhost:5000/Static/',
   wsUrl: 'http://localhost:5000',
-  apiUrl: 'http://localhost:5000/api'
+  apiUrl: 'http://localhost:5000/api',
+  authUrl: 'http://localhost:3000/api'
 };
 
 // export const environment = {

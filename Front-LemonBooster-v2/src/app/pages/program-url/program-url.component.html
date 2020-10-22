@@ -111,6 +111,16 @@
   </div>
 </div>
 
+<ngx-loading
+  [show]="executing"
+  [config]="{
+    backdropBorderRadius: '3px',
+    primaryColour: '#00f2c3',
+    secondaryColour: '#00f2c3',
+    tertiaryColour: '#00f2c3'
+  }"
+></ngx-loading>
+
 <app-seeds *ngIf="_openSeeds"></app-seeds>
 <app-enumeration *ngIf="_openEnum"></app-enumeration>
 <app-discovery *ngIf="_openDiscovery"></app-discovery>

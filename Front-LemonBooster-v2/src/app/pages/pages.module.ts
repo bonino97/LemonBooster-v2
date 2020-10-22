@@ -18,6 +18,8 @@ import { EditProgramComponent } from './edit-program/edit-program.component';
 import { ComingSoonComponent } from './coming-soon/coming-soon.component';
 import { DocsComponent } from './docs/docs.component';
 import { PagesComponent } from './pages.component';
+import { SettingsComponent } from './settings/settings.component';
+import { ProfileComponent } from './profile/profile.component';
 
 
 
@@ -40,7 +42,9 @@ import { PagesComponent } from './pages.component';
     EditProgramComponent,
     ComingSoonComponent,
     DocsComponent,
-    PagesComponent
+    PagesComponent,
+    SettingsComponent,
+    ProfileComponent
   ],
   exports: [
   ]

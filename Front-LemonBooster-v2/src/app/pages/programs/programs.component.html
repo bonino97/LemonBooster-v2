@@ -1,26 +1,50 @@
 <app-programs-navbar></app-programs-navbar>
 <div class="row animate__animated animate__fadeIn" *ngIf="!!programs">
-    <div class="col-md-4" *ngFor="let program of programs">
-        <div class="card border">
-            <div class="card-body text-center">
-                <h4 class="card-title">Program:<span class="text-success ml-2 font-weight-bold">{{program.Name}}</span></h4>
-            </div>
-            <div class="card-footer">
-                <button class="btn btn-success btn-simple btn-sm" [routerLink]="['/programs', program.Url]" ><i class="fas fa-play"></i></button>
-                <button class="btn btn-danger btn-simple btn-sm pull-right" (click)="removeProgram(program._id)" ><i class="fas fa-trash-alt"></i></button>
-            </div>
-        </div>
+  <div class="col-md-4" *ngFor="let program of programs">
+    <div class="card border">
+      <div class="card-body text-center">
+        <h4 class="card-title">
+          Program:<span class="text-success ml-2 font-weight-bold">{{
+            program.Name
+          }}</span>
+        </h4>
+      </div>
+      <div class="card-footer">
+        <button
+          class="btn btn-success btn-simple btn-sm"
+          [routerLink]="['/programs', program.Url]"
+        >
+          <i class="fas fa-play"></i>
+        </button>
+        <button
+          class="btn btn-danger btn-simple btn-sm pull-right"
+          (click)="removeProgram(program._id)"
+        >
+          <i class="fas fa-trash-alt"></i>
+        </button>
+      </div>
     </div>
+  </div>
 </div>
 
 <div class="row mt-3 animate__animated animate__fadeIn" *ngIf="!!error">
-    <div class="col-md-4 ml-auto mr-auto text-center">
-        <div class="card">
-            <div class="card-body border-danger">
-                <h3 class="font-weight-bold text-danger">
-                    {{error}}
-                </h3>
-            </div>
-        </div>
+  <div class="col-md-4 ml-auto mr-auto text-center">
+    <div class="card">
+      <div class="card-body border-danger">
+        <h3 class="font-weight-bold text-danger">
+          {{ error }}
+        </h3>
+      </div>
     </div>
+  </div>
 </div>
+
+<ngx-loading
+  [show]="executing"
+  [config]="{
+    backdropBorderRadius: '3px',
+    primaryColour: '#00f2c3',
+    secondaryColour: '#00f2c3',
+    tertiaryColour: '#00f2c3'
+  }"
+></ngx-loading>

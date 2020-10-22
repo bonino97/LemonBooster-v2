@@ -14,13 +14,14 @@ export class ResponseGeneric {
 })
 export class ApiService {
 
-  url = environment.apiUrl;
+  url = 'http://'+localStorage.getItem('IpVPS')+':5000/api';
 
   constructor(
     private http: HttpClient,
     
-  ) { console.log('API') }
-
+  ) { 
+    console.log('API');  
+  }
 
   POST(entity, data:any):Observable<any>{
     let params = JSON.stringify(data);

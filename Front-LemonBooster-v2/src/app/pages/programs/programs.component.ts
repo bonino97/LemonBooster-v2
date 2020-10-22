@@ -11,16 +11,20 @@ import swal from "sweetalert2";
 export class ProgramsComponent implements OnInit {
   programs:any[] = [];
   error: any;
+  executing = false;
   constructor(
     public programService: ProgramService,
     private router: Router) { }
 
   ngOnInit(): void {
+    this.executing = true;
     this.programService.GetPrograms().subscribe((data:any) => {
       this.programs = data.data;  
+      this.executing = false;
     }, (error:any) => {
       if(!error.error.success && error.status === 404){
         this.error = error.error.msg;
+        this.executing = false;
       }
       console.error(error);
     });
