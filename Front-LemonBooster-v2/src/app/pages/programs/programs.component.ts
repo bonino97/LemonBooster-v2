@@ -2,6 +2,7 @@ import { ProgramService } from './../../services/program.service';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import swal from "sweetalert2";
+import { Socket } from 'ngx-socket-io';
 
 @Component({
   selector: 'app-programs',
@@ -12,12 +13,16 @@ export class ProgramsComponent implements OnInit {
   programs:any[] = [];
   error: any;
   executing = false;
+  socketStatus: boolean = true;
+
   constructor(
     public programService: ProgramService,
-    private router: Router) { }
+    private router: Router,
+    public socket: Socket,) { }
 
   ngOnInit(): void {
     this.executing = true;
+    this.checkStatus();
     this.programService.GetPrograms().subscribe((data:any) => {
       this.programs = data.data;  
       this.executing = false;
@@ -70,6 +75,21 @@ export class ProgramsComponent implements OnInit {
         });
       }
     })
+  }
+
+  checkStatus(){
+    
+    this.socket.on('connect', () => {
+      console.log('Connected to Server.');
+      this.socketStatus = true;
+      this.executing = false;
+    });
+
+    this.socket.on('disconnect', () => {
+      console.log('Disconnected from Server.');
+      this.socketStatus = false;
+      this.executing = true;
+    });
   }
 
 }

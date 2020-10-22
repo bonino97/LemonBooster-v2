@@ -41,7 +41,6 @@ export class SubdomainsComponent implements OnInit {
   program:any;
   subdomainEnumeration:any;
   wsSubdomainEnumeration:any;
-  socketStatus: boolean = false;
   executing: boolean = false;
 
   selectEnumerationForm: FormGroup;
@@ -103,14 +102,12 @@ export class SubdomainsComponent implements OnInit {
 
   checkStatus(){
     this.socket.on('connect', () => {
-      console.log('Connected to Server.');
-      this.socketStatus = true;
+      console.log('Connected to Server.');;
       this.executing = false;
     });
 
     this.socket.on('disconnect', () => {
       console.log('Disconnected from Server.');
-      this.socketStatus = false;
       this.executing = true;
     });
   }

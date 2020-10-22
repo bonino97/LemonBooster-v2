@@ -1,6 +1,5 @@
 
-<div class="card border animate__animated animate__fadeIn">
-  <ngx-loading [show]="executing" [config]="{ backdropBorderRadius: '3px', primaryColour: '#00f2c3', secondaryColour: '#00f2c3', tertiaryColour: '#00f2c3'}"></ngx-loading>
+<div class="card border animate__animated animate__fadeIn" *ngIf="!!program && !executing">
     <div class="card-header">
         <div class="row">
           <div class="col-md-9">
@@ -11,7 +10,7 @@
     </div>
 
     <div class="card-body animate__animated animate__fadeIn" >
-      <div class=" table-full-width" *ngIf="!!program && !executing">
+      <div class=" table-full-width">
         <table class=" table">
           <thead class=" text-primary">
             <tr>

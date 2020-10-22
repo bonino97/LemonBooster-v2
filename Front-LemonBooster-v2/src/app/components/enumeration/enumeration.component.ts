@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Socket } from 'ngx-socket-io';
 
 @Component({
   selector: 'app-enumeration',
@@ -12,11 +13,26 @@ export class EnumerationComponent implements OnInit {
   _screenshots: boolean = false;
   _jsscanner: boolean = false;
   _responseCodes: boolean = false;
+  executing: boolean = false;
 
-  constructor() { }
+  constructor(public socket: Socket,) { }
 
   ngOnInit(): void {
+    this.checkStatus();
   }
+
+  checkStatus(){
+    this.socket.on('connect', () => {
+      console.log('Connected to Server.');;
+      this.executing = false;
+    });
+
+    this.socket.on('disconnect', () => {
+      console.log('Disconnected from Server.');
+      this.executing = true;
+    });
+  }
+
 
   open(value){
     switch(value){

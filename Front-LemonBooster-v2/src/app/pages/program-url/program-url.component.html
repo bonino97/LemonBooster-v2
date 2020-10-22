@@ -1,15 +1,15 @@
 <div class="row mt-3 animate__animated animate__fadeIn" *ngIf="!!program">
-  <ngx-loading
-    [show]="executing"
-    [config]="{
-      backdropBorderRadius: '3px',
-      primaryColour: '#00f2c3',
-      secondaryColour: '#00f2c3',
-      tertiaryColour: '#00f2c3'
-    }"
-  ></ngx-loading>
   <div class="col-md-6 ml-auto mr-auto">
     <div class="card border">
+      <ngx-loading
+        [show]="executing"
+        [config]="{
+          backdropBorderRadius: '3px',
+          primaryColour: '#00f2c3',
+          secondaryColour: '#00f2c3',
+          tertiaryColour: '#00f2c3'
+        }"
+      ></ngx-loading>
       <div class="card-header">
         <div class="row">
           <div class="col-md-12">
@@ -110,18 +110,9 @@
     </div>
   </div>
 </div>
-
-<ngx-loading
-  [show]="executing"
-  [config]="{
-    backdropBorderRadius: '3px',
-    primaryColour: '#00f2c3',
-    secondaryColour: '#00f2c3',
-    tertiaryColour: '#00f2c3'
-  }"
-></ngx-loading>
-
-<app-seeds *ngIf="_openSeeds"></app-seeds>
-<app-enumeration *ngIf="_openEnum"></app-enumeration>
-<app-discovery *ngIf="_openDiscovery"></app-discovery>
-<app-monitoring *ngIf="_openMonitoring"></app-monitoring>
+<app-seeds
+  *ngIf="(_openSeeds && !executing)"
+></app-seeds>
+<app-enumeration *ngIf="_openEnum && !executing"></app-enumeration>
+<app-discovery *ngIf="_openDiscovery && !executing"></app-discovery>
+<app-monitoring *ngIf="_openMonitoring && !executing"></app-monitoring>

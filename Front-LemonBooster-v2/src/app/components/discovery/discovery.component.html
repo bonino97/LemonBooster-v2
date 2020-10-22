@@ -23,8 +23,8 @@
         </div>
     </div>
     <div class="col-md-9">
-        <app-waybackurls *ngIf="_waybackurls"></app-waybackurls>
-        <app-spider *ngIf="_spider"></app-spider>
-        <app-directory-bruteforce *ngIf="_directoryBruteforce"></app-directory-bruteforce>
+        <app-waybackurls *ngIf="_waybackurls !executing"></app-waybackurls>
+        <app-spider *ngIf="_spider !executing"></app-spider>
+        <app-directory-bruteforce *ngIf="_directoryBruteforce !executing"></app-directory-bruteforce>
     </div>
 </div>
