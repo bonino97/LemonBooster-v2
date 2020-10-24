@@ -46,12 +46,14 @@
 ### Monitoring Results
 ![Monitoring](https://i.pinimg.com/originals/ae/eb/91/aeeb91efda9925e58b558c73820995c0.jpg)
 
-## ¿Why use LemonBooster?
+## Features: 
 
-- Because you can run tools with one click.
-- Because you going to monitor the new results.
-- Because you will save results in a database and not in hundreds of txts. More organized for you.
-- Because you will be able to play from anywhere, without having to open your terminal.
-- Because it will continue in development, this is the beta phase.
-- Because it is free.
-- Because it is made with love, the same love that you have for security.
+- OneClick complete Scanning. [Run Subdomain Enumeration, Alives, Screenshots, Spidering]  
+- Subdomain Enumerations. [Findomain, Subfinder, Assetfinder, Amass, Github Search, Permutations]
+- Alives. [Httprobe]
+- Subdomain Response Codes. [Hakcheckurl]
+- Screenshots. [Aquatone]
+- Js Scanning. [Linkfinder]
+- Waybackurls. [Waybackurls]
+- Spidering. [GoSpider, Hakrawler].
+- Dir Bruteforcing. [Dirsearch].
