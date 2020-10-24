@@ -28,6 +28,7 @@ sudo apt-get install -y rustc
 sudo apt-get install -y make
 sudo apt-get install -y nodejs
 sudo apt-get install -y chromium-browser
+sudo apt-get install -y npm
 
 echo "Installing GNUPG..."
 sudo apt-get install gnupg
@@ -260,7 +261,3 @@ cargo build --release
 sudo cp target/release/findomain /usr/bin/
 cd ~/tools/
 echo "Done!"
-
-
-
-echo "Dont forget to set-up AWS APIKey & GITHub APIKey"

@@ -28,6 +28,7 @@ sudo apt-get install -y rustc
 sudo apt-get install -y make
 sudo apt-get install -y nodejs
 sudo apt-get install -y chromium-browser
+sudo apt-get install -y npm
 
 echo "Installing GNUPG..."
 sudo apt-get install gnupg
