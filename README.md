@@ -22,7 +22,7 @@
     - If you have a VPS with Ubuntu 18.04. → ```chmod +x Install-LemonBooster-Ubuntu18.04.sh```
 
 8. Run the Installer → ```./Install-LemonBooster-Ubuntu20.04.sh```
-    - The script gonna install the database for save results, all the tools used by the tool and all the requireds dependencies.
+    - The script gonna install the database for save results, all the tools used by LemonBooster and all the requireds dependencies.
     - The installer leave your VPS ready to configure on the WEB.
 
 9. Once the Installer finish. Go to [Settings](http://beta.lemonbooster.com/settings). and load the VPS Ip .
