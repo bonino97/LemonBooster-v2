@@ -29,7 +29,7 @@
 
 10. If everything installed correctly, you should see [Status: ✔ ]. In the left Sidebar options.
 
-11. IMPORTANT! → If you want to see the proccess running:
+11. **IMPORTANT!** → If you want to see the proccess running:
     - Go to Config Folder → ```cd ~/tools/LemonBooster-v2/Config-LemonBooster-v2```
     - Give privileges to the ViewExecution SH. → ```chmod +x ViewExecution.sh```
     - Run SH. → ```./ViewExecution.sh```
