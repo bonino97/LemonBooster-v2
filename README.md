@@ -1,6 +1,6 @@
 # LemonBooster-v2
 
-### Register on → http://beta.lemonbooster.com/auth/register
+#### Register on → http://beta.lemonbooster.com/auth/register
 
 ## ¿How to Run?
 
@@ -82,5 +82,6 @@ Many thanks to the tools developers <3
 
 #### If you found a bug, please send to support@lemonbooster.com or make a Github Issue. :)
 #### Any suggestion is welcome.
+#### Follow us on [Twitter](https://twitter.com/lemon_booster)
 
 # ~ HappyHacking ~
