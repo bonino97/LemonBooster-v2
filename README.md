@@ -77,3 +77,7 @@
 - https://github.com/jaeles-project/gospider
 - https://github.com/hakluke/hakrawler
 - https://github.com/maurosoria/dirsearch
+
+Many thanks to the tools developers <3
+
+If you found a bug, please send to support@lemonbooster.com or make a Github Issue. :)
