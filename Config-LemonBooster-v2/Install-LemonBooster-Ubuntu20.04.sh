@@ -34,7 +34,7 @@ sudo apt-get install -y nodejs-dev
 sudo apt-get install -y node-gyp
 sudo apt-get install -y golang-go
 
-npm install pm2 -g
+npm install -g pm2 
 
 echo "Installing GNUPG..."
 sudo apt-get install -y gnupg
