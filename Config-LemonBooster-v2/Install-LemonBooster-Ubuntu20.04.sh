@@ -28,10 +28,10 @@ sudo apt-get install -y rustc
 sudo apt-get install -y make
 sudo apt-get install -y nodejs
 sudo apt-get install -y chromium-browser
-sudo apt-get install -y npm
 sudo apt-get install -y libssl1.0-dev
 sudo apt-get install -y nodejs-dev
 sudo apt-get install -y node-gyp
+sudo apt-get install -y npm
 
 npm install -g pm2 
 
@@ -42,9 +42,6 @@ echo "Importing MongoDB public GPG Key..."
 wget -qO - https://www.mongodb.org/static/pgp/server-4.4.asc | sudo apt-key add -
 
 echo "deb [ arch=amd64,arm64 ] https://repo.mongodb.org/apt/ubuntu focal/mongodb-org/4.4 multiverse" | sudo tee /etc/apt/sources.list.d/mongodb-org-4.4.list
-
-echo "Reloading packages..."
-sudo apt-get update
 
 echo "Installing MongoDB..."
 sudo apt-get install -y mongodb-org
