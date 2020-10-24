@@ -57,6 +57,7 @@
 - Waybackurls. [Waybackurls]
 - Spidering. [GoSpider, Hakrawler].
 - Dir Bruteforcing. [Dirsearch].
+- Get multiples loaded lists to use.
 - Save results on MongoDB.
 - Compare Old Results with New Results in each Scanning.
 - New Results in Monitoring Option. 
