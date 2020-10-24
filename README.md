@@ -80,4 +80,7 @@
 
 Many thanks to the tools developers <3
 
-If you found a bug, please send to support@lemonbooster.com or make a Github Issue. :)
+#### If you found a bug, please send to support@lemonbooster.com or make a Github Issue. :)
+#### Any suggestion is welcome.
+
+# ~ HappyHacking ~
