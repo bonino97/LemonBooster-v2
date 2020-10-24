@@ -1,7 +1,7 @@
 # LemonBooster-v2
 
 #### Register on → http://beta.lemonbooster.com/auth/register
-#### Follow the Installation steps on → httphttp://beta.lemonbooster.com/docs
+#### Follow the Installation steps on → http://beta.lemonbooster.com/docs
 
 ## ¿How to Run?
 
