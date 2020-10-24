@@ -37,7 +37,7 @@ sudo apt-get install -y golang-go
 npm install pm2 -g
 
 echo "Installing GNUPG..."
-sudo apt-get install gnupg
+sudo apt-get install -y gnupg
 
 echo "Importing MongoDB public GPG Key..."
 wget -qO - https://www.mongodb.org/static/pgp/server-4.4.asc | sudo apt-key add -
