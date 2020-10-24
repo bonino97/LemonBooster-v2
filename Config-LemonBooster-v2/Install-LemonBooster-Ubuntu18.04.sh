@@ -29,9 +29,10 @@ sudo apt-get install -y make
 sudo apt-get install -y nodejs
 sudo apt-get install -y chromium-browser
 sudo apt-get install -y npm
-sudo apt-get install libssl1.0-dev
-sudo apt-get install nodejs-dev
-sudo apt-get install node-gyp
+sudo apt-get install -y libssl1.0-dev
+sudo apt-get install -y nodejs-dev
+sudo apt-get install -y node-gyp
+sudo apt-get install -y golang-go
 
 npm install pm2 -g
 
@@ -235,11 +236,7 @@ echo "Done!"
 
 #Install Subfinder
 echo "Installing Subfinder..."
-mkdir ~/tools/subfinder
-cd ~/tools/subfinder
-wget https://github.com/projectdiscovery/subfinder/releases/download/v2.4.5/subfinder_2.4.5_linux_arm64.tar.gz
-tar -xzvf subfinder-linux-amd64.tar
-mv subfinder-linux-amd64 /usr/bin/subfinder
+GO111MODULE=on go get -u -v github.com/projectdiscovery/subfinder/v2/cmd/subfinder
 cd ~/tools/
 echo "Done!"
 
@@ -251,6 +248,11 @@ cargo build --release
 sudo cp target/release/findomain /usr/bin/
 cd ~/tools/
 echo "Done!"
+
+#Install Amass
+echo "Installing Amass..."
+export GO111MODULE=on
+go get -v github.com/OWASP/Amass/v3/...
 
 #Install API-LemonBooster
 echo "Installing LemonBooster..."

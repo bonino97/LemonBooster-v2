@@ -29,6 +29,11 @@ sudo apt-get install -y make
 sudo apt-get install -y nodejs
 sudo apt-get install -y chromium-browser
 sudo apt-get install -y npm
+sudo apt-get install -y libssl1.0-dev
+sudo apt-get install -y nodejs-dev
+sudo apt-get install -y node-gyp
+sudo apt-get install -y golang-go
+
 npm install pm2 -g
 
 echo "Installing GNUPG..."
@@ -66,34 +71,19 @@ sudo systemctl enable mongod
 #Installing GO.
 
 if [[ -z "$GOPATH" ]];then
-echo "It looks like GO is not installed, would you like to install it now?"
-PS3="Please select an option: "
-choices=("Y" "N")
-select choice in "${choices[@]}"; do
-        case $choice in
-                Y)
-
-					echo "Installing GOlang..."
-					wget https://dl.google.com/go/go1.14.2.linux-amd64.tar.gz
-					sudo tar -xvf go1.14.2.linux-amd64.tar.gz
-					sudo mv go /usr/local
-					export GOROOT=/usr/local/go
-					export GOPATH=$HOME/go
-					export PATH=$GOPATH/bin:$GOROOT/bin:$PATH
-					echo 'export GOROOT=/usr/local/go' >> ~/.bash_profile
-					echo 'export GOPATH=$HOME/go'	>> ~/.bash_profile			
-					echo 'export PATH=$GOPATH/bin:$GOROOT/bin:$PATH' >> ~/.bash_profile	
-					source ~/.bash_profile
-					sleep 1
-					break
-					;;
-				N)
-					echo "Please install go and re-run this script"
-					echo "Aborting Installation..."
-					exit 1
-					;;
-	esac	
-done
+	echo "Installing GOlang..."
+	wget https://golang.org/dl/go1.15.3.linux-amd64.tar.gz
+	sudo tar -xvf go1.14.2.linux-amd64.tar.gz
+	sudo mv go /usr/local
+	export GOROOT=/usr/local/go
+	export GOPATH=$HOME/go
+	export PATH=$GOPATH/bin:$GOROOT/bin:$PATH
+	echo 'export GOROOT=/usr/local/go' >> ~/.bash_profile
+	echo 'export GOPATH=$HOME/go'	>> ~/.bash_profile
+	echo 'export PATH=$GOPATH/bin:$GOROOT/bin:$PATH' >> ~/.bash_profile	
+	source ~/.bash_profile
+	sleep 1
+	break
 fi
 
 #Create a recon folder in ~/
@@ -246,11 +236,7 @@ echo "Done!"
 
 #Install Subfinder
 echo "Installing Subfinder..."
-mkdir ~/tools/subfinder
-cd ~/tools/subfinder
-wget https://github.com/projectdiscovery/subfinder/releases/download/v2.4.5/subfinder_2.4.5_linux_arm64.tar.gz
-tar -xzvf subfinder-linux-amd64.tar
-mv subfinder-linux-amd64 /usr/bin/subfinder
+GO111MODULE=on go get -u -v github.com/projectdiscovery/subfinder/v2/cmd/subfinder
 cd ~/tools/
 echo "Done!"
 
@@ -262,6 +248,11 @@ cargo build --release
 sudo cp target/release/findomain /usr/bin/
 cd ~/tools/
 echo "Done!"
+
+#Install Amass
+echo "Installing Amass..."
+export GO111MODULE=on
+go get -v github.com/OWASP/Amass/v3/...
 
 #Install API-LemonBooster
 echo "Installing LemonBooster..."
