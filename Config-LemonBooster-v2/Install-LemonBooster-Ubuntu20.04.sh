@@ -32,7 +32,6 @@ sudo apt-get install -y npm
 sudo apt-get install -y libssl1.0-dev
 sudo apt-get install -y nodejs-dev
 sudo apt-get install -y node-gyp
-sudo apt-get install -y golang-go
 
 npm install -g pm2 
 
@@ -72,7 +71,7 @@ sudo systemctl enable mongod
 
 if [[ -z "$GOPATH" ]];then
 	echo "Installing GOlang..."
-	wget https://golang.org/dl/go1.15.3.linux-amd64.tar.gz
+	wget https://dl.google.com/go/go1.14.2.linux-amd64.tar.gz
 	sudo tar -xvf go1.14.2.linux-amd64.tar.gz
 	sudo mv go /usr/local
 	export GOROOT=/usr/local/go
@@ -263,3 +262,8 @@ pm2 start Index.js
 echo "Done!"
 
 echo "All Done ~ Put the VPS Ip inside the platform. beta.lemonbooster.com"
+hostname -I | awk '{print $1}'
+hostname -I | awk '{print $1}'
+hostname -I | awk '{print $1}'
+hostname -I | awk '{print $1}'
+hostname -I | awk '{print $1}'
