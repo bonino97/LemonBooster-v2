@@ -29,6 +29,7 @@ sudo apt-get install -y make
 sudo apt-get install -y nodejs
 sudo apt-get install -y chromium-browser
 sudo apt-get install -y npm
+npm install pm2 -g
 
 echo "Installing GNUPG..."
 sudo apt-get install gnupg
@@ -261,3 +262,13 @@ cargo build --release
 sudo cp target/release/findomain /usr/bin/
 cd ~/tools/
 echo "Done!"
+
+#Install API-LemonBooster
+echo "Installing LemonBooster..."
+git clone https://github.com/bonino97/LemonBooster-v2.git
+cd ~/tools/LemonBooster-v2/API-LemonBooster-v2
+sudo npm install
+pm2 start Index.js
+echo "Done!"
+
+echo "All Done ~ Put the VPS Ip inside the platform. beta.lemonbooster.com"
