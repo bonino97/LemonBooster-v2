@@ -25,3 +25,16 @@
 9. Once the Installer finish. Go to [Settings](http://beta.lemonbooster.com/settings). and load the VPS Ip .
 
 10. If everything installed correctly, you should see [Status: ✔ ]. In the left Sidebar options.
+
+### Programs List
+![Programs](https://i.pinimg.com/originals/2f/47/57/2f4757ceaba47697c1d36a5f07ee18a5.jpg)
+
+### Selected Program Options
+![Options](https://i.pinimg.com/originals/27/c9/65/27c965db9e7846ba9b6a552ca25c3d93.jpg)
+
+### Executed Results
+![Results](https://i.pinimg.com/originals/ae/eb/91/aeeb91efda9925e58b558c73820995c0.jpg)
+
+
+### Monitoring Results
+![Monitoring](https://i.pinimg.com/originals/ae/eb/91/aeeb91efda9925e58b558c73820995c0.jpg)
