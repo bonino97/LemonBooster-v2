@@ -91,9 +91,12 @@ Many thanks to the tools developers <3
 #### Any suggestion is welcome.
 #### Follow us on [Twitter](https://twitter.com/lemon_booster)
 
-If you are interested in supporting me because you liked my project:
+If you are interested in support the tool because you liked the project:
+
+<a href="https://www.buymeacoffee.com/lemonbooster"><img src="https://img.buymeacoffee.com/button-api/?text=Buy me a coffee&emoji=&slug=lemonbooster&button_colour=00f2c3&font_colour=ffffff&font_family=Cookie&outline_colour=000000&coffee_colour=ffffff"></a>
 
 **BTC Wallet**: ```156CNj43EDXKWj2s2sKnNzWga3jX4kHQYf```
+
 **ETH Wallet**: ```0x2318eB71Ff070955aC7064750503855392aE83A9```
 
 # ~ HappyHacking ~
