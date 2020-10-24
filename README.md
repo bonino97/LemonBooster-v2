@@ -60,3 +60,19 @@
 - Save results on MongoDB.
 - Compare Old Results with New Results in each Scanning.
 - New Results in Monitoring Option. 
+
+### Tools: 
+- https://github.com/Findomain/Findomain
+- https://github.com/tomnomnom/assetfinder
+- https://github.com/projectdiscovery/subfinder
+- https://github.com/OWASP/Amass
+- https://github.com/gwen001/github-search
+- https://github.com/OJ/gobuster
+- https://github.com/tomnomnom/httprobe
+- https://github.com/michenriksen/aquatone
+- https://github.com/GerbenJavado/LinkFinder
+- https://github.com/hakluke/hakcheckurl
+- https://github.com/tomnomnom/waybackurls
+- https://github.com/jaeles-project/gospider
+- https://github.com/hakluke/hakrawler
+- https://github.com/maurosoria/dirsearch
