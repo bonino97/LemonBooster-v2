@@ -29,6 +29,10 @@ sudo apt-get install -y make
 sudo apt-get install -y nodejs
 sudo apt-get install -y chromium-browser
 sudo apt-get install -y npm
+sudo apt-get install libssl1.0-dev
+sudo apt-get install nodejs-dev
+sudo apt-get install node-gyp
+
 npm install pm2 -g
 
 echo "Installing GNUPG..."
@@ -74,12 +78,11 @@ if [[ -z "$GOPATH" ]];then
 	export GOPATH=$HOME/go
 	export PATH=$GOPATH/bin:$GOROOT/bin:$PATH
 	echo 'export GOROOT=/usr/local/go' >> ~/.bash_profile
-	echo 'export GOPATH=$HOME/go'	>> ~/.bash_profile			
+	echo 'export GOPATH=$HOME/go'	>> ~/.bash_profile
 	echo 'export PATH=$GOPATH/bin:$GOROOT/bin:$PATH' >> ~/.bash_profile	
 	source ~/.bash_profile
 	sleep 1
 	break
-	;;					
 fi
 
 #Create a recon folder in ~/
