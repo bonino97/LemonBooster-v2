@@ -66,34 +66,20 @@ sudo systemctl enable mongod
 #Installing GO.
 
 if [[ -z "$GOPATH" ]];then
-echo "It looks like GO is not installed, would you like to install it now?"
-PS3="Please select an option: "
-choices=("Y" "N")
-select choice in "${choices[@]}"; do
-        case $choice in
-                Y)
-
-					echo "Installing GOlang..."
-					wget https://dl.google.com/go/go1.14.2.linux-amd64.tar.gz
-					sudo tar -xvf go1.14.2.linux-amd64.tar.gz
-					sudo mv go /usr/local
-					export GOROOT=/usr/local/go
-					export GOPATH=$HOME/go
-					export PATH=$GOPATH/bin:$GOROOT/bin:$PATH
-					echo 'export GOROOT=/usr/local/go' >> ~/.bash_profile
-					echo 'export GOPATH=$HOME/go'	>> ~/.bash_profile			
-					echo 'export PATH=$GOPATH/bin:$GOROOT/bin:$PATH' >> ~/.bash_profile	
-					source ~/.bash_profile
-					sleep 1
-					break
-					;;
-				N)
-					echo "Please install go and re-run this script"
-					echo "Aborting Installation..."
-					exit 1
-					;;
-	esac	
-done
+	echo "Installing GOlang..."
+	wget https://golang.org/dl/go1.15.3.linux-amd64.tar.gz
+	sudo tar -xvf go1.14.2.linux-amd64.tar.gz
+	sudo mv go /usr/local
+	export GOROOT=/usr/local/go
+	export GOPATH=$HOME/go
+	export PATH=$GOPATH/bin:$GOROOT/bin:$PATH
+	echo 'export GOROOT=/usr/local/go' >> ~/.bash_profile
+	echo 'export GOPATH=$HOME/go'	>> ~/.bash_profile			
+	echo 'export PATH=$GOPATH/bin:$GOROOT/bin:$PATH' >> ~/.bash_profile	
+	source ~/.bash_profile
+	sleep 1
+	break
+	;;					
 fi
 
 #Create a recon folder in ~/
