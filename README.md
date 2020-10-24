@@ -3,6 +3,12 @@
 #### Register on → http://beta.lemonbooster.com/auth/register
 #### Follow the Installation steps on → http://beta.lemonbooster.com/docs
 
+## ¿What is LemonBooster?
+
+It is a tool that automates and monitors a large part of the Recon phase.
+
+It runs in a web environment, and facilitates the execution of tools.
+
 ## ¿How to Run?
 
 1. Go to [DigitalOcean](https://m.do.co/c/b11f008f8927), [Linode](https://www.linode.com/?r=30f11dc4791aafe40fad71f0de8f0682f88fc7af) or run a VPS with your favourite provider.
@@ -34,6 +40,8 @@
     - Give privileges to the ViewExecution SH. → ```chmod +x ViewExecution.sh```
     - Run SH. → ```./ViewExecution.sh```
     - By this way, you can execute the tools, and see all the proccess running (tools included).
+    
+![LemonBooster-GIF](https://i.pinimg.com/originals/78/9d/62/789d620a379636d58b64755a84223599.gif)
 
 ## Features: 
 
