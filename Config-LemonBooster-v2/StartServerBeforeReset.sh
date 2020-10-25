@@ -2,7 +2,6 @@
 
 sudo systemctl daemon-reload
 sudo systemctl start mongod
-sudo systemctl status mongod
 pm2 delete 0
 cd ~/tools/LemonBooster-v2/API-LemonBooster-v2
 npm install --save dotenv
