@@ -2,12 +2,12 @@
 const mongoose = require('mongoose');
 require('dotenv').config({path: '.env'});
 
-mongoose.connect('mongodb://localhost:27017/lemonbooster', { 
+mongoose.connect(process.env.DB, { 
     useNewUrlParser: true,  
     useFindAndModify: false,    
-    socketTimeoutMS: 30000,
+    socketTimeoutMS: 300000,
     keepAlive: true,
-    reconnectTries: 30000
+    reconnectTries: 300000
 }, (err, res) => { 
     if(err){
         throw err;
