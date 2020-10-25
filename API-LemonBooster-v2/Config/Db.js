@@ -2,7 +2,7 @@
 const mongoose = require('mongoose');
 require('dotenv').config({path: '.env'});
 
-mongoose.connect(process.env.DB, { 
+mongoose.connect((process.env.DB || "mongodb://localhost:27017/lemonbooster"), { 
     useNewUrlParser: true,  
     useFindAndModify: false,    
     socketTimeoutMS: 30000,
