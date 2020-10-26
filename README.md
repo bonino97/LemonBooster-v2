@@ -95,6 +95,16 @@ Many thanks to the tools developers <3
 ### Monitoring Results
 ![Monitoring](https://i.pinimg.com/originals/ae/eb/91/aeeb91efda9925e58b558c73820995c0.jpg)
 
+## ToDo List.
+
+- [ ]  Telegram Bot
+- [ ] Port Scanning with Naabu
+- [ ] Ffuf
+- [ ] Gau
+- [ ] JSF Scan
+- [ ] Kxss
+- [ ] Paramspider / Arjun
+
 #### If you found a bug, please send to support@lemonbooster.com or make a Github Issue. :)
 #### Any suggestion is welcome.
 #### Follow us on [Twitter](https://twitter.com/lemon_booster)
