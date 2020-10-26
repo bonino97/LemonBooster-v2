@@ -95,10 +95,11 @@ Many thanks to the tools developers <3
 ### Monitoring Results
 ![Monitoring](https://i.pinimg.com/originals/ae/eb/91/aeeb91efda9925e58b558c73820995c0.jpg)
 
-### ¿How to add your own Wordlist?
+
+## ¿How to add your own Wordlist?
 Copy and Paste the List inside the Lists folder →  ```cp Example.txt ~/tools/LemonBooster-v2/API-LemonBooster-v2/Common/Lists```
 
-## ToDo List.
+### ToDo List.
 
 - [ ] Telegram Bot
 - [ ] Port Scanning with Naabu
