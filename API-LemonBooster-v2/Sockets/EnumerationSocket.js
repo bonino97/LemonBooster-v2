@@ -40,9 +40,9 @@ ExecuteSubdomainEnumeration = (client) => {
         
                 /* SINTAXIS DE CADA HERRAMIENTA */
                 const findomain = `findomain -t ${enumeration.Scope} -u ${findomainFile}`;
-                const subfinder = `subfinder -d ${enumeration.Scope} -t 100 -timeout 5 -o ${subfinderFile}`;
+                const subfinder = `subfinder -d ${enumeration.Scope} -t 40 -timeout 5 -o ${subfinderFile}`;
                 const assetFinder = `${GO_DIR}assetfinder --subs-only ${enumeration.Scope} | tee -a ${assetFinderFile}`;
-                const amass = `amass enum -passive -d ${enumeration.Scope} -max-dns-queries 200 -o ${amassFile} `; 
+                const amass = `amass enum -passive -d ${enumeration.Scope} -max-dns-queries 100 -o ${amassFile} `; 
         
                 enumeration.Syntax=[findomain,subfinder,assetFinder,amass];
         
@@ -161,7 +161,7 @@ ExecutePermutationEnumeration = (client) => {
 
 
                     dataArr.forEach(element => {
-                        shell.exec(`${GO_DIR}gobuster dns -d ${element.trim()} -w ${GOBUSTERDNS_DICT} -t 100 -o ${gobusterAuxSubdomainsFile}`);
+                        shell.exec(`${GO_DIR}gobuster dns -d ${element.trim()} -w ${GOBUSTERDNS_DICT} -t 50 -o ${gobusterAuxSubdomainsFile}`);
                         shell.exec(`sed 's/Found: //g' ${gobusterAuxSubdomainsFile} >> ${auxNewSubdomainsFile}`);
                         shell.exec(`rm -r ${gobusterAuxSubdomainsFile}`);
                     });
@@ -334,7 +334,7 @@ ExecuteAlive = (client) => {
                 let auxNewAlivesFile = `${enumeration.Directory}/AuxNewAlives-${enumeration.Scope.toUpperCase()}-${date}.txt`;
         
                 /* SINTAXIS DE CADA HERRAMIENTA */            
-                const httprobe = `cat ${payload.Subdomain.File} | ${GO_DIR}httprobe -t 10000 -c 100 | tee -a ${auxNewAlivesFile}`;
+                const httprobe = `cat ${payload.Subdomain.File} | ${GO_DIR}httprobe -t 10000 -c 35 | tee -a ${auxNewAlivesFile}`;
                 
                 enumeration.Syntax = [httprobe];
                 enumeration.PathDirectory = payload.Alive.Program.PathDirectory;
@@ -430,7 +430,7 @@ ExecuteScreenshot = (client) => {
 
             if(enumeration) {
                 /* SINTAXIS */            
-                const aquatone = `cat ${payload.Alives.File} | ${GO_DIR}aquatone -out ${enumeration.Directory} -threads 20`;
+                const aquatone = `cat ${payload.Alives.File} | ${GO_DIR}aquatone -out ${enumeration.Directory}`;
                 
                 enumeration.Syntax = aquatone;
                 

@@ -78,7 +78,7 @@ async function ExecuteSubdomainEnumeration(payload, client) {
     
             /* SINTAXIS DE CADA HERRAMIENTA */
             const findomain = `findomain -t ${enumeration.Scope} -u ${findomainFile}`;
-            const subfinder = `subfinder -d ${enumeration.Scope} -t 65 -timeout 15 -o ${subfinderFile}`;
+            const subfinder = `subfinder -d ${enumeration.Scope} -t 40 -timeout 15 -o ${subfinderFile}`;
             const assetFinder = `${GO_DIR}assetfinder --subs-only ${enumeration.Scope} | tee -a ${assetFinderFile}`;
             const amass = `amass enum -passive -d ${enumeration.Scope} -o ${amassFile}`; 
     
