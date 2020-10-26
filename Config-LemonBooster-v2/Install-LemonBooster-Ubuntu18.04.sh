@@ -61,9 +61,6 @@ sudo systemctl daemon-reload
 echo "Start MongoDB"
 sudo systemctl start mongod.service
 
-echo "Verifying if MongoDB is installed..."
-sudo systemctl status mongod
-
 echo "Appliying auto-start for reboot system error..."
 sudo systemctl enable mongod
 
