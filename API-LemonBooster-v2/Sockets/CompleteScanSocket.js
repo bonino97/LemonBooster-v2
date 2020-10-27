@@ -87,7 +87,7 @@ async function ExecuteSubdomainEnumeration(payload, client) {
             client.emit('completed-scan', {
                 success: true,
                 executing: true,
-                msg: `Executing Subdomain Enumeration on ${enumeration.Scope}...`
+                msg: `Executing OneClick recon on ${enumeration.Scope}...`
             });
     
             shell.exec(findomain); //Ejecuto Findomain
