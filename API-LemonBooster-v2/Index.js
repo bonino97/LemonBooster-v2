@@ -8,14 +8,13 @@ const cors = require('cors');
 const path = require('path');
 const httpServer = http.createServer(app); //Http with express & http with socket.
 const io = SocketIO(this.httpServer).listen(httpServer);
-
 const socket = require('./Config/Sockets');
 
 io.origins('*:*');
 
+require('./Config/TelegramBot');
 require('./Config/Db');
 require('dotenv').config({path: '.env'});
-
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended:true}));

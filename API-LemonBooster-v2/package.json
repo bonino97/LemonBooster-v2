@@ -20,7 +20,8 @@
     "shelljs": "^0.8.4",
     "shortid": "^2.2.15",
     "slug": "^3.3.4",
-    "socket.io": "^2.3.0"
+    "socket.io": "^2.3.0",
+    "telegraf": "^3.38.0"
   },
   "devDependencies": {
     "nodemon": "^2.0.4"

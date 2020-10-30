@@ -6,7 +6,7 @@ const dateFormat = require('dateformat');
 const Enumeration = require('../Models/Enumerations');
 const Program = require('../Models/Programs');
 const Monitorings = require('../Models/Monitorings');
-
+const BOT = require('../Config/TelegramBot');
 const date = dateFormat(new Date(), "yyyy-mm-dd-HH-MM");
 
 const GO_DIR=`${process.env.GO_DIR}`;
@@ -17,7 +17,6 @@ const GIT_TOKEN = `${process.env.GIT_TOKEN}`;
 const APIKEY_VIRUSTOTAL = `${process.env.APIKEY_VIRUSTOTAL}`;
 const APIKEY_FB_TOKEN = `${process.env.APIKEY_FB_TOKEN}`;
 const APIKEY_SECURITYTRAILS = `${process.env.APIKEY_SECURITYTRAILS}`;
-
 
 
 ExecuteSubdomainEnumeration = (client) => {
@@ -76,14 +75,14 @@ ExecuteSubdomainEnumeration = (client) => {
 
         
                 let Results = FileToArray(newSubdomainsFile);
-        
+
                 const monitoring = new Monitorings({
                     Program: enumeration.Program,
                     Scope: enumeration.Scope,
                     Type: 1,
                     Results: Results
                 });
-        
+
                 const program = await Program.findById(payload.Program);
                 program.Files.push(allSubdomainsFile);
         
@@ -97,9 +96,7 @@ ExecuteSubdomainEnumeration = (client) => {
                             program.Subdomains.push(element);
                         }
                     });
-        
                 } else {
-        
                     Results.forEach(element => {
                         if(element.length !== 0){
                             program.Subdomains.push(element);
@@ -107,7 +104,8 @@ ExecuteSubdomainEnumeration = (client) => {
                     });
         
                 }
-        
+                
+                BOT.SendMessage(`New Subdomains [${Results.length}] → ${Results.toString()}`);
                 monitoring.save();
                 program.save();
         
@@ -195,6 +193,7 @@ ExecutePermutationEnumeration = (client) => {
                         }
                     });
 
+                    BOT.SendMessage(`New Subdomains [${Results.length}] → ${Results.toString()}`);
                     monitoring.save();
                     program.save();
             
@@ -287,6 +286,7 @@ ExecuteGithubEnumeration = (client) => {
                         }
                     });
 
+                    BOT.SendMessage(`New Subdomains Found [${Results.length}] → ${Results.toString()}`);
                     monitoring.save();
                     program.save();
             
@@ -399,6 +399,7 @@ ExecuteAlive = (client) => {
                     });
                 }
         
+                BOT.SendMessage(`New Alive Subdomains Found [${Results.length}] → ${Results.toString()}`);
                 monitoring.save();
                 program.save();
         

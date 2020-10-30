@@ -95,6 +95,7 @@ ExecuteWaybackurlsAll = (client) => {
                     });
                 }
         
+                BOT.SendMessage(`New Waybackurls [${Results.length}] → ${Results.toString()}`);
                 monitoring.save();
                 program.save();
         
@@ -169,6 +170,7 @@ ExecuteWaybackurlsBySubdomain = (client) => {
         
                 program.Files.push(allWaybackurlsFile);
         
+                BOT.SendMessage(`New Waybackurls Endpoints Found [${Results.length}] → ${Results.toString()}`);
                 monitoring.save();
                 program.save();
         
@@ -271,6 +273,7 @@ ExecuteGoSpiderAll = (client) => {
                     });
                 }
         
+                BOT.SendMessage(`New GoSpider Endpoints Found [${Results.length}] → ${Results.toString()}`);
                 monitoring.save();
                 program.save();
         
@@ -445,6 +448,7 @@ ExecuteHakrawlerAll = (client) => {
                     });
                 }
         
+                BOT.SendMessage(`New Hakrawler Endpoints Found [${Results.length}] → ${Results.toString()}`);
                 monitoring.save();
                 program.save();
         
@@ -519,6 +523,7 @@ ExecuteHakrawlerBySubdomain = (client) => {
         
                 program.Files.push(allHakrawlerFile);
         
+                BOT.SendMessage(`New Hakrawler Endpoints Found [${Results.length}] → ${Results.toString()}`);
                 monitoring.save();
                 program.save();
         
@@ -621,6 +626,7 @@ ExecuteDirsearchAll = (client) => {
                     });
                 }
         
+                BOT.SendMessage(`New Directory Endpoints Found [${Results.length}] → ${Results.toString()}`);
                 monitoring.save();
                 program.save();
         
@@ -695,7 +701,8 @@ ExecuteDirsearchBySubdomain = (client) => {
                 const program = await Program.findById(payload.Dirsearch.Program);
         
                 program.Files.push(allDirsearchFile);
-        
+                
+                BOT.SendMessage(`New Directory Endpoints Found [${Results.length}] → ${Results.toString()}`);
                 monitoring.save();
                 program.save();
         
