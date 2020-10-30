@@ -96,16 +96,16 @@ ExecuteSubdomainEnumeration = (client) => {
                             program.Subdomains.push(element);
                         }
                     });
+                    BOT.SendMessage(`First Subdomains Enumeration Scanning Found [${Results.length}] → ${Results.toString()}`);
                 } else {
                     Results.forEach(element => {
                         if(element.length !== 0){
                             program.Subdomains.push(element);
                         }
                     });
-        
+                    BOT.SendMessage(`New Subdomains Found [${Results.length}] → ${Results.toString()}`);
                 }
                 
-                BOT.SendMessage(`New Subdomains [${Results.length}] → ${Results.toString()}`);
                 monitoring.save();
                 program.save();
         
@@ -391,15 +391,18 @@ ExecuteAlive = (client) => {
                             program.Alives.push(element);
                         }
                     });
+
+                    BOT.SendMessage(`First Alives Enumeration Scanning Found [${Results.length}] → ${Results.toString()}`);
                 } else {
                     Results.forEach(element => {
                         if(element.length !== 0){
                             program.Alives.push(element);
                         }
                     });
+
+                    BOT.SendMessage(`New Alive Subdomains Found [${Results.length}] → ${Results.toString()}`);
                 }
-        
-                BOT.SendMessage(`New Alive Subdomains Found [${Results.length}] → ${Results.toString()}`);
+
                 monitoring.save();
                 program.save();
         
@@ -666,7 +669,6 @@ function FileToArray(file){
     
     return fileToArray;
 }
-
 
 module.exports = {
     ExecuteSubdomainEnumeration,

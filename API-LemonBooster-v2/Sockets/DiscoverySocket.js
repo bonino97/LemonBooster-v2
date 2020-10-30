@@ -8,6 +8,8 @@ const Program = require('../Models/Programs');
 const Monitorings = require('../Models/Monitorings');
 const Discoveries = require('../Models/Discoveries');
 
+const BOT = require('../Config/TelegramBot');
+
 const date = dateFormat(new Date(), "yyyy-mm-dd-HH-MM");
 
 const GO_DIR=`${process.env.GO_DIR}`;
@@ -559,7 +561,7 @@ ExecuteDirsearchAll = (client) => {
                 let auxNewDirsearchFile = `${discovery.Directory}/AuxNewDirsearch-${discovery.Scope.toUpperCase()}-${date}.txt`;
         
                 /* SINTAXIS DE CADA HERRAMIENTA */            
-                const dirsearch = `python3 ${TOOLS_DIR}dirsearch/dirsearch.py -L ${payload.Alives.File} -w ${LIST_DIR}${list} -e html,js,php,png,jpg,sql,json,xml,htm,css,asp,jsp,aspx,jspx,git -x 404 -t 80 -b --plain-text-report=${auxNewDirsearchFile}`;
+                const dirsearch = `python3 ${TOOLS_DIR}dirsearch/dirsearch.py -l ${payload.Alives.File} -w ${LIST_DIR}${list} -e html,js,php,png,jpg,sql,json,xml,htm,css,asp,jsp,aspx,jspx,git -x 404 -t 80 -b --plain-text-report=${auxNewDirsearchFile}`;
                 
                 discovery.Syntax = [dirsearch];
                 discovery.PathDirectory = payload.Dirsearch.Program.PathDirectory;
@@ -614,19 +616,22 @@ ExecuteDirsearchAll = (client) => {
         
                     Results.forEach(element => {
                         if(element.length !== 0){
-                            program.Hakrawler.push(element);
+                            program.DirBruteforce.push(element);
                         }
                     });
+
+                    BOT.SendMessage(`First Directory Endpoints Scanning Found [${Results.length}] → ${Results.toString()}`);
 
                 } else {
                     Results.forEach(element => {
                         if(element.length !== 0){
-                            program.Hakrawler.push(element);
+                            program.DirBruteforce.push(element);
                         }
                     });
+
+                    BOT.SendMessage(`New Directory Endpoints Found [${Results.length}] → ${Results.toString()}`);
                 }
-        
-                BOT.SendMessage(`New Directory Endpoints Found [${Results.length}] → ${Results.toString()}`);
+    
                 monitoring.save();
                 program.save();
         
@@ -656,6 +661,7 @@ ExecuteDirsearchBySubdomain = (client) => {
             const discovery = await Discoveries.findById(id).exec();
     
             if(discovery){
+                var firstExecution = false;
                 let subdomain = discovery.Subdomain.split('://');
                 let allDirsearchFile = `${discovery.Directory}/SubdomainDirsearch-${subdomain[0].toUpperCase()}-${subdomain[1].toUpperCase()}.txt`;
                 let newDirsearchFile = `${discovery.Directory}/NewSubdomainDirsearch-${subdomain[0].toUpperCase()}-${subdomain[1].toUpperCase()}-${date}.txt`;
@@ -676,6 +682,7 @@ ExecuteDirsearchBySubdomain = (client) => {
                 shell.exec(dirsearch); //Ejecuto Dirsearch
         
                 if(!fs.existsSync(allDirsearchFile)){
+                    firstExecution = true;
                     shell.exec(`cat ${auxNewDirsearchFile} >> ${allDirsearchFile}`); 
                 }
             
@@ -701,8 +708,31 @@ ExecuteDirsearchBySubdomain = (client) => {
                 const program = await Program.findById(payload.Dirsearch.Program);
         
                 program.Files.push(allDirsearchFile);
-                
-                BOT.SendMessage(`New Directory Endpoints Found [${Results.length}] → ${Results.toString()}`);
+
+                if(firstExecution){
+        
+                    let Results = FileToArray(allDirsearchFile);
+
+                    monitoring.Results = Results;
+        
+                    Results.forEach(element => {
+                        if(element.length !== 0){
+                            program.DirBruteforce.push(element);
+                        }
+                    });
+
+                    BOT.SendMessage(`First Directory Endpoints Scanning Found [${Results.length}] → ${Results.toString()}`);
+
+                } else {
+                    Results.forEach(element => {
+                        if(element.length !== 0){
+                            program.DirBruteforce.push(element);
+                        }
+                    });
+
+                    BOT.SendMessage(`New Directory Endpoints Found [${Results.length}] → ${Results.toString()}`);
+                }
+
                 monitoring.save();
                 program.save();
         
@@ -733,8 +763,6 @@ function FileToArray(file){
     
     return fileToArray;
 }
-
-
 
 module.exports = {
     ExecuteWaybackurlsAll,

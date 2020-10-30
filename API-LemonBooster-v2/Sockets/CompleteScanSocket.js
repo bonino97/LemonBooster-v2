@@ -7,6 +7,7 @@ const Enumerations = require('../Models/Enumerations');
 const Program = require('../Models/Programs');
 const Monitorings = require('../Models/Monitorings');
 const Discoveries = require('../Models/Discoveries');
+const BOT = require('../Config/TelegramBot');
 
 const date = dateFormat(new Date(), "yyyy-mm-dd-HH-MM");
 
@@ -31,6 +32,7 @@ exports.ExecuteCompleteScan = async (client) => {
             await ExecuteWaybackurl(payload, client);
             await ExecuteGoSpider(payload, client);
             await ExecuteHakrawler(payload, client);
+            // await ExecuteDirsearch(payload, client);
         
         } 
         catch (e) {
@@ -39,7 +41,6 @@ exports.ExecuteCompleteScan = async (client) => {
 
     });
 }
-
 
 async function ExecuteSubdomainEnumeration(payload, client) {
 
@@ -135,6 +136,8 @@ async function ExecuteSubdomainEnumeration(payload, client) {
                     }
                 });
     
+                BOT.SendMessage(`First Subdomains Enumeration Scanning Found [${Results.length}] → ${Results.toString()}`);
+
             } else {
     
                 Results.forEach(element => {
@@ -142,7 +145,8 @@ async function ExecuteSubdomainEnumeration(payload, client) {
                         program.Subdomains.push(element);
                     }
                 });
-    
+
+                BOT.SendMessage(`New Subdomains Enumeration Found [${Results.length}] → ${Results.toString()}`);
             }
     
             monitoring.save();
@@ -250,12 +254,17 @@ async function ExecuteAlive(payload, client){
                         program.Alives.push(element);
                     }
                 });
+
+                BOT.SendMessage(`First Alives Enumeration Scanning Found [${Results.length}] → ${Results.toString()}`);
+
             } else {
                 Results.forEach(element => {
                     if(element.length !== 0){
                         program.Alives.push(element);
                     }
                 });
+
+                BOT.SendMessage(`New Alive Subdomains Found [${Results.length}] → ${Results.toString()}`);
             }
     
             monitoring.save();
@@ -570,12 +579,16 @@ async function ExecuteWaybackurl(payload, client) {
                     }
                 });
 
+                BOT.SendMessage(`First Waybackurls Scanning Found [${Results.length}] → ${Results.toString()}`);
+
             } else {
                 Results.forEach(element => {
                     if(element.length !== 0){
                         program.Waybackurls.push(element);
                     }
                 });
+
+                BOT.SendMessage(`New Waybackurls Found [${Results.length}] → ${Results.toString()}`);
             }
     
             monitoring.save();
@@ -684,14 +697,18 @@ async function ExecuteGoSpider(payload, client) {
                     }
                 });
 
+                BOT.SendMessage(`First GoSpider Endpoints Scanning Found [${Results.length}] → ${Results.toString()}`);
+
             } else {
                 Results.forEach(element => {
                     if(element.length !== 0){
                         program.GoSpider.push(element);
                     }
                 });
+
+                BOT.SendMessage(`New GoSpider Endpoints Found [${Results.length}] → ${Results.toString()}`);
             }
-    
+
             monitoring.save();
             program.save();
 
@@ -797,12 +814,16 @@ async function ExecuteHakrawler(payload, client) {
                     }
                 });
 
+                BOT.SendMessage(`First Hakrawler Endpoints Scanning Found [${Results.length}] → ${Results.toString()}`);
+
             } else {
                 Results.forEach(element => {
                     if(element.length !== 0){
                         program.Hakrawler.push(element);
                     }
                 });
+
+                BOT.SendMessage(`New Hakrawler Endpoints Found [${Results.length}] → ${Results.toString()}`);
             }
     
             monitoring.save();
@@ -826,8 +847,19 @@ async function ExecuteHakrawler(payload, client) {
     }
 }
 
-async function ExecuteDirsearch(program, payload, client) {
+async function ExecuteDirsearch(payload, client) {
     try {
+
+        
+        const program = await Program.findOne({Url: payload.Url});
+
+        if(!program){
+            client.emit('completed-scan', {
+                success: false,
+                executing: false,
+                msg: `Doesn't exist program with this URL.`
+            });
+        }
 
         const discovery = new Discoveries({
             Directory: CreateBruteforcingDirectory(program),
@@ -844,7 +876,7 @@ async function ExecuteDirsearch(program, payload, client) {
             let auxNewDirsearchFile = `${discovery.Directory}/AuxNewDirsearch-${discovery.Scope.toUpperCase()}-${date}.txt`;
     
             /* SINTAXIS DE CADA HERRAMIENTA */            
-            const dirsearch = `python3 ${TOOLS_DIR}dirsearch/dirsearch.py -L ${this.allAlivesFile} -w ${LIST_DIR}${list} -e html,js,php,png,jpg,sql,json,xml,htm,css,asp,jsp,aspx,jspx,git -x 404 -t 50 -b --plain-text-report=${auxNewDirsearchFile}`;
+            const dirsearch = `python3 ${TOOLS_DIR}dirsearch/dirsearch.py -l ${this.allAlivesFile} -w ${LIST_DIR}RAFT-medium-words.txt -e html,js,php,png,jpg,sql,json,xml,htm,css,asp,jsp,aspx,jspx,git -x 404 -t 50 -b --plain-text-report=${auxNewDirsearchFile}`;
             
             discovery.Syntax = [dirsearch];
             
@@ -896,18 +928,22 @@ async function ExecuteDirsearch(program, payload, client) {
     
                 Results.forEach(element => {
                     if(element.length !== 0){
-                        program.Hakrawler.push(element);
+                        program.DirBruteforce.push(element);
                     }
                 });
+
+                BOT.SendMessage(`First Directory Endpoints Scanning Found [${Results.length}] → ${Results.toString()}`);
 
             } else {
                 Results.forEach(element => {
                     if(element.length !== 0){
-                        program.Hakrawler.push(element);
+                        program.DirBruteforce.push(element);
                     }
                 });
+
+                BOT.SendMessage(`New Directory Endpoints Found [${Results.length}] → ${Results.toString()}`);
             }
-    
+
             monitoring.save();
             program.save();
     
@@ -1042,3 +1078,4 @@ function FileToArray(file){
     
     return fileToArray;
 }
+
