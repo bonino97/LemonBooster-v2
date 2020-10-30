@@ -1,34 +1,40 @@
 //LIBRARIES
-const Telegraf = require('telegraf');
-require('dotenv').config({path: '.env'});
+const Telegraf = require("telegraf");
+require("dotenv").config({ path: ".env" });
 
 //API KEY
-const botKey = process.env.TELEGRAM_TOKEN;
+const botKey = process.env.TELEGRAM_TOKEN || null;
 
 //BOT
-const bot = new Telegraf(botKey);
+if (botKey !== null) {
+  const bot = new Telegraf(botKey);
 
-bot.start(async (ctx) => {
+  bot.start(async (ctx) => {
     ctx.reply(`~ Welcome to LemonBooster BOT ~`);
     setTimeout(() => {
-        ctx.reply(`~ Activating Monitoring ~`);
+      ctx.reply(`~ Activating Monitoring ~`);
     }, 1000);
     setTimeout(() => {
-        ctx.reply(`~ 3 ~`);
+      ctx.reply(`~ 3 ~`);
     }, 2000);
     setTimeout(() => {
-        ctx.reply(`~ 2 ~`);
+      ctx.reply(`~ 2 ~`);
     }, 3000);
     setTimeout(() => {
-        ctx.reply(`~ 1 ~`);
+      ctx.reply(`~ 1 ~`);
     }, 4000);
     setTimeout(() => {
-        ctx.reply(`~ Enjoy! ~`);
+      ctx.reply(`~ Enjoy! ~`);
     }, 5000);
-});
+  });
 
-exports.SendMessage = (results) => {
+  exports.SendMessage = (results) => {
     bot.telegram.sendMessage(process.env.TELEGRAM_CHAT_ID, results);
-}
+  };
 
-bot.launch();
+  bot.launch();
+} else {
+  exports.SendMessage = (results) => {
+    console.log('You need to configure your Telegram Token.');
+  };
+}

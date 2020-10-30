@@ -7,7 +7,7 @@ const Enumerations = require('../Models/Enumerations');
 const Program = require('../Models/Programs');
 const Monitorings = require('../Models/Monitorings');
 const Discoveries = require('../Models/Discoveries');
-// const BOT = require('../Config/TelegramBot');
+const BOT = require('../Config/TelegramBot');
 
 const date = dateFormat(new Date(), "yyyy-mm-dd-HH-MM");
 

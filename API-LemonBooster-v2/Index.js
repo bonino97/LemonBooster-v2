@@ -12,7 +12,7 @@ const socket = require('./Config/Sockets');
 
 io.origins('*:*');
 
-// require('./Config/TelegramBot');
+require('./Config/TelegramBot');
 require('./Config/Db');
 require('dotenv').config({path: '.env'});
 
