@@ -25,7 +25,6 @@ app.use(bodyParser.urlencoded({extended:true}));
 // })); // Initializing CORS, dont remember import.
 
 app.use(cors());
-console.log(1);
 /* ROUTES */
 const IndexRoutes = require('./Routes/IndexRoutes');
 const ProgramRoutes = require('./Routes/ProgramRoutes');
