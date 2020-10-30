@@ -7,7 +7,7 @@ const Enumerations = require('../Models/Enumerations');
 const Program = require('../Models/Programs');
 const Monitorings = require('../Models/Monitorings');
 const Discoveries = require('../Models/Discoveries');
-const BOT = require('../Config/TelegramBot');
+// const BOT = require('../Config/TelegramBot');
 
 const date = dateFormat(new Date(), "yyyy-mm-dd-HH-MM");
 
@@ -136,7 +136,7 @@ async function ExecuteSubdomainEnumeration(payload, client) {
                     }
                 });
     
-                BOT.SendMessage(`First Subdomains Enumeration Scanning Found [${Results.length}] → ${Results.toString()}`);
+                // BOT.SendMessage(`First Subdomains Enumeration Scanning Found [${Results.length}] → ${Results.toString()}`);
 
             } else {
     
@@ -146,7 +146,7 @@ async function ExecuteSubdomainEnumeration(payload, client) {
                     }
                 });
 
-                BOT.SendMessage(`New Subdomains Enumeration Found [${Results.length}] → ${Results.toString()}`);
+                // BOT.SendMessage(`New Subdomains Enumeration Found [${Results.length}] → ${Results.toString()}`);
             }
     
             monitoring.save();
@@ -255,7 +255,7 @@ async function ExecuteAlive(payload, client){
                     }
                 });
 
-                BOT.SendMessage(`First Alives Enumeration Scanning Found [${Results.length}] → ${Results.toString()}`);
+                // BOT.SendMessage(`First Alives Enumeration Scanning Found [${Results.length}] → ${Results.toString()}`);
 
             } else {
                 Results.forEach(element => {
@@ -264,7 +264,7 @@ async function ExecuteAlive(payload, client){
                     }
                 });
 
-                BOT.SendMessage(`New Alive Subdomains Found [${Results.length}] → ${Results.toString()}`);
+                // BOT.SendMessage(`New Alive Subdomains Found [${Results.length}] → ${Results.toString()}`);
             }
     
             monitoring.save();
@@ -579,7 +579,7 @@ async function ExecuteWaybackurl(payload, client) {
                     }
                 });
 
-                BOT.SendMessage(`First Waybackurls Scanning Found [${Results.length}] → ${Results.toString()}`);
+                // BOT.SendMessage(`First Waybackurls Scanning Found [${Results.length}] → ${Results.toString()}`);
 
             } else {
                 Results.forEach(element => {
@@ -588,7 +588,7 @@ async function ExecuteWaybackurl(payload, client) {
                     }
                 });
 
-                BOT.SendMessage(`New Waybackurls Found [${Results.length}] → ${Results.toString()}`);
+                // BOT.SendMessage(`New Waybackurls Found [${Results.length}] → ${Results.toString()}`);
             }
     
             monitoring.save();
@@ -697,7 +697,7 @@ async function ExecuteGoSpider(payload, client) {
                     }
                 });
 
-                BOT.SendMessage(`First GoSpider Endpoints Scanning Found [${Results.length}] → ${Results.toString()}`);
+                // BOT.SendMessage(`First GoSpider Endpoints Scanning Found [${Results.length}] → ${Results.toString()}`);
 
             } else {
                 Results.forEach(element => {
@@ -706,7 +706,7 @@ async function ExecuteGoSpider(payload, client) {
                     }
                 });
 
-                BOT.SendMessage(`New GoSpider Endpoints Found [${Results.length}] → ${Results.toString()}`);
+                // BOT.SendMessage(`New GoSpider Endpoints Found [${Results.length}] → ${Results.toString()}`);
             }
 
             monitoring.save();
@@ -814,7 +814,7 @@ async function ExecuteHakrawler(payload, client) {
                     }
                 });
 
-                BOT.SendMessage(`First Hakrawler Endpoints Scanning Found [${Results.length}] → ${Results.toString()}`);
+                // BOT.SendMessage(`First Hakrawler Endpoints Scanning Found [${Results.length}] → ${Results.toString()}`);
 
             } else {
                 Results.forEach(element => {
@@ -823,7 +823,7 @@ async function ExecuteHakrawler(payload, client) {
                     }
                 });
 
-                BOT.SendMessage(`New Hakrawler Endpoints Found [${Results.length}] → ${Results.toString()}`);
+                // BOT.SendMessage(`New Hakrawler Endpoints Found [${Results.length}] → ${Results.toString()}`);
             }
     
             monitoring.save();
@@ -932,7 +932,7 @@ async function ExecuteDirsearch(payload, client) {
                     }
                 });
 
-                BOT.SendMessage(`First Directory Endpoints Scanning Found [${Results.length}] → ${Results.toString()}`);
+                // BOT.SendMessage(`First Directory Endpoints Scanning Found [${Results.length}] → ${Results.toString()}`);
 
             } else {
                 Results.forEach(element => {
@@ -941,7 +941,7 @@ async function ExecuteDirsearch(payload, client) {
                     }
                 });
 
-                BOT.SendMessage(`New Directory Endpoints Found [${Results.length}] → ${Results.toString()}`);
+                // BOT.SendMessage(`New Directory Endpoints Found [${Results.length}] → ${Results.toString()}`);
             }
 
             monitoring.save();

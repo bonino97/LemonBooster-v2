@@ -8,7 +8,7 @@ const Program = require('../Models/Programs');
 const Monitorings = require('../Models/Monitorings');
 const Discoveries = require('../Models/Discoveries');
 
-const BOT = require('../Config/TelegramBot');
+// const BOT = require('../Config/TelegramBot');
 
 const date = dateFormat(new Date(), "yyyy-mm-dd-HH-MM");
 
@@ -89,15 +89,18 @@ ExecuteWaybackurlsAll = (client) => {
                         }
                     });
 
+                    // BOT.SendMessage(`First Waybackurls Scanning Found [${Results.length}] → ${Results.toString()}`);
+
                 } else {
                     Results.forEach(element => {
                         if(element.length !== 0){
                             program.Waybackurls.push(element);
                         }
                     });
+
+                    // BOT.SendMessage(`New Waybackurls Found [${Results.length}] → ${Results.toString()}`);
                 }
-        
-                BOT.SendMessage(`New Waybackurls [${Results.length}] → ${Results.toString()}`);
+    
                 monitoring.save();
                 program.save();
         
@@ -172,7 +175,7 @@ ExecuteWaybackurlsBySubdomain = (client) => {
         
                 program.Files.push(allWaybackurlsFile);
         
-                BOT.SendMessage(`New Waybackurls Endpoints Found [${Results.length}] → ${Results.toString()}`);
+                // BOT.SendMessage(`New Waybackurls Endpoints Found [${Results.length}] → ${Results.toString()}`);
                 monitoring.save();
                 program.save();
         
@@ -275,7 +278,7 @@ ExecuteGoSpiderAll = (client) => {
                     });
                 }
         
-                BOT.SendMessage(`New GoSpider Endpoints Found [${Results.length}] → ${Results.toString()}`);
+                // BOT.SendMessage(`New GoSpider Endpoints Found [${Results.length}] → ${Results.toString()}`);
                 monitoring.save();
                 program.save();
         
@@ -450,7 +453,7 @@ ExecuteHakrawlerAll = (client) => {
                     });
                 }
         
-                BOT.SendMessage(`New Hakrawler Endpoints Found [${Results.length}] → ${Results.toString()}`);
+                // BOT.SendMessage(`New Hakrawler Endpoints Found [${Results.length}] → ${Results.toString()}`);
                 monitoring.save();
                 program.save();
         
@@ -525,7 +528,7 @@ ExecuteHakrawlerBySubdomain = (client) => {
         
                 program.Files.push(allHakrawlerFile);
         
-                BOT.SendMessage(`New Hakrawler Endpoints Found [${Results.length}] → ${Results.toString()}`);
+                // BOT.SendMessage(`New Hakrawler Endpoints Found [${Results.length}] → ${Results.toString()}`);
                 monitoring.save();
                 program.save();
         
@@ -620,7 +623,7 @@ ExecuteDirsearchAll = (client) => {
                         }
                     });
 
-                    BOT.SendMessage(`First Directory Endpoints Scanning Found [${Results.length}] → ${Results.toString()}`);
+                    // BOT.SendMessage(`First Directory Endpoints Scanning Found [${Results.length}] → ${Results.toString()}`);
 
                 } else {
                     Results.forEach(element => {
@@ -629,7 +632,7 @@ ExecuteDirsearchAll = (client) => {
                         }
                     });
 
-                    BOT.SendMessage(`New Directory Endpoints Found [${Results.length}] → ${Results.toString()}`);
+                    // BOT.SendMessage(`New Directory Endpoints Found [${Results.length}] → ${Results.toString()}`);
                 }
     
                 monitoring.save();
@@ -721,7 +724,7 @@ ExecuteDirsearchBySubdomain = (client) => {
                         }
                     });
 
-                    BOT.SendMessage(`First Directory Endpoints Scanning Found [${Results.length}] → ${Results.toString()}`);
+                    // BOT.SendMessage(`First Directory Endpoints Scanning Found [${Results.length}] → ${Results.toString()}`);
 
                 } else {
                     Results.forEach(element => {
@@ -730,7 +733,7 @@ ExecuteDirsearchBySubdomain = (client) => {
                         }
                     });
 
-                    BOT.SendMessage(`New Directory Endpoints Found [${Results.length}] → ${Results.toString()}`);
+                    // BOT.SendMessage(`New Directory Endpoints Found [${Results.length}] → ${Results.toString()}`);
                 }
 
                 monitoring.save();

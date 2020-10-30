@@ -6,7 +6,7 @@ const dateFormat = require('dateformat');
 const Enumeration = require('../Models/Enumerations');
 const Program = require('../Models/Programs');
 const Monitorings = require('../Models/Monitorings');
-const BOT = require('../Config/TelegramBot');
+// const BOT = require('../Config/TelegramBot');
 const date = dateFormat(new Date(), "yyyy-mm-dd-HH-MM");
 
 const GO_DIR=`${process.env.GO_DIR}`;
@@ -96,14 +96,14 @@ ExecuteSubdomainEnumeration = (client) => {
                             program.Subdomains.push(element);
                         }
                     });
-                    BOT.SendMessage(`First Subdomains Enumeration Scanning Found [${Results.length}] → ${Results.toString()}`);
+                    // BOT.SendMessage(`First Subdomains Enumeration Scanning Found [${Results.length}] → ${Results.toString()}`);
                 } else {
                     Results.forEach(element => {
                         if(element.length !== 0){
                             program.Subdomains.push(element);
                         }
                     });
-                    BOT.SendMessage(`New Subdomains Found [${Results.length}] → ${Results.toString()}`);
+                    // BOT.SendMessage(`New Subdomains Found [${Results.length}] → ${Results.toString()}`);
                 }
                 
                 monitoring.save();
@@ -193,7 +193,7 @@ ExecutePermutationEnumeration = (client) => {
                         }
                     });
 
-                    BOT.SendMessage(`New Subdomains [${Results.length}] → ${Results.toString()}`);
+                    // BOT.SendMessage(`New Subdomains [${Results.length}] → ${Results.toString()}`);
                     monitoring.save();
                     program.save();
             
@@ -286,7 +286,7 @@ ExecuteGithubEnumeration = (client) => {
                         }
                     });
 
-                    BOT.SendMessage(`New Subdomains Found [${Results.length}] → ${Results.toString()}`);
+                    // BOT.SendMessage(`New Subdomains Found [${Results.length}] → ${Results.toString()}`);
                     monitoring.save();
                     program.save();
             
@@ -392,7 +392,7 @@ ExecuteAlive = (client) => {
                         }
                     });
 
-                    BOT.SendMessage(`First Alives Enumeration Scanning Found [${Results.length}] → ${Results.toString()}`);
+                    // BOT.SendMessage(`First Alives Enumeration Scanning Found [${Results.length}] → ${Results.toString()}`);
                 } else {
                     Results.forEach(element => {
                         if(element.length !== 0){
@@ -400,7 +400,7 @@ ExecuteAlive = (client) => {
                         }
                     });
 
-                    BOT.SendMessage(`New Alive Subdomains Found [${Results.length}] → ${Results.toString()}`);
+                    // BOT.SendMessage(`New Alive Subdomains Found [${Results.length}] → ${Results.toString()}`);
                 }
 
                 monitoring.save();

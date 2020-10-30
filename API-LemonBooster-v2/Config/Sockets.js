@@ -7,8 +7,6 @@ const CompleteScanSockets = require('../Sockets/CompleteScanSocket');
 
 Connection = (io) => {
 
-    console.log('Sockets: lemon-booster ~ Online');
-
     io.on('connection', (client) => {   
         console.log('Connected Client.');
         
