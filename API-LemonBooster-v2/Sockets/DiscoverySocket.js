@@ -164,7 +164,7 @@ ExecuteWaybackurlsBySubdomain = (client) => {
                 const monitoring = new Monitorings({
                     Program: discovery.Program,
                     Scope: discovery.Scope,
-                    Type: 7,
+                    Type: 6,
                     Results: Results
                 });
         
@@ -342,7 +342,7 @@ ExecuteGoSpiderBySubdomain = (client) => {
                 const monitoring = new Monitorings({
                     Program: discovery.Program,
                     Scope: discovery.Scope,
-                    Type: 9,
+                    Type: 8,
                     Results: Results
                 });
         
@@ -517,7 +517,7 @@ ExecuteHakrawlerBySubdomain = (client) => {
                 const monitoring = new Monitorings({
                     Program: discovery.Program,
                     Scope: discovery.Scope,
-                    Type: 11,
+                    Type: 10,
                     Results: Results
                 });
         
@@ -701,7 +701,7 @@ ExecuteDirsearchBySubdomain = (client) => {
                 const monitoring = new Monitorings({
                     Program: discovery.Program,
                     Scope: discovery.Scope,
-                    Type: 13,
+                    Type: 12,
                     Results: Results
                 });
         
