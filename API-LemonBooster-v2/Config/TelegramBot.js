@@ -1,6 +1,6 @@
 //LIBRARIES
-const Telegraf = require("telegraf");
-require("dotenv").config({ path: ".env" });
+const Telegraf = require('telegraf');
+require('dotenv').config({ path: '.env' });
 
 //API KEY
 const botKey = process.env.TELEGRAM_TOKEN || null;

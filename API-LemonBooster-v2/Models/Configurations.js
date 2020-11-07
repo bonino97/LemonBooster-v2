@@ -2,22 +2,19 @@ const mongoose = require('mongoose');
 mongoose.Promise = global.Promise;
 mongoose.pluralize(null);
 
-const UserSchema = new mongoose.Schema({ 
-    Email:{
+const ConfigurationsSchema = new mongoose.Schema({ 
+    UserId:{
         type: String,
-        required: 'Email required.',
+        required: 'UserId required.',
         trim: true, 
-        unique: true,
-        lowercase: true
+        unique: true
     },
     GitToken: String,
     TelegramToken: String,
     TelegramChatId: String,
     VirusTotalApiKey: String,
     FacebookApiKey: String,
-    SecurityTrailsApiKey: String,
-    CreatedAt: Date,
-
+    SecurityTrailsApiKey: String
 });
 
-module.exports = mongoose.model('User', UserSchema);
+module.exports = mongoose.model('Configurations', ConfigurationsSchema);
