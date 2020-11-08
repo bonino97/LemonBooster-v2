@@ -4,3 +4,4 @@ LemonBooster-Results
 Auth-LemonBooster-v2/node_modules
 Auth-LemonBooster-v2
 *.dev
+API-LemonBooster-v2/.env
