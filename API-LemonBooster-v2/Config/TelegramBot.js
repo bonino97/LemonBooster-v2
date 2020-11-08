@@ -29,7 +29,11 @@ if (botKey !== null) {
   });
 
   exports.SendMessage = (results) => {
-    bot.telegram.sendMessage(process.env.TELEGRAM_CHAT_ID, results);
+    if(results.length < 4000) {
+      bot.telegram.sendMessage(process.env.TELEGRAM_CHAT_ID, results);
+    } else {
+      bot.telegram.sendMessage(process.env.TELEGRAM_CHAT_ID, results.substring(0,4000));
+    }
   };
 
   bot.launch();
