@@ -5,7 +5,6 @@ const dateFormat = require('dateformat');
 const Enumeration = require('../Models/Enumerations');
 const Program = require('../Models/Programs');
 const Monitorings = require('../Models/Monitorings');
-const Configuration = require('../Models/Configurations');
 const BOT = require('../Config/TelegramBot');
 const date = dateFormat(new Date(), 'yyyy-mm-dd-HH-MM');
 
@@ -17,17 +16,6 @@ const GIT_TOKEN = `${process.env.GIT_TOKEN}`;
 ExecuteSubdomainEnumeration = (client) => {
   client.on('execute-subdomain-enumeration', async (payload) => {
     try {
-      const configuration = await Configuration.findOne();
-      if (configuration) {
-        process.env.GIT_TOKEN = configuration.GitToken;
-
-        process.env.APIKEY_VIRUSTOTAL = configuration.VirusTotalApiKey;
-        process.env.APIKEY_FB_TOKEN = configuration.FacebookApiKey;
-        process.env.APIKEY_SECURITYTRAILS = configuration.SecurityTrailsApiKey;
-
-        process.env.TELEGRAM_TOKEN = configuration.TelegramToken;
-        process.env.TELEGRAM_CHAT_ID = configuration.TelegramChatId;
-      }
 
       const id = payload._id;
       const enumeration = await Enumeration.findById(id).exec();
@@ -250,18 +238,6 @@ ExecutePermutationEnumeration = (client) => {
 ExecuteGithubEnumeration = (client) => {
   client.on('execute-github-enumeration', async (payload) => {
     try {
-      const configuration = await Configuration.findOne();
-      if (configuration) {
-        process.env.GIT_TOKEN = configuration.GitToken;
-
-        process.env.APIKEY_VIRUSTOTAL = configuration.VirusTotalApiKey;
-        process.env.APIKEY_FB_TOKEN = configuration.FacebookApiKey;
-        process.env.APIKEY_SECURITYTRAILS = configuration.SecurityTrailsApiKey;
-
-        process.env.TELEGRAM_TOKEN = configuration.TelegramToken;
-        process.env.TELEGRAM_CHAT_ID = configuration.TelegramChatId;
-        console.log(process.env);
-      }
 
       const id = payload._id;
       const enumeration = await Enumeration.findById(id).exec();
