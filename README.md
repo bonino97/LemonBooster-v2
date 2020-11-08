@@ -109,7 +109,7 @@ Copy and Paste the List inside the Lists folder →  ```cp Example.txt ~/tools/L
 - [ ] Kxss
 - [ ] Paramspider / Arjun
 
-## This tool runs and stores results locally, so no one (not me) will have access to your data from outside.
+#### This tool runs and stores results locally, so no one (not even me) will have access to your data from outside.
 
 #### If you found a bug, please send to support@lemonbooster.com or make a Github Issue. :)
 #### Any suggestion is welcome.
