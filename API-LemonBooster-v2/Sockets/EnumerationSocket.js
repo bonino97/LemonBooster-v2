@@ -21,13 +21,8 @@ ExecuteSubdomainEnumeration = (client) => {
       const enumeration = await Enumeration.findById(id).exec();
       if (enumeration) {
         var firstExecution = false;
-        let allSubdomainsFile = `${
-          enumeration.Directory
-        }/Subdomains-${enumeration.Scope.toUpperCase()}.txt`;
-
-        let newSubdomainsFile = `${
-          enumeration.Directory
-        }/NewSubdomains-${enumeration.Scope.toUpperCase()}-${date}.txt`;
+        let allSubdomainsFile = `${enumeration.Directory}/Subdomains-${enumeration.Scope.toUpperCase()}.txt`;
+        let newSubdomainsFile = `${enumeration.Directory}/NewSubdomains-${enumeration.Scope.toUpperCase()}-${date}.txt`;
         let auxNewSubdomainsFile = `${enumeration.Directory}/AuxNewSubdomains-${enumeration.Scope}-${date}.txt`;
 
         let findomainFile = `${enumeration.Directory}/Findomain-${enumeration.Scope}-${date}.txt`;
@@ -51,24 +46,16 @@ ExecuteSubdomainEnumeration = (client) => {
 
         shell.exec(findomain); //Ejecuto Findomain
 
-        shell.exec(
-          `cat ${findomainFile} ${subfinderFile} ${assetFinderFile} ${amassFile} >> ${auxNewSubdomainsFile}`
-        ); // Guardo todos los resultados en un Txt Auxiliar
-        shell.exec(
-          `sort -u ${auxNewSubdomainsFile} -o ${auxNewSubdomainsFile}`
-        ); // Ordeno y filtro resultados.
+        shell.exec(`cat ${findomainFile} ${subfinderFile} ${assetFinderFile} ${amassFile} >> ${auxNewSubdomainsFile}`); // Guardo todos los resultados en un Txt Auxiliar
+        shell.exec(`sort -u ${auxNewSubdomainsFile} -o ${auxNewSubdomainsFile}`); // Ordeno y filtro resultados.
 
         if (!fs.existsSync(allSubdomainsFile)) {
           firstExecution = true;
           shell.exec(`cat ${auxNewSubdomainsFile} >> ${allSubdomainsFile}`); // Si no existe ningun archivo AllSubd inicializo con todos los encontrados.
         }
 
-        shell.exec(
-          `awk 'NR == FNR{ a[$0] = 1;next } !a[$0]' ${allSubdomainsFile} ${auxNewSubdomainsFile} >> ${newSubdomainsFile}`
-        ); // Filtro entre AllSubd y NewSub para luego armar un Txt de NuevosSubdominios a Monitorear.
-        shell.exec(
-          `rm -r ${auxNewSubdomainsFile} ${findomainFile} ${subfinderFile} ${assetFinderFile} ${amassFile}`
-        ); //Elimino txts.
+        shell.exec(`awk 'NR == FNR{ a[$0] = 1;next } !a[$0]' ${allSubdomainsFile} ${auxNewSubdomainsFile} >> ${newSubdomainsFile}`); // Filtro entre AllSubd y NewSub para luego armar un Txt de NuevosSubdominios a Monitorear.
+        shell.exec(`rm -r ${auxNewSubdomainsFile} ${findomainFile} ${subfinderFile} ${assetFinderFile} ${amassFile}`); //Elimino txts.
         shell.exec(`cat ${newSubdomainsFile} >> ${allSubdomainsFile}`); // Guardo todos los resultados en AllSubdomains.
 
         enumeration.NewFile = newSubdomainsFile; // Guardo New Subdomains.
@@ -98,10 +85,7 @@ ExecuteSubdomainEnumeration = (client) => {
               program.Subdomains.push(element);
             }
           });
-          BOT.SendMessage(
-            `First Subdomains Enumeration Scanning Found [${
-              Results.length
-            }] → ${Results.toString()}`
+          BOT.SendMessage(`First Subdomains Enumeration Scanning Found [${Results.length}] → ${Results.toString()}`
           );
         } else {
           Results.forEach((element) => {
@@ -109,9 +93,7 @@ ExecuteSubdomainEnumeration = (client) => {
               program.Subdomains.push(element);
             }
           });
-          BOT.SendMessage(
-            `New Subdomains Found [${Results.length}] → ${Results.toString()}`
-          );
+          BOT.SendMessage(`New Subdomains Found [${Results.length}] → ${Results.toString()}`);
         }
 
         monitoring.save();
