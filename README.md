@@ -3,6 +3,8 @@
 #### Register on → http://beta.lemonbooster.com/auth/register
 #### Follow the Installation steps on → http://beta.lemonbooster.com/docs
 
+#### This tool runs and stores results locally, so no one (not even me) will have access to your data from outside.
+
 ## ¿What is LemonBooster?
 
 It is a tool that automates and monitors a large part of the Recon phase.
@@ -108,8 +110,6 @@ Copy and Paste the List inside the Lists folder →  ```cp Example.txt ~/tools/L
 - [ ] JSF Scan
 - [ ] Kxss
 - [ ] Paramspider / Arjun
-
-#### This tool runs and stores results locally, so no one (not even me) will have access to your data from outside.
 
 #### If you found a bug, please send to support@lemonbooster.com or make a Github Issue. :)
 #### Any suggestion is welcome.
