@@ -88,7 +88,7 @@ ExecuteSubdomainEnumeration = (client) => {
               program.Subdomains.push(element);
             }
           });
-          BOT.SendMessage(`First Subdomains Enumeration Scanning Found [${Results.length}] → ${Results.toString()}`
+          BOT.SendMessage(`First Subdomains Enumeration Scanning Found [${Results.length}] → \n${Results.toString()}`
           );
         } else {
           Results.forEach((element) => {
@@ -96,7 +96,7 @@ ExecuteSubdomainEnumeration = (client) => {
               program.Subdomains.push(element);
             }
           });
-          BOT.SendMessage(`New Subdomains Found [${Results.length}] → ${Results.toString()}\n`);
+          BOT.SendMessage(`New Subdomains Found [${Results.length}] → \n${Results.toString()}`);
         }
 
         monitoring.save();
