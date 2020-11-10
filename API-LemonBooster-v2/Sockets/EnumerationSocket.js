@@ -96,7 +96,7 @@ ExecuteSubdomainEnumeration = (client) => {
               program.Subdomains.push(element);
             }
           });
-          BOT.SendMessage(`New Subdomains Found [${Results.length}] → ${Results.toString()}`);
+          BOT.SendMessage(`New Subdomains Found [${Results.length} - ${newSubdomainsFile}] → ${Results.toString()}`);
         }
 
         monitoring.save();
