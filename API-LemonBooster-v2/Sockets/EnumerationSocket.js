@@ -1,8 +1,6 @@
 const shell = require('shelljs');
 const fs = require('fs');
 const dateFormat = require('dateformat');
-const os = require("os");
-const hostname = os.hostname();
 
 const Enumeration = require('../Models/Enumerations');
 const Program = require('../Models/Programs');
@@ -98,7 +96,7 @@ ExecuteSubdomainEnumeration = (client) => {
               program.Subdomains.push(element);
             }
           });
-          BOT.SendMessage(`New Subdomains Found [${Results.length}] → ${hostname}:5000/Static/${newSubdomainsFile.split('../LemonBooster-Results/')[1]}`);
+          BOT.SendMessage(`New Subdomains Found [${Results.length}] → ${request.headers.host}:5000/Static/${newSubdomainsFile.split('../LemonBooster-Results/')[1]}`);
         }
 
         monitoring.save();
