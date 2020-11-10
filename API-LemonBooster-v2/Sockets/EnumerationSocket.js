@@ -96,7 +96,7 @@ ExecuteSubdomainEnumeration = (client) => {
               program.Subdomains.push(element);
             }
           });
-          BOT.SendMessage(`New Subdomains Found [${Results.length} - ${newSubdomainsFile}] → ${Results.toString()}`);
+          BOT.SendMessage(`New Subdomains Found [${Results.length}] → ${window.location.hostname}:5000/Static/${newSubdomainsFile.split('../LemonBooster-Results/')[1]}`);
         }
 
         monitoring.save();
