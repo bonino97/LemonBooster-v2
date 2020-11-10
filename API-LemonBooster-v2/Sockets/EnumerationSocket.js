@@ -45,6 +45,9 @@ ExecuteSubdomainEnumeration = (client) => {
         });
 
         shell.exec(findomain); //Ejecuto Findomain
+        shell.exec(subfinder); //Ejecuto Subfinder
+        shell.exec(assetFinder); //Ejecuto Assetfinder
+        shell.exec(amass); //Ejecuto Amass
 
         shell.exec(`cat ${findomainFile} ${subfinderFile} ${assetFinderFile} ${amassFile} >> ${auxNewSubdomainsFile}`); // Guardo todos los resultados en un Txt Auxiliar
         shell.exec(`sort -u ${auxNewSubdomainsFile} -o ${auxNewSubdomainsFile}`); // Ordeno y filtro resultados.
