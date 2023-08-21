@@ -33,7 +33,7 @@ ExecuteSubdomainEnumeration = (client) => {
         /* SINTAXIS DE CADA HERRAMIENTA */
         const findomain = `findomain -t ${enumeration.Scope} -u ${findomainFile}`;
         const subfinder = `subfinder -d ${enumeration.Scope} -t 40 -timeout 5 -o ${subfinderFile}`;
-        const assetFinder = `assetfinder --subs-only ${enumeration.Scope} | tee -a ${assetFinderFile}`;
+        const assetFinder = `${GO_DIR}assetfinder --subs-only ${enumeration.Scope} | tee -a ${assetFinderFile}`;
         const amass = `amass enum -passive -d ${enumeration.Scope} -max-dns-queries 100 -o ${amassFile} `;
 
         enumeration.Syntax = [findomain, subfinder, assetFinder, amass];
@@ -127,10 +127,12 @@ ExecutePermutationEnumeration = (client) => {
       const enumeration = await Enumeration.findById(id).exec();
 
       if (enumeration) {
-        const allSubdomainsFile = `${enumeration.Directory
-          }/Subdomains-${enumeration.Scope.toUpperCase()}.txt`;
-        const newSubdomainsFile = `${enumeration.Directory
-          }/NewSubdomains-${enumeration.Scope.toUpperCase()}-${date}.txt`;
+        const allSubdomainsFile = `${
+          enumeration.Directory
+        }/Subdomains-${enumeration.Scope.toUpperCase()}.txt`;
+        const newSubdomainsFile = `${
+          enumeration.Directory
+        }/NewSubdomains-${enumeration.Scope.toUpperCase()}-${date}.txt`;
         const auxNewSubdomainsFile = `${enumeration.Directory}/AuxNewSubdomains-${enumeration.Scope}-${date}.txt`;
         const gobusterAuxSubdomainsFile = `${enumeration.Directory}/AuxGobuster-${enumeration.Scope}-${date}.txt`;
 
@@ -152,7 +154,7 @@ ExecutePermutationEnumeration = (client) => {
 
           dataArr.forEach((element) => {
             shell.exec(
-              `gobuster dns -d ${element.trim()} -w ${GOBUSTERDNS_DICT} -t 50 -o ${gobusterAuxSubdomainsFile}`
+              `${GO_DIR}gobuster dns -d ${element.trim()} -w ${GOBUSTERDNS_DICT} -t 50 -o ${gobusterAuxSubdomainsFile}`
             );
             shell.exec(
               `sed 's/Found: //g' ${gobusterAuxSubdomainsFile} >> ${auxNewSubdomainsFile}`
@@ -226,10 +228,12 @@ ExecuteGithubEnumeration = (client) => {
       const enumeration = await Enumeration.findById(id).exec();
 
       if (enumeration) {
-        const allSubdomainsFile = `${enumeration.Directory
-          }/Subdomains-${enumeration.Scope.toUpperCase()}.txt`;
-        const newSubdomainsFile = `${enumeration.Directory
-          }/NewSubdomains-${enumeration.Scope.toUpperCase()}-${date}.txt`;
+        const allSubdomainsFile = `${
+          enumeration.Directory
+        }/Subdomains-${enumeration.Scope.toUpperCase()}.txt`;
+        const newSubdomainsFile = `${
+          enumeration.Directory
+        }/NewSubdomains-${enumeration.Scope.toUpperCase()}-${date}.txt`;
         const auxNewSubdomainsFile = `${enumeration.Directory}/AuxNewSubdomains-${enumeration.Scope}-${date}.txt`;
         const gitAuxSubdomainsFile = `${enumeration.Directory}/AuxGit-${enumeration.Scope}-${date}.txt`;
 
@@ -335,15 +339,18 @@ ExecuteAlive = (client) => {
         });
         var firstExecution = false;
 
-        let allAlivesFile = `${enumeration.Directory
-          }/Alives-${enumeration.Scope.toUpperCase()}.txt`;
-        let newAlivesFile = `${enumeration.Directory
-          }/NewAlives-${enumeration.Scope.toUpperCase()}-${date}.txt`;
-        let auxNewAlivesFile = `${enumeration.Directory
-          }/AuxNewAlives-${enumeration.Scope.toUpperCase()}-${date}.txt`;
+        let allAlivesFile = `${
+          enumeration.Directory
+        }/Alives-${enumeration.Scope.toUpperCase()}.txt`;
+        let newAlivesFile = `${
+          enumeration.Directory
+        }/NewAlives-${enumeration.Scope.toUpperCase()}-${date}.txt`;
+        let auxNewAlivesFile = `${
+          enumeration.Directory
+        }/AuxNewAlives-${enumeration.Scope.toUpperCase()}-${date}.txt`;
 
         /* SINTAXIS DE CADA HERRAMIENTA */
-        const httprobe = `cat ${payload.Subdomain.File} | httprobe -t 10000 -c 35 | tee -a ${auxNewAlivesFile}`;
+        const httprobe = `cat ${payload.Subdomain.File} | ${GO_DIR}httprobe -t 10000 -c 35 | tee -a ${auxNewAlivesFile}`;
 
         enumeration.Syntax = [httprobe];
         enumeration.PathDirectory = payload.Alive.Program.PathDirectory;
@@ -406,7 +413,8 @@ ExecuteAlive = (client) => {
           });
 
           BOT.SendMessage(
-            `First Alives Enumeration Scanning Found [${Results.length
+            `First Alives Enumeration Scanning Found [${
+              Results.length
             }] → ${Results.toString()}`
           );
         } else {
@@ -417,7 +425,8 @@ ExecuteAlive = (client) => {
           });
 
           BOT.SendMessage(
-            `New Alive Subdomains Found [${Results.length
+            `New Alive Subdomains Found [${
+              Results.length
             }] → ${Results.toString()}`
           );
         }
@@ -451,7 +460,7 @@ ExecuteScreenshot = (client) => {
 
       if (enumeration) {
         /* SINTAXIS */
-        const aquatone = `cat ${payload.Alives.File} | aquatone -out ${enumeration.Directory}`;
+        const aquatone = `cat ${payload.Alives.File} | ${GO_DIR}aquatone -out ${enumeration.Directory}`;
 
         enumeration.Syntax = aquatone;
 
@@ -568,14 +577,17 @@ ExecuteSubdomainResponseCodes = (client) => {
 
       if (enumeration) {
         /* SINTAXIS */
-        const reponseCodesFile = `${enumeration.Directory
-          }/ResponseCodes-${enumeration.Scope.toUpperCase()}.txt`;
-        const newReponseCodesFile = `${enumeration.Directory
-          }/NewResponseCodes-${enumeration.Scope.toUpperCase()}-${date}.txt`;
-        const auxNewResponseCodesFile = `${enumeration.Directory
-          }/AuxNewResponseCodes-${enumeration.Scope.toUpperCase()}-${date}.txt`;
+        const reponseCodesFile = `${
+          enumeration.Directory
+        }/ResponseCodes-${enumeration.Scope.toUpperCase()}.txt`;
+        const newReponseCodesFile = `${
+          enumeration.Directory
+        }/NewResponseCodes-${enumeration.Scope.toUpperCase()}-${date}.txt`;
+        const auxNewResponseCodesFile = `${
+          enumeration.Directory
+        }/AuxNewResponseCodes-${enumeration.Scope.toUpperCase()}-${date}.txt`;
 
-        const hakcheckurl = `cat ${payload.Alives.File} | hakcheckurl | tee -a ${auxNewResponseCodesFile}`;
+        const hakcheckurl = `cat ${payload.Alives.File} | ${GO_DIR}hakcheckurl | tee -a ${auxNewResponseCodesFile}`;
 
         var firstExecution = false;
 
