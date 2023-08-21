@@ -91,47 +91,47 @@ cd ~/tools/
 
 #Install Aquatone
 echo "Installing Aquatone..."
-go get github.com/michenriksen/aquatone
+go install github.com/michenriksen/aquatone@latest
 echo "Done!"
 
 #Install Subjack
 echo "Installing Subjack..."
-go get github.com/haccer/subjack
+go install github.com/haccer/subjack@latest
 echo "Done!"
 
 #Install Gobuster
 echo "Installing Gobuster..."
-go get github.com/OJ/gobuster
+go install github.com/OJ/gobuster@latest
 echo "Done!"
 
 #Install Gau
 echo "Installing Gau..."
-GO111MODULE=on go get -u -v github.com/lc/gau
+GO111MODULE=on go install -u -v github.com/lc/gau@latest
 echo "Done!"
 
 #Install Hakcheckurl
 echo "Installing Hakcheckurl..."
-go get github.com/hakluke/hakcheckurl
+go install github.com/hakluke/hakcheckurl@latest
 echo "Done!"
 
 #Install Hakrawler
 echo "Installing Hakrawler..."
-go get github.com/hakluke/hakrawler
+go install github.com/hakluke/hakrawler@latest
 echo "Done!"
 
 #Install GoSpider
 echo "Installing GoSpider..."
-go get -u github.com/jaeles-project/gospider
+go install -u github.com/jaeles-project/gospider@latest
 echo "Done!"
 
 #Install getJS
 echo "Installing GetJS..."
-go get github.com/003random/getJS
+go install github.com/003random/getJS@latest
 echo "Done!"
 
 #Install Assetfinder
 echo "Installing Assetfinder..."
-go get -u github.com/tomnomnom/assetfinder
+go install -u github.com/tomnomnom/assetfinder@latest
 echo "Done!"
 
 #Install Chromium
@@ -147,7 +147,7 @@ echo "Done!"
 
 #Install Httprobe
 echo "Installing Httprobe..."
-go get -u github.com/tomnomnom/httprobe
+go install -u github.com/tomnomnom/httprobe@latest
 echo "Done!"
 
 #Install AWSCLI
@@ -174,7 +174,7 @@ echo "Done!"
 
 #Install Waybackurls
 echo "Installing Waybackurls..."
-go get github.com/tomnomnom/waybackurls
+go install github.com/tomnomnom/waybackurls@latest
 echo "Done!"
 
 #Install vhost Discovery
@@ -232,7 +232,7 @@ echo "Done!"
 
 #Install Subfinder
 echo "Installing Subfinder..."
-GO111MODULE=on go get -u -v github.com/projectdiscovery/subfinder/v2/cmd/subfinder
+go install -v github.com/projectdiscovery/subfinder/v2/cmd/subfinder@latest
 cd ~/tools/
 echo "Done!"
 
@@ -248,7 +248,7 @@ echo "Done!"
 #Install Amass
 echo "Installing Amass..."
 export GO111MODULE=on
-go get -v github.com/OWASP/Amass/v3/...
+go install -v github.com/owasp-amass/amass/v4/...@master
 
 #Install API-LemonBooster
 echo "Installing LemonBooster..."
