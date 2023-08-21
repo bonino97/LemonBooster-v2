@@ -101,12 +101,13 @@ echo "Done!"
 
 #Install Gobuster
 echo "Installing Gobuster..."
-go install github.com/OJ/gobuster@latest
+go install github.com/OJ/gobuster/v3@latest
 echo "Done!"
 
 #Install Gau
 echo "Installing Gau..."
-GO111MODULE=on go install -u -v github.com/lc/gau@latest
+GO111MODULE=on
+go install github.com/lc/gau/v2/cmd/gau@latest
 echo "Done!"
 
 #Install Hakcheckurl
@@ -121,7 +122,7 @@ echo "Done!"
 
 #Install GoSpider
 echo "Installing GoSpider..."
-go install -u github.com/jaeles-project/gospider@latest
+GO111MODULE=on go install github.com/jaeles-project/gospider@latest
 echo "Done!"
 
 #Install getJS
