@@ -67,10 +67,9 @@ sudo systemctl enable mongod
 #Installing GO.
 
 if [[ -z "$GOPATH" ]]; then
-	echo "Installing GOlang..."
+	echo "Installing GOLANG..."
 	wget https://go.dev/dl/go1.19.2.linux-amd64.tar.gz
-	sudo tar -xvf go1.19.2.linux-amd64.tar.gz
-	sudo mv go /usr/local
+	sudo tar -C /usr/local -xzf go1.19.2.linux-amd64.tar.gz
 	export GOROOT=/usr/local/go
 	export GOPATH=$HOME/go
 	export PATH=$GOPATH/bin:$GOROOT/bin:$PATH

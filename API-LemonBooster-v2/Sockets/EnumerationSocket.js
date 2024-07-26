@@ -29,12 +29,14 @@ ExecuteSubdomainEnumeration = (client) => {
         let subfinderFile = `${enumeration.Directory}/Subfinder-${enumeration.Scope}-${date}.txt`;
         let assetFinderFile = `${enumeration.Directory}/Assetfinder-${enumeration.Scope}-${date}.txt`;
         let amassFile = `${enumeration.Directory}/Amass-${enumeration.Scope}-${date}.txt`;
+        let sublisterFile = `${enumeration.Directory}/Sublist3r-${enumeration.Scope}-${date}.txt`;
 
         /* SINTAXIS DE CADA HERRAMIENTA */
         const findomain = `findomain -t ${enumeration.Scope} -u ${findomainFile}`;
         const subfinder = `subfinder -d ${enumeration.Scope} -t 40 -timeout 5 -o ${subfinderFile}`;
         const assetFinder = `${GO_DIR}assetfinder --subs-only ${enumeration.Scope} | tee -a ${assetFinderFile}`;
-        const amass = `amass enum -passive -d ${enumeration.Scope} -max-dns-queries 100 -o ${amassFile} `;
+        const amass = `amass enum -d ${enumeration.Scope} -max-dns-queries 100 -o ${amassFile} `;
+        const sublister = `python3 ${TOOLS_DIR}/Sublist3r/sublist3r.py -b -d ${enumeration.Scope} -o ${enumeration.Directory}/Sublist3r-${enumeration.Scope}-${date}.txt`;
 
         enumeration.Syntax = [findomain, subfinder, assetFinder, amass];
 
@@ -48,8 +50,11 @@ ExecuteSubdomainEnumeration = (client) => {
         shell.exec(subfinder); //Ejecuto Subfinder
         shell.exec(assetFinder); //Ejecuto Assetfinder
         shell.exec(amass); //Ejecuto Amass
+        shell.exec(sublister) //Ejecuto Sublister
 
-        shell.exec(`cat ${findomainFile} ${subfinderFile} ${assetFinderFile} ${amassFile} >> ${auxNewSubdomainsFile}`); // Guardo todos los resultados en un Txt Auxiliar
+        shell.exec(`grep -oP '^\S+(?=\s\(FQDN\))' ${amassFile} | grep '.${enumeration.Scope}' >> ${auxNewSubdomainsFile}`); // Filtro entre Amass y NewSub para luego armar un Txt de NuevosSubdominios a Monitorear.
+        shell.exec(`cat ${findomainFile} ${subfinderFile} ${assetFinderFile} ${sublisterFile} >> ${auxNewSubdomainsFile}`); // Guardo todos los resultados en un Txt Auxiliar
+
         shell.exec(`sort -u ${auxNewSubdomainsFile} -o ${auxNewSubdomainsFile}`); // Ordeno y filtro resultados.
 
         if (!fs.existsSync(allSubdomainsFile)) {
@@ -57,8 +62,9 @@ ExecuteSubdomainEnumeration = (client) => {
           shell.exec(`cat ${auxNewSubdomainsFile} >> ${allSubdomainsFile}`); // Si no existe ningun archivo AllSubd inicializo con todos los encontrados.
         }
 
+
         shell.exec(`awk 'NR == FNR{ a[$0] = 1;next } !a[$0]' ${allSubdomainsFile} ${auxNewSubdomainsFile} >> ${newSubdomainsFile}`); // Filtro entre AllSubd y NewSub para luego armar un Txt de NuevosSubdominios a Monitorear.
-        shell.exec(`rm -r ${auxNewSubdomainsFile} ${findomainFile} ${subfinderFile} ${assetFinderFile} ${amassFile}`); //Elimino txts.
+        // shell.exec(`rm -r ${auxNewSubdomainsFile} ${findomainFile} ${subfinderFile} ${assetFinderFile} ${amassFile}`); //Elimino txts.
         shell.exec(`cat ${newSubdomainsFile} >> ${allSubdomainsFile}`); // Guardo todos los resultados en AllSubdomains.
 
         enumeration.NewFile = newSubdomainsFile; // Guardo New Subdomains.
@@ -127,12 +133,10 @@ ExecutePermutationEnumeration = (client) => {
       const enumeration = await Enumeration.findById(id).exec();
 
       if (enumeration) {
-        const allSubdomainsFile = `${
-          enumeration.Directory
-        }/Subdomains-${enumeration.Scope.toUpperCase()}.txt`;
-        const newSubdomainsFile = `${
-          enumeration.Directory
-        }/NewSubdomains-${enumeration.Scope.toUpperCase()}-${date}.txt`;
+        const allSubdomainsFile = `${enumeration.Directory
+          }/Subdomains-${enumeration.Scope.toUpperCase()}.txt`;
+        const newSubdomainsFile = `${enumeration.Directory
+          }/NewSubdomains-${enumeration.Scope.toUpperCase()}-${date}.txt`;
         const auxNewSubdomainsFile = `${enumeration.Directory}/AuxNewSubdomains-${enumeration.Scope}-${date}.txt`;
         const gobusterAuxSubdomainsFile = `${enumeration.Directory}/AuxGobuster-${enumeration.Scope}-${date}.txt`;
 
@@ -228,12 +232,10 @@ ExecuteGithubEnumeration = (client) => {
       const enumeration = await Enumeration.findById(id).exec();
 
       if (enumeration) {
-        const allSubdomainsFile = `${
-          enumeration.Directory
-        }/Subdomains-${enumeration.Scope.toUpperCase()}.txt`;
-        const newSubdomainsFile = `${
-          enumeration.Directory
-        }/NewSubdomains-${enumeration.Scope.toUpperCase()}-${date}.txt`;
+        const allSubdomainsFile = `${enumeration.Directory
+          }/Subdomains-${enumeration.Scope.toUpperCase()}.txt`;
+        const newSubdomainsFile = `${enumeration.Directory
+          }/NewSubdomains-${enumeration.Scope.toUpperCase()}-${date}.txt`;
         const auxNewSubdomainsFile = `${enumeration.Directory}/AuxNewSubdomains-${enumeration.Scope}-${date}.txt`;
         const gitAuxSubdomainsFile = `${enumeration.Directory}/AuxGit-${enumeration.Scope}-${date}.txt`;
 
@@ -339,15 +341,12 @@ ExecuteAlive = (client) => {
         });
         var firstExecution = false;
 
-        let allAlivesFile = `${
-          enumeration.Directory
-        }/Alives-${enumeration.Scope.toUpperCase()}.txt`;
-        let newAlivesFile = `${
-          enumeration.Directory
-        }/NewAlives-${enumeration.Scope.toUpperCase()}-${date}.txt`;
-        let auxNewAlivesFile = `${
-          enumeration.Directory
-        }/AuxNewAlives-${enumeration.Scope.toUpperCase()}-${date}.txt`;
+        let allAlivesFile = `${enumeration.Directory
+          }/Alives-${enumeration.Scope.toUpperCase()}.txt`;
+        let newAlivesFile = `${enumeration.Directory
+          }/NewAlives-${enumeration.Scope.toUpperCase()}-${date}.txt`;
+        let auxNewAlivesFile = `${enumeration.Directory
+          }/AuxNewAlives-${enumeration.Scope.toUpperCase()}-${date}.txt`;
 
         /* SINTAXIS DE CADA HERRAMIENTA */
         const httprobe = `cat ${payload.Subdomain.File} | ${GO_DIR}httprobe -t 10000 -c 35 | tee -a ${auxNewAlivesFile}`;
@@ -413,8 +412,7 @@ ExecuteAlive = (client) => {
           });
 
           BOT.SendMessage(
-            `First Alives Enumeration Scanning Found [${
-              Results.length
+            `First Alives Enumeration Scanning Found [${Results.length
             }] → ${Results.toString()}`
           );
         } else {
@@ -425,8 +423,7 @@ ExecuteAlive = (client) => {
           });
 
           BOT.SendMessage(
-            `New Alive Subdomains Found [${
-              Results.length
+            `New Alive Subdomains Found [${Results.length
             }] → ${Results.toString()}`
           );
         }
@@ -461,6 +458,7 @@ ExecuteScreenshot = (client) => {
       if (enumeration) {
         /* SINTAXIS */
         const aquatone = `cat ${payload.Alives.File} | ${GO_DIR}aquatone -out ${enumeration.Directory}`;
+        // const gowitness = `${GO_DIR}gowitness file -f ${payload.Alives.File} -P ${enumeration.Directory}`;
 
         enumeration.Syntax = aquatone;
 
@@ -577,15 +575,12 @@ ExecuteSubdomainResponseCodes = (client) => {
 
       if (enumeration) {
         /* SINTAXIS */
-        const reponseCodesFile = `${
-          enumeration.Directory
-        }/ResponseCodes-${enumeration.Scope.toUpperCase()}.txt`;
-        const newReponseCodesFile = `${
-          enumeration.Directory
-        }/NewResponseCodes-${enumeration.Scope.toUpperCase()}-${date}.txt`;
-        const auxNewResponseCodesFile = `${
-          enumeration.Directory
-        }/AuxNewResponseCodes-${enumeration.Scope.toUpperCase()}-${date}.txt`;
+        const reponseCodesFile = `${enumeration.Directory
+          }/ResponseCodes-${enumeration.Scope.toUpperCase()}.txt`;
+        const newReponseCodesFile = `${enumeration.Directory
+          }/NewResponseCodes-${enumeration.Scope.toUpperCase()}-${date}.txt`;
+        const auxNewResponseCodesFile = `${enumeration.Directory
+          }/AuxNewResponseCodes-${enumeration.Scope.toUpperCase()}-${date}.txt`;
 
         const hakcheckurl = `cat ${payload.Alives.File} | ${GO_DIR}hakcheckurl | tee -a ${auxNewResponseCodesFile}`;
 

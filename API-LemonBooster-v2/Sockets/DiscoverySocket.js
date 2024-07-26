@@ -211,7 +211,7 @@ ExecuteGoSpiderAll = (client) => {
                 // let auxNewGoSpiderFile = `${discovery.Directory}/AuxNewGoSpider-${discovery.Scope.toUpperCase()}-${date}.txt`;
 
                 /* SINTAXIS DE LA HERRAMIENTA */
-                const goSpider = `${GO_DIR}gospider -S ${payload.Alives.File} -d 0 --sitemap -t 3 -c 50 | tee -a ${auxNewGoSpiderFile}`;
+                const goSpider = `${GO_DIR}gospider -S ${payload.Alives.File} -d 0 --sitemap --js --subs --robots -t 3 -c 50 | tee -a ${auxNewGoSpiderFile}`;
 
                 discovery.Syntax = [goSpider];
                 discovery.PathDirectory = payload.GoSpider.Program.PathDirectory;
